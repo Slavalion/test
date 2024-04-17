@@ -49,6 +49,9 @@ const faqItems = reactive(
                 </div>
             </Transition>
         </div>
+        <div v-if="!faqItems.lenght">
+        текущий раздел пока пуст
+        </div>
     </AuthenticatedLayout>
 </template>
 <style lang="scss">
