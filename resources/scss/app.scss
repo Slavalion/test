@@ -1,0 +1,690 @@
+@import "../css/app.css";
+
+// Helpers
+@import "vars";
+@import "mixins";
+
+// Components
+@import "components/button";
+@import "components/datepicker";
+@import "components/label";
+@import "components/menu";
+@import "components/progress";
+@import "components/toast";
+
+@import "input";
+@import "modal";
+@import "select-dropdown";
+@import "wallet";
+
+@import "product";
+
+.wrapper {
+    background-color: $neuralNeural2;
+    padding-left: 260px;
+
+    letter-spacing: .2px;
+}
+
+.sidebar {
+    left: 0;
+    width: 261px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: $functionalWhite;
+    border-right: 1px solid $neuralNeural4;
+    overflow: auto;
+
+    &-collapse {
+        margin-top: auto;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        display: flex;
+        justify-content: center;
+
+        .btn {
+            padding: 11px 13px;
+        }
+    }
+
+    .profile-card .btn svg {
+        display: none;
+    }
+
+    &::-webkit-scrollbar {
+        width: 2px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: $functionalBlue20;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 20px;
+        background-color: $functionalBlue;
+    }
+}
+
+.topbar {
+    top: 0;
+    padding: 11px 24px;
+    padding-bottom: 12px;
+    background-color: $functionalWhite;
+    border-bottom: 1px solid $neuralNeural4;
+    margin-left: 261px;
+    display: flex;
+    gap: 12px;
+    z-index: 2;
+}
+
+.logo-wrapper {
+    padding: 16px 6px;
+    padding-bottom: 4px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    padding-top: 60px;
+    min-height: 100vh;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    // overflow: auto;
+
+    &__headline {
+        padding: 24px 0;
+        @include header(2);
+        color: $neuralNeural10;
+    }
+}
+
+.profile-card {
+    background-color: $functionalBlueDark ;
+    border-radius: 16px;
+    padding: 12px;
+    margin-left: 2px;
+    margin-right: 2px;
+
+    &__email {
+        color: $neuralNeural6;
+        font-size: 15px;
+        line-height: 22px;
+    }
+
+    &__settings {
+        path {
+            stroke: $neuralNeural6;
+        }
+    }
+
+    &__balance {
+        font-size: 15px;
+        line-height: 22px;
+        color: $neuralNeural4;
+        margin-bottom: 6px;
+    }
+}
+
+.panel {
+    padding: 12px;
+    border-radius: 16px;
+    box-shadow: $panelShadow;
+    background-color: $functionalWhite;
+
+    &_p-lg {
+        padding: 24px;
+    }
+
+    &_product {
+        padding: 24px;
+    }
+}
+
+.auth-panel {
+    width: 480px;
+    border-radius: 25px;
+    box-shadow: -1px 3px 8px 0px rgba(89, 128, 206, 0.05);
+    background-color: $functionalWhite;
+
+    &__head {
+        padding: 36px;
+        border-bottom: 1px solid $neuralNeural4;
+
+        &-title {
+            margin-bottom: 12px;
+            color: $neuralNeural10;
+
+            @include header(2);
+        }
+
+        &-caption {
+            color: $neuralNeural8;
+
+            @include paragraph(2)
+        }
+    }
+
+    &__body {
+        padding: 36px;
+    }
+
+    &__footer {
+        padding: 36px;
+        border-top: 1px solid $neuralNeural4;
+    }
+}
+
+.empty-state {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+
+    &__title {
+        @include header(4);
+        color: $neuralNeural10;
+        margin-bottom: 6px;
+    }
+
+    &__list {
+        @include paragraph(3);
+        color: $neuralNeural8;
+        list-style: disc;
+        padding-left: 22px;
+    }
+
+    p {
+        max-width: 320px;
+        margin-bottom: 18px;
+
+        @include paragraph(3)
+    }
+}
+
+.map-container {
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+}
+
+.map-balloon {
+    position: absolute;
+    width: 232px;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 3px 12px 0px rgba(89, 128, 206, 0.10);
+
+    &__header {
+        padding-bottom: 10px;
+        color: $neuralNeural10;
+        border-bottom: 1px solid $neuralNeural4;
+
+        @include header(5);
+    }
+
+    &__body-wrapper {
+        padding-top: 10px;
+        display: flex;
+        flex-direction: column;
+        @include paragraph(3)
+    }
+
+    &__subhead {
+        color: $neuralNeural8
+    }
+
+    &__value {
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        margin-top: auto;
+    }
+}
+
+.auth-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &__logo {
+        position: absolute;
+        left: 16px;
+        top: 16px;
+    }
+
+    &__bg {
+        &::before {
+            content: "";
+            background-color: $functionalBlue;
+            background-image: url(/images/Pattern.svg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            left: 0;
+            z-index: -1;
+        }
+
+        &::after {
+            content: "";
+            background-color: $neuralNeural2;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            right: 0;
+            z-index: -1;
+        }
+    }
+
+}
+
+.telegram-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 19px;
+    border-radius: 16px;
+
+    background-color: $functionalBlue10;
+    color: $neuralNeural10;
+    transition: .3s;
+    cursor: pointer;
+
+    @include paragraph(1);
+
+    &:hover {
+        background-color: $functionalBlue20;
+    }
+}
+
+.inline-link {
+    color: $functionalBlue;
+}
+
+.sidebar_collapsed {
+    &.wrapper {
+        padding-left: 65px;
+    }
+
+    .sidebar {
+        width: 65px;
+
+        .logo-wrapper svg {
+            // width: 36px;
+            height: 36px;
+        }
+
+        .logo-wrapper svg path:nth-child(n+3) {
+            display: none;
+        }
+
+        .profile-card {
+            margin-left: -2px;
+            margin-right: -2px;
+            padding: 6px;
+
+            .btn {
+                padding: 7px 0;
+
+                svg {
+                    display: block;
+                }
+            }
+
+            &__settings {
+                width: 100%;
+            }
+
+            &__settings a {
+                display: flex;
+                justify-content: center;
+                padding: 8px;
+            }
+        }
+
+        .profile-card__email,
+        .profile-card__balance,
+        .btn span,
+        .menu__section,
+        .menu__link span,
+        .menu__link-counter {
+            display: none;
+        }
+
+        .menu__link {
+            height: 44px;
+            padding: 10.5px 12px;
+        }
+    }
+
+    .topbar {
+        margin-left: 65px;
+    }
+}
+
+.purchase-group {
+    // padding: 12px;
+    padding-bottom: 24px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    &__title {
+        color: $neuralNeural10;
+
+        @include header(5);
+    }
+}
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+
+    div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 2px solid $functionalBlue;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: $functionalBlue transparent transparent transparent;
+
+        &:nth-child(1) {
+            animation-delay: -0.45s;
+        }
+
+        &:nth-child(2) {
+            animation-delay: -0.3s;
+        }
+
+        &:nth-child(3) {
+            animation-delay: -0.15s;
+        }
+    }
+}
+
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.caption {
+    display: flex;
+    gap: 6px;
+    padding: 2px 0;
+
+    color: $neuralNeural6;
+    @include paragraph(3);
+
+    svg {
+        width: 20px;
+        height: 20px;
+
+        path {
+            stroke: $neuralNeural6;
+        }
+    }
+}
+
+.paragraph-2 {
+    @include paragraph(2);
+}
+
+.paragraph-3 {
+    @include paragraph(3);
+}
+
+.header-5 {
+    @include header(5);
+}
+
+.overflow-initial {
+    overflow: initial;
+}
+
+.product-review {
+    &__id {
+        color: $neuralNeural10;
+
+        @include header(6);
+    }
+
+    &__rating {
+        display: flex;
+        gap: 4px;
+        padding-top: 8px;
+        padding-bottom: 16px;
+
+        &-star {
+            &_active {
+                path {
+                    fill: #FFCE00;
+                }
+            }
+        }
+    }
+
+    &__review-title {
+        margin-bottom: 6px;
+        color: $neuralNeural10;
+
+        @include header(6);
+    }
+
+    &__review {
+        max-width: 100%;
+        color: $neuralNeural10;
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        margin-right: auto;
+
+        @include paragraph(3)
+    }
+}
+
+.profile-block {
+    display: flex;
+    gap: 12px;
+
+    &__icon {
+        svg {
+            width: 28px;
+            height: 28px;
+        }
+    }
+
+    &__title {
+        margin-bottom: 3px;
+        color: $neuralNeural10;
+
+        @include header(5);
+    }
+
+    &__desc {
+        max-width: 550px;
+        color: $neuralNeural8;
+
+        @include paragraph(3)
+    }
+
+    &__info {
+        flex-grow: 1;
+    }
+
+    &__action {
+        align-self: center;
+    }
+
+    &_theme-danger {
+        .profile-block {
+            &__icon {
+                svg {
+                    path {
+                        stroke: $accentRed;
+                    }
+                }
+            }
+
+            &__title {
+                color: $accentRed;
+            }
+        }
+    }
+}
+
+.main-table {
+    padding: 0;
+
+    &__th {
+        padding-bottom: 12px;
+        border-bottom: 1px solid $neuralNeural4;
+
+        @include header(6)
+    }
+
+    &__tr {
+        td {
+            padding-top: 12px;
+            padding-bottom: 12px;
+
+            border-bottom: 1px solid $neuralNeural4;
+
+            @include paragraph(3)
+        }
+
+        &:last-of-type td {
+            border-bottom: none;
+        }
+    }
+}
+
+.dropdown {
+    margin-top: 6px;
+    border-radius: 8px;
+    background-color: $functionalWhite;
+    box-shadow: 0px 12px 24px 0px rgba(89, 128, 206, 0.10);
+
+    &__wrapper {
+        border-radius: 8px;
+    }
+}
+
+.app-list {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        height: 36px;
+        padding: 0 12px;
+        border-radius: 6px;
+        background-color: $functionalWhite;
+        transition: .2s;
+        cursor: pointer;
+
+        @include paragraph(3);
+
+        &:hover {
+            background-color: $functionalBlue10;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+}
+
+.excel-import {
+    &__step {
+        margin-bottom: 24px;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+
+        &-caption {
+            margin-bottom: 10px;
+
+            @include paragraph(2);
+        }
+    }
+}
+
+.input-dndfile {
+    &__input {
+        display: none;
+    }
+
+    &__label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px dashed $neuralNeural6;
+        border-radius: 10px;
+        height: 170px;
+        cursor: pointer;
+
+        &-caption {
+            color: $neuralNeural6;
+
+            @include paragraph(2)
+        }
+    }
+}
+
+.overflow-initial {
+    overflow: initial;
+}
+
+.maintenance-mode {
+    background-color: $accentYellow;
+    width: 100%;
+    padding: 24px 12px;
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.in-maintenance-mode {
+
+    .topbar,
+    .sidebar {
+        top: 96px
+    }
+
+    .main {
+        margin-top: 96px;
+    }
+}

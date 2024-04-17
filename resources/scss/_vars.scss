@@ -1,0 +1,51 @@
+//
+// Colors
+//
+$functionalBlack: #000000;
+$functionalWhite: #ffffff;
+
+$functionalBlue: #1665FF;
+$functionalBlueMedium: #1250CC;
+$functionalBlueDark: #283B62;
+$functionalBlue10: #e7efff;
+$functionalBlue20: rgba(22, 101, 255, 0.20);
+
+$functionalRed: #E0281B;
+
+$neuralNeural2: #F4F7FC;
+$neuralNeural4: #E7EAF0;
+$neuralNeural6: #BBC1CD;
+$neuralNeural8: #565B66;
+$neuralNeural10: #2C3037;
+
+$accentRed: #E0281B;
+$accentRed10: rgba(224, 40, 27, 0.10);
+$accentYellow: #D89B00;
+$accentYellow10: rgba(216, 155, 0, 0.10);
+$accentGreen: #16C050;
+$accentGreen10: rgba(22, 192, 80, 0.10);
+
+$modalShadow: rgba(0, 0, 0, 0.10);
+$panelShadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.03);
+
+//
+// Fonts
+//
+$headlineFont: 'Inter';
+
+
+//
+// Typographic (index, fontSize, fontWeight, lineHeight, letterSpacing)
+//
+$headers: 0 48px 600 56px -0.03px,
+    1 35px 600 48px -0.02px,
+    2 27px 600 40px -0.01px,
+    3 23px 600 36px 0.12px,
+    4 17px 500 28px 0.18px,
+    5 15px 500 22px 0.2px,
+    6 13px 500 16px 0px;
+
+$paragraphs: 0 23px 36px 0.12px,
+    1 17px 28px 0.18px,
+    2 15px 22px 0.2px,
+    3 13px 20px 0.22px;

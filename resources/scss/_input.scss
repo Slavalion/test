@@ -1,0 +1,225 @@
+.input-wrapper {
+    position: relative;
+}
+
+.text-input {
+    width: 100%;
+    border: 1.5px solid $neuralNeural6;
+    transition: ease all .3s;
+    @include paragraph(3);
+    color: $neuralNeural8;
+
+    &:focus {
+        border-color: $functionalBlue;
+        background-color: $functionalBlue10;
+        color: $neuralNeural10;
+        box-shadow: none;
+        outline: none;
+    }
+
+    &:hover:not(:focus) {
+        border-color: $neuralNeural8;
+        background-color: #ffffff;
+        color: $neuralNeural10;
+    }
+
+    &:disabled {
+        opacity: .5;
+
+        &+svg {
+            opacity: .5;
+        }
+    }
+
+    &+svg {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 16px;
+        height: 16px;
+        stroke: $neuralNeural10;
+    }
+
+    &__label {
+        display: block;
+        margin-bottom: 10px;
+        color: $neuralNeural10;
+
+        @include paragraph(2);
+    }
+
+    &_error,
+    &_error:focus,
+    &_error:hover:not(:focus) {
+        border-color: $accentRed;
+    }
+
+    &_size {
+        &-sm {
+            padding: 3px 5px;
+            border-radius: 6px;
+
+            &+svg {
+                right: 6px;
+            }
+        }
+
+        &-md {
+            padding: 7px 11px;
+            border-radius: 8px;
+
+            &+svg {
+                right: 12px;
+            }
+        }
+
+        &-lg {
+            padding: 10px 15px;
+            border-radius: 10px;
+            @include paragraph(2);
+
+            &+svg {
+                right: 12px;
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        &-xl {
+            padding: 21px 22.5px;
+            border-radius: 16px;
+            font-family: $headlineFont;
+            font-size: 27px;
+            font-weight: 500;
+            line-height: 36px;
+            letter-spacing: -0.01px;
+
+            &+svg {
+                right: 24px;
+                width: 32px;
+                height: 32px;
+            }
+        }
+    }
+
+    &__caption {
+        position: absolute;
+        bottom: 0;
+        transform: translateY(100%);
+        @include caption;
+        color: $accentRed;
+    }
+
+    &_select {
+        cursor: pointer;
+
+        &+svg {
+            cursor: pointer;
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+
+            &+svg {
+                cursor: not-allowed;
+            }
+
+            &:hover {
+                border-color: $neuralNeural6;
+            }
+        }
+    }
+}
+
+.checkbox-input {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+
+    &__input {
+        border-radius: 3px;
+        margin: 11px 0;
+        margin-right: 8px;
+        border: 1.5px solid $neuralNeural10;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+
+        &:checked {
+            background-color: $functionalBlue;
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    &__label {
+        @include paragraph(2);
+        color: $neuralNeural8;
+    }
+}
+
+.radio-group {
+    margin-right: 8px;
+    cursor: pointer;
+
+    @include paragraph(3);
+
+    input[type=radio] {
+        position: relative;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        border: 1px solid $functionalBlack;
+        color: $functionalBlue;
+        cursor: pointer;
+
+        &:checked {
+            border-color: $functionalBlue;
+            border-width: 2px;
+            background-color: $functionalWhite;
+
+            &::after {
+                content: '';
+                width: 8px;
+                height: 8px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                background-color: $functionalBlue;
+            }
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    label {
+        padding-left: 8px;
+        cursor: pointer;
+    }
+}
+
+.rating-input {
+    display: flex;
+    gap: 16px;
+    padding: 4px 0;
+
+    &__star {
+        cursor: pointer;
+
+        &_active {
+            path {
+                fill: #FFCE00;
+            }
+        }
+    }
+}

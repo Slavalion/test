@@ -1,0 +1,204 @@
+.modal {
+    &__wrapper {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        width: 600px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #ffffff;
+        border-radius: 24px;
+        box-shadow: 0px 12px 24px 0px $modalShadow;
+
+        &_slide {
+            display: flex;
+            flex-direction: column;
+            top: 0;
+            right: 0;
+            left: auto;
+            // left: 280px;
+
+            width: 1078px;
+            max-width: 1150px;
+            border-radius: 0;
+            border-bottom-left-radius: 12px;
+        }
+
+        &_slide-review {
+            display: flex;
+            flex-direction: column;
+            top: 0;
+            right: 0;
+            left: auto;
+            // left: 280px;
+
+            width: 1160px;
+            max-width: 1160px;
+            border-radius: 0;
+            border-bottom-left-radius: 12px;
+        }
+
+        &_size {
+            &-lg {
+                width: 1160px;
+                max-width: 1160px;
+            }
+        }
+
+        &_w-480 {
+            width: 480px;
+            max-width: 480px;
+        }
+    }
+
+    &__header {
+        padding: 36px;
+        border-bottom: 1px solid $neuralNeural4;
+
+        &-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        &-title {
+            display: flex;
+            align-items: center;
+            color: $neuralNeural10;
+
+            @include header(2);
+        }
+
+        &-close {
+            margin-left: auto;
+
+            &>.btn {
+                padding-top: 9px;
+                padding-bottom: 9px;
+            }
+        }
+
+        &-caption {
+            min-height: 28px;
+            margin-top: 12px;
+            color: $neuralNeural8;
+
+            @include paragraph(2);
+        }
+
+        &_noborder {
+            border-bottom: none;
+        }
+
+        &_pbsm {
+            padding-bottom: 12px;
+        }
+    }
+
+    &__body {
+        padding: 36px;
+        flex-grow: 1;
+        overflow: auto;
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: $neuralNeural6;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 20px;
+            background-color: $functionalBlue;
+        }
+
+        &_nopadding {
+            padding: 0;
+
+            &-top {
+                padding-top: 0;
+            }
+        }
+
+        &_generator {
+            max-height: calc(100vh - 290px);
+        }
+    }
+
+    &__footer {
+        padding: 36px;
+        border-top: 1px solid $neuralNeural4;
+
+        &-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+    }
+
+    &__loading-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 17;
+    }
+}
+
+.fillup-modal {
+    &__icons {
+        margin-bottom: 24px;
+        height: 36px;
+    }
+
+    &__input {
+        margin-bottom: 24px;
+    }
+
+    &__fill-buttons {
+        display: flex;
+        gap: 12px;
+
+        &>.btn {
+            white-space: nowrap;
+            flex: 1 1 0;
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+    }
+}
+
+.qrcode-modal {
+    &__header {
+        margin-bottom: 12px;
+
+        @include paragraph(2);
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 240px;
+            height: 240px;
+            margin-bottom: 22px;
+        }
+
+        span {
+            color: $neuralNeural10;
+            text-align: center;
+
+            @include header(1);
+        }
+    }
+}

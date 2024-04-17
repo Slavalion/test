@@ -1,0 +1,54 @@
+.label {
+    display: flex;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 6px;
+    background-color: $neuralNeural2;
+    color: $neuralNeural10;
+    white-space: nowrap;
+
+    @include header(6);
+
+    svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    &_theme {
+        &-info {
+            color: $functionalBlue;
+            background: $functionalBlue10;
+
+            svg path {
+                stroke: $functionalBlue;
+            }
+        }
+
+        &-danger {
+            color: $accentRed;
+            background-color: $accentRed10;
+
+            svg path {
+                stroke: $accentRed;
+            }
+        }
+
+        &-warning {
+            color: $accentYellow;
+            background-color: $accentYellow10;
+
+            svg path {
+                stroke: $accentYellow;
+            }
+        }
+
+        &-success {
+            color: $accentGreen;
+            background-color: $accentGreen10;
+
+            svg path {
+                stroke: $accentGreen;
+            }
+        }
+    }
+}

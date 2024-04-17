@@ -1,0 +1,78 @@
+.menu {
+    &__section {
+        margin-top: 10px;
+        margin-bottom: 6px;
+        color: $neuralNeural10;
+
+        @include header(6);
+
+        &:first-child {
+            margin-top: 12px;
+        }
+    }
+
+    &__link {
+        position: relative;
+        height: 40px;
+        margin-bottom: 3px;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.22px;
+        padding: 9px 12px;
+        border-radius: 10px;
+        border: 1.5px solid $functionalWhite;
+        background-color: $functionalWhite;
+        transition: all ease-in-out .2s;
+        color: $neuralNeural8;
+        display: flex;
+        gap: 8px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+
+            path {
+                stroke: $neuralNeural8;
+            }
+        }
+
+        &:hover:not(.menu__link_active) {
+            background-color: $neuralNeural4;
+            border-color: $neuralNeural4;
+            color: $neuralNeural10;
+
+            svg {
+                path {
+                    stroke: $neuralNeural10;
+                }
+            }
+        }
+
+        &-counter {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            height: 20px;
+            min-width: 20px;
+            border-radius: 10px;
+            color: $functionalWhite;
+            background-color: $functionalBlue;
+            text-align: center;
+            padding: 0 5px;
+
+            @include paragraph(3);
+        }
+
+        &_active {
+            border-color: transparent;
+            color: $functionalBlue;
+            background-color: $functionalBlue10;
+
+            svg {
+                path {
+                    stroke: $functionalBlue;
+                }
+            }
+        }
+    }
+}

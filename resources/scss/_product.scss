@@ -1,0 +1,312 @@
+.products-header {
+    display: flex;
+    border-bottom: 1px solid $neuralNeural4;
+    gap: 6px;
+    padding-bottom: 12px;
+    align-items: center;
+
+    @include header(6);
+
+    &_slide {
+        margin-left: -36px;
+        margin-right: -36px;
+        padding-top: 6px;
+        padding-bottom: 18px;
+        padding-left: 36px;
+        padding-right: 36px;
+
+        .products-header {
+            &__product {
+                flex: 0 0 152px;
+            }
+
+            &__code {
+                flex: 0 0 96px;
+            }
+
+            &__quantity {
+                flex: 0 0 98px;
+            }
+
+            &__gender {
+                flex: 0 0 76px;
+            }
+
+            &__size {
+                flex: 0 0 76px;
+            }
+
+            &__keywords {
+                flex: 0 0 140px;
+            }
+
+            &__purchase-at {
+                flex: 0 0 140px;
+            }
+
+            &__address {
+                display: flex;
+                align-items: center;
+                flex-grow: 1;
+            }
+        }
+    }
+
+    &_deliveries {
+        .products-header {
+            &__product {
+                flex: 0 0 22.9007633587786%;
+            }
+
+            &__code {
+                flex: 0 0 9.2557251908396%;
+            }
+
+            &__quantity {
+                flex: 0 0 5.43893129770992366%;
+            }
+
+            &__gender {
+                flex: 0 0 4.38931297709923664%;
+            }
+
+            &__size {
+                flex: 0 0 6.10687022900763358778%;
+            }
+
+            &__keywords {
+                flex: 0 0 13.358778625954198%;
+            }
+
+            &__review {
+                flex: 0 0 31%;
+            }
+
+            &__address {
+                display: flex;
+                align-items: center;
+                flex-grow: 1;
+            }
+        }
+    }
+
+}
+
+.product {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 0;
+    border-top: 1px solid $neuralNeural4;
+
+    &:first-child {
+        border: none;
+    }
+
+    &__image {
+        padding-right: 6px;
+        width: 30px;
+        height: 40px;
+        flex: 0 0 36px;
+
+        img {
+            width: 30px;
+            height: 40px;
+            border-radius: 4px;
+        }
+    }
+
+    &__info {
+        padding-right: 18px;
+        overflow: hidden;
+
+        &-title {
+            @include paragraph(3);
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: $neuralNeural8;
+        }
+
+        &-price {
+            @include paragraph(3);
+            color: $neuralNeural10;
+        }
+    }
+
+    &__code {
+        @include paragraph(3);
+        color: $functionalBlue;
+    }
+
+    &__address {
+        // width: 120px;
+        // display: flex;
+        max-width: 100%;
+        overflow: hidden;
+
+        &>div {
+            align-items: center;
+            display: flex;
+            max-width: 100%;
+        }
+
+        .trancated {
+            @include paragraph(3);
+
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-right: auto;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: 6px;
+    }
+}
+
+.product-list {
+    &_slide {
+        .product {
+            &__image {
+                flex: 0 0 36px;
+            }
+
+            &__info {
+                flex: 0 0 110px;
+            }
+
+            &__code {
+                flex: 0 0 96px;
+            }
+
+            &__quantity {
+                flex: 0 0 98px;
+            }
+
+            &__keywords {
+                flex: 0 0 140px;
+            }
+
+            &__gender {
+                flex: 0 0 76px;
+            }
+
+            &__size {
+                flex: 0 0 76px;
+            }
+
+            &__date {
+                flex: 0 0 140px;
+            }
+
+            &__address {
+                flex-grow: 1;
+            }
+
+            &__actions {
+                flex: 0 0 62px;
+            }
+        }
+    }
+
+    &_deliveries {
+        .product {
+            &:last-child {
+                padding-bottom: 0;
+            }
+
+            &__product {
+                display: flex;
+                flex: 0 0 22.9007633587786%;
+                max-width: 22.9007633587786%;
+            }
+
+            &__code {
+                flex: 0 0 9.2557251908396%;
+            }
+
+            &__quantity {
+                flex: 0 0 5.43893129770992366%;
+                @include paragraph(3);
+            }
+
+            &__gender {
+                flex: 0 0 4.38931297709923664%;
+                @include paragraph(3);
+            }
+
+            &__size {
+                flex: 0 0 6.1068702290076335%;
+                @include paragraph(3);
+            }
+
+            &__keywords {
+                flex: 0 0 13.358778625954198%;
+                @include paragraph(3);
+            }
+
+            &__review {
+                flex: 0 0 31%;
+                @include paragraph(3);
+            }
+
+            &__address {
+                // flex: 0 0 23.85496183206106%;
+                flex-grow: 1;
+                @include paragraph(3);
+            }
+
+            &__actions {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                // flex-grow: 1;
+            }
+        }
+    }
+}
+
+.product-mini {
+    display: flex;
+    max-width: 240px;
+
+    &__image {
+        padding-right: 6px;
+        width: 30px;
+        height: 40px;
+        flex: 0 0 36px;
+
+        img {
+            width: 30px;
+            height: 40px;
+            border-radius: 4px;
+        }
+    }
+
+    &__info {
+        padding-right: 18px;
+        overflow: hidden;
+        text-align: left;
+
+        &-title {
+            @include paragraph(3);
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: $neuralNeural8;
+        }
+
+        &-price {
+            @include paragraph(3);
+            color: $neuralNeural10;
+        }
+    }
+}

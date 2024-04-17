@@ -1,0 +1,241 @@
+.btn {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid $functionalBlue;
+    border-radius: 8px;
+    padding: 7px 11px;
+    background-color: $functionalBlue;
+    color: #ffffff;
+    transition: .2s;
+    user-select: none;
+
+    @include paragraph(3);
+
+    svg {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        width: 16px;
+        height: 16px;
+
+        path {
+            stroke: #ffffff;
+        }
+    }
+
+    &:hover {
+        background-color: $functionalBlueMedium;
+        border-color: $functionalBlueMedium;
+    }
+
+    &:disabled {
+        background-color: $neuralNeural4;
+        border-color: $neuralNeural4;
+        cursor: not-allowed;
+    }
+
+    &_fillwidth {
+        width: 100%;
+    }
+
+    &_size {
+        &-sm {
+            border-radius: 6px;
+            padding: 4px 6px;
+
+            @include paragraph(3);
+
+            svg {
+                margin-top: 2px;
+                margin-bottom: 2px;
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        &-lg {
+            border-radius: 10px;
+            padding: 10px 15px;
+            line-height: 30px;
+
+            @include paragraph(2);
+
+            svg {
+                margin-top: 1px;
+                margin-bottom: 1px;
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+
+    &_theme {
+        &-normal {
+            background-color: #ffffff;
+            color: $neuralNeural10;
+            border-color: transparent;
+
+            svg {
+                path {
+                    stroke: $neuralNeural10;
+                }
+            }
+
+            &.btn_selected {
+                background-color: $functionalBlue10;
+                border-color: $functionalBlue10;
+                color: $functionalBlue;
+            }
+
+            &:hover {
+                color: $neuralNeural10;
+                background-color: $neuralNeural4;
+                border-color: $neuralNeural4;
+
+                svg {
+                    path {
+                        stroke: $neuralNeural10;
+                    }
+                }
+            }
+
+            &:disabled {
+                color: $neuralNeural4;
+                background-color: $functionalWhite;
+                border-color: $functionalWhite;
+
+                &:hover {
+                    border-color: transparent;
+                }
+
+                svg {
+                    path {
+                        stroke: $neuralNeural4;
+                    }
+                }
+            }
+        }
+
+        &-outline {
+            background-color: #ffffff;
+            border: 1px solid $functionalBlue;
+            color: $functionalBlue;
+
+            svg {
+                path {
+                    stroke: $functionalBlue;
+                }
+            }
+
+            &.btn_selected {
+                background-color: $functionalBlue10;
+                color: $functionalBlue;
+            }
+
+            &:hover {
+                color: $functionalBlueMedium;
+                border-color: $functionalBlueMedium;
+                background-color: #fff;
+
+                svg {
+                    path {
+                        stroke: $functionalBlueMedium;
+                    }
+                }
+            }
+
+            &:disabled {
+                color: $neuralNeural4;
+                background-color: #fff;
+                border-color: $neuralNeural4;
+
+                svg {
+                    path {
+                        stroke: $neuralNeural4;
+                    }
+                }
+            }
+        }
+
+        &-danger {
+            background-color: #ffffff;
+            color: $functionalRed;
+            border-color: transparent;
+
+            svg {
+                path {
+                    stroke: $functionalRed;
+                }
+            }
+
+            &.btn_selected {
+                background-color: $accentRed10;
+            }
+
+            &:hover {
+                color: $functionalRed;
+                background-color: $neuralNeural4;
+                border-color: $neuralNeural4;
+
+                svg {
+                    path {
+                        stroke: $functionalRed;
+                    }
+                }
+            }
+
+            &:disabled {
+                color: $functionalRed;
+                background-color: $functionalWhite;
+                border-color: $functionalWhite;
+
+                &:hover {
+                    border-color: transparent;
+                }
+
+                svg {
+                    path {
+                        stroke: $functionalRed;
+                    }
+                }
+            }
+        }
+
+        &-oldanger {
+            background-color: #ffffff;
+            color: $functionalRed;
+            border-color: $functionalRed;
+
+            svg {
+                path {
+                    stroke: $functionalRed;
+                }
+            }
+
+            &:hover {
+                color: $functionalRed;
+                border-color: $functionalRed;
+                background-color: #fff;
+
+                svg {
+                    path {
+                        stroke: $functionalRed;
+                    }
+                }
+            }
+
+            &:disabled {
+                color: $neuralNeural4;
+                background-color: #fff;
+                border-color: $neuralNeural4;
+
+                svg {
+                    path {
+                        stroke: $neuralNeural4;
+                    }
+                }
+            }
+        }
+
+    }
+}
