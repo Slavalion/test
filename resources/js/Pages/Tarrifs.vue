@@ -1,7 +1,9 @@
 <script setup>
 import { Head } from '@inertiajs/vue3'
+import TarrifeCard from '@/Components/Partials/TarrifeCard.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import AppButton from '@/Components/AppButton.vue'
+
 import { reactive, ref } from 'vue'
 import AppIcon from '@/Components/AppIcon.vue'
 
@@ -63,29 +65,9 @@ const actualSection = reactive(
         </div>    
 
         <div  class="container flex flex-row">
-            <div class="tarifCard" v-for="tarrif in tarrifsItems.filter(tarrif => tarrif.task_type === currentSection)">
-                <h6>{{ tarrif.type }}</h6>
-                <p>{{ tarrif.task_type }}</p>
+            <div class="tarifCard" v-for="(tarrif, index) in tarrifsItems.filter(tarrif => tarrif.task_type === currentSection)">
+                <TarrifeCard :tarrif="tarrif" :keyID="index"/>
             </div>
-            
-            
-            <!-- <divcursor-pointer flex justify-between i
-                class="tems-center select-none"
-                @click="faq.collapsed = !faq.collapsed"
-            >
-                <span>{{ faq.type }}</span>
-                <div :class="{ 'rotate-180': !faq.collapsed }" class="transition-all">
-                    <AppIcon icon="chevron-down" />
-                </div>
-            </div>
-            <Transition>
-                <div v-show="!faq.collapsed" class="pt-6">
-                    <div v-html="faq.video" class="flex justify-center"></div>
-                    <div v-if="faq.content" class="pt-6">
-                        {{ faq.content }}
-                    </div>
-                </div>
-            </Transition> -->
         </div>
      </AuthenticatedLayout>
 </template>
