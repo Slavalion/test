@@ -85,12 +85,11 @@ const actualSection = reactive(
 
 .container{
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid; 
+    grid-template-columns:  1fr 1fr 1fr;  
+    grid-template-rows: 250px; 
+    gap: 16px;
 }
 
-.tarifCard{
-    width: 30%;
-}
+
 </style>

@@ -18,3 +18,18 @@ watch(props, () => {
     </div>
 
 </template>
+
+<style scoped lang="scss">
+.tarrife-card{
+    min-width: 254px;
+    min-height: 260px;
+    padding: 24px;
+    background-color: #FFFFFF;
+    border: 0.5px solid #E7EAF0;
+    border-radius: 16px;
+
+    flex-grow: 1; 
+}
+
+
+</style>
