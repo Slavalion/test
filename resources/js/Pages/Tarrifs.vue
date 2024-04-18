@@ -12,7 +12,6 @@ const props = defineProps({
     },
 })
 
-const sections = ref(['purchase'])
 const currentSection = ref ('purchase')
 
 const setSection = (section) => {
@@ -50,37 +49,28 @@ const actualSection = reactive(
     <AuthenticatedLayout>
         <template #header>Тарифы</template>
 
-        <div>{{ actualSection[0] }}</div>
-
         <div class="panel mb-6">
-            <div class="flex gap-1.5">
+            <div class="flex flex-row gap-1.5" >
                 <AppButton
+                    v-for="section in actualSection"
                     theme="normal"
-                    :class="{ btn_selected: null == currentSection }"
-                    @click="setSection('')"
+                    :class="{ btn_selected: section == currentSection }"
+                    @click="setSection(section)"
                 >
-                    Доступные
-                </AppButton>
-                <AppButton
-                    theme="normal"
-                    :class="{ btn_selected: 'processing' == currentSection }"
-                    @click="setSection('processing')"
-                >
-                    В работе
-                </AppButton>
-                <AppButton
-                    theme="normal"
-                    :class="{ btn_selected: 'done' == currentSection }"
-                    @click="setSection('done')"
-                >
-                    Опубликованные
+                    {{ section}}
                 </AppButton>
             </div>
         </div>    
 
-        <div v-for="faq in tarrifsItems" class="panel panel_p-lg mb-6">
-            <div
-                class="cursor-pointer flex justify-between items-center select-none"
+        <div  class="container flex flex-row">
+            <div class="tarifCard" v-for="tarrif in tarrifsItems.filter(tarrif => tarrif.task_type === currentSection)">
+                <h6>{{ tarrif.type }}</h6>
+                <p>{{ tarrif.task_type }}</p>
+            </div>
+            
+            
+            <!-- <divcursor-pointer flex justify-between i
+                class="tems-center select-none"
                 @click="faq.collapsed = !faq.collapsed"
             >
                 <span>{{ faq.type }}</span>
@@ -95,11 +85,11 @@ const actualSection = reactive(
                         {{ faq.content }}
                     </div>
                 </div>
-            </Transition>
+            </Transition> -->
         </div>
      </AuthenticatedLayout>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 /* we will explain what these classes do next! */
 .v-enter-active,
 .v-leave-active {
@@ -109,5 +99,16 @@ const actualSection = reactive(
 .v-enter-from,
 .v-leave-to {
     opacity: 0;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.tarifCard{
+    width: 30%;
 }
 </style>
