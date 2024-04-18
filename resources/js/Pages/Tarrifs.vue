@@ -6,14 +6,15 @@ import { reactive } from 'vue'
 import AppIcon from '@/Components/AppIcon.vue'
 
 const props = defineProps({
-    faqs: {
+    tarrifs: {
         type: Array,
         required: true,
     },
 })
 
 const faqItems = reactive(
-    props.faqs.reduce((acc, curVal) => {
+    props.tarrifs.reduce((acc, curVal) => {
+        console.log(curVal);
         return [
             ...acc,
             {
@@ -25,10 +26,10 @@ const faqItems = reactive(
 )
 </script>
 <template>
-    <Head title="FAQ" />
+    <Head title="Tarrifs" />
 
     <AuthenticatedLayout>
-        <template #header> FAQ </template>
+        <template #header> Tarrifs </template>
 
         <div v-for="faq in faqItems" class="panel panel_p-lg mb-6">
             <div

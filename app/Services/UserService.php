@@ -34,7 +34,7 @@ class UserService
             ];
         });
 
-        $prices = $prices->merge($userPrices->mapWithKeys(function ($el) {
+        $prices = $prices->toBase()->merge($userPrices->mapWithKeys(function ($el) {
             $priceType = $el->type->value;
 
             return [
