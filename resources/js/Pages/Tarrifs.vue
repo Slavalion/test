@@ -14,7 +14,7 @@ const props = defineProps({
     },
 })
 
-const currentSection = ref ('purchase')
+const currentSection = ref('purchase')
 
 const setSection = (section) => {
     currentSection.value = section
@@ -23,7 +23,7 @@ const setSection = (section) => {
 const tarrifsItems = reactive(
     props.tarrifs.reduce((acc, curVal) => {
         // !sections.value.includes(curVal.task_type) ? setSection([...sections.value, curVal.task_type]) :console.log(curVal.task_type)
-        
+
         return [
             ...acc,
             {
@@ -37,13 +37,11 @@ const tarrifsItems = reactive(
 const actualSection = reactive(
     tarrifsItems.reduce((acc, curVal) => {
         if (acc.includes(curVal.task_type)) {
-    return acc; // если значение уже есть, то просто возвращаем аккумулятор
-  }
-  return [...acc, curVal.task_type];
-
-}, [])
+            return acc // если значение уже есть, то просто возвращаем аккумулятор
+        }
+        return [...acc, curVal.task_type]
+    }, [])
 )
-
 </script>
 <template>
     <Head title="Tarrifs" />
@@ -52,24 +50,29 @@ const actualSection = reactive(
         <template #header>Тарифы</template>
 
         <div class="panel mb-6">
-            <div class="flex flex-row gap-1.5" >
+            <div class="flex flex-row gap-1.5">
                 <AppButton
                     v-for="section in actualSection"
                     theme="normal"
                     :class="{ btn_selected: section == currentSection }"
                     @click="setSection(section)"
                 >
-                    {{ section}}
+                    {{ $t(section + 'Title') }}
                 </AppButton>
             </div>
-        </div>    
+        </div>
 
-        <div  class="container flex flex-row">
-            <div class="tarifCard" v-for="(tarrif, index) in tarrifsItems.filter(tarrif => tarrif.task_type === currentSection)">
-                <TarrifeCard :tarrif="tarrif" :keyID="index"/>
+        <div class="container flex flex-row">
+            <div
+                class="tarifCard"
+                v-for="(tarrif, index) in tarrifsItems.filter(
+                    (tarrif) => tarrif.task_type === currentSection
+                )"
+            >
+                <TarrifeCard :tarrif="tarrif" :keyID="index" />
             </div>
         </div>
-     </AuthenticatedLayout>
+    </AuthenticatedLayout>
 </template>
 <style lang="scss" scoped>
 /* we will explain what these classes do next! */
@@ -83,13 +86,23 @@ const actualSection = reactive(
     opacity: 0;
 }
 
-.container{
+.container {
     width: 100%;
-    display: grid; 
-    grid-template-columns:  1fr 1fr 1fr;  
-    grid-template-rows: 250px; 
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 260px;
     gap: 16px;
 }
 
+@media (max-width: 1000px) {
+    .container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
 
+@media (max-width: 750px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}
 </style>

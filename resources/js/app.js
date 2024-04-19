@@ -5,7 +5,7 @@ import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'
-
+import { i18nVue } from 'laravel-vue-i18n';
 import Toast from 'vue-toastification'
 
 const toastOptions = {
@@ -23,6 +23,12 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(Toast, toastOptions)
+            .use(i18nVue, { 
+                resolve: async lang => {
+                    const langs = import.meta.glob('../../lang/*.json');
+                        return await langs[`../../lang/${lang}.json`]();
+                }
+            })
             .mount(el)
     },
     progress: {

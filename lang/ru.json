@@ -70,5 +70,17 @@
     "Whoops!": "Упс!",
     "You are receiving this email because we received a password reset request for your account.": "Вы получили это письмо, потому что мы получили запрос на сброс пароля для Вашей учётной записи.",
     "You're logged in!": "Вы уже вошли.",
-    "Your email address is unverified.": "Ваш адрес электронной почты не подтверждён."
+    "Your email address is unverified.": "Ваш адрес электронной почты не подтверждён.",
+    "base": "Базовый",
+    "advanced": "Продвинутый",
+    "pac300": "Пакет 300",
+    "pac500": "Пакет 500",
+    "profi": "Профессиональный",
+    "smart": "Думающий",
+    "purchase": "выкупов",
+    "review": "отзывов",
+    "question": "вопросов",
+    "purchaseTitle": "Выкупы",
+    "reviewTitle": "Отзывы",
+    "questionTitle": "Вопросы"
 }
