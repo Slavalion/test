@@ -64,7 +64,7 @@ const actualSection = reactive(
                     (tarrif) => tarrif.task_type === currentSection
                 )"
             >
-                <TarrifeCard :tarrif="tarrif" :keyID="index" />
+                <TarrifeCard :tariff="tarrif" :keyID="index" />
             </div>
         </div>
     </AuthenticatedLayout>
