@@ -8,7 +8,7 @@ import { reactive, ref } from 'vue'
 import AppIcon from '@/Components/AppIcon.vue'
 
 const props = defineProps({
-    tarrifs: {
+    tariffs: {
         type: Array,
         required: true,
     },
@@ -20,22 +20,19 @@ const setSection = (section) => {
     currentSection.value = section
 }
 
-const tarrifsItems = reactive(
-    props.tarrifs.reduce((acc, curVal) => {
-        // !sections.value.includes(curVal.task_type) ? setSection([...sections.value, curVal.task_type]) :console.log(curVal.task_type)
-
+const tariffsItems = reactive(
+    props.tariffs.reduce((acc, curVal) => {
         return [
             ...acc,
             {
                 ...curVal,
-                collapsed: true,
             },
         ]
     }, [])
 )
 
 const actualSection = reactive(
-    tarrifsItems.reduce((acc, curVal) => {
+    tariffsItems.reduce((acc, curVal) => {
         if (acc.includes(curVal.task_type)) {
             return acc // если значение уже есть, то просто возвращаем аккумулятор
         }
@@ -44,7 +41,7 @@ const actualSection = reactive(
 )
 </script>
 <template>
-    <Head title="Tarrifs" />
+    <Head title="Tariffs" />
 
     <AuthenticatedLayout>
         <template #header>Тарифы</template>
@@ -65,7 +62,7 @@ const actualSection = reactive(
         <div class="container flex flex-row">
             <div
                 class="tarifCard"
-                v-for="(tarrif, index) in tarrifsItems.filter(
+                v-for="(tarrif, index) in tariffsItems.filter(
                     (tarrif) => tarrif.task_type === currentSection
                 )"
             >

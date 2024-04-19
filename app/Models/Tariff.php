@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon             $created_at
  * @property \Carbon\Carbon             $updated_at
  */
-class Tarrif extends Model
+class Tariff extends Model
 {
     use HasFactory;
 
