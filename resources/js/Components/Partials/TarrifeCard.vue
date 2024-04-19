@@ -24,9 +24,10 @@ watch(props, () => {
         </div>
 
         <div>
-            <div>
-                <p>{{ props.tarrif.quantity }} {{ $t(props.tarrif.task_type) }}</p>
-                <p>{{ props.tarrif.task_type }}</p>
+            <div class="tarrife-card__info">
+                <h1>{{ props.tarrif.quantity }} {{ $t(props.tarrif.task_type) }}</h1>
+                <h5>{{ props.tarrif.price_single }}&#8381; за штуку</h5>
+                <h5>{{ +props.tarrif.price_single * +props.tarrif.quantity }}&#8381; в месяц</h5>
             </div>
 
             <div class="tarrife-card__buyIt">
@@ -43,27 +44,4 @@ watch(props, () => {
     </div>
 </template>
 
-<style scoped lang="scss">
-.tarrife-card {
-    min-width: 254px;
-    min-height: 260px;
-    padding: 24px;
-    background-color: #ffffff;
-    border: 0.5px solid #e7eaf0;
-    border-radius: 16px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    &__blueCard {
-        background-color: #1665ff;
-        color: white;
-    }
-
-    &__darkCard {
-        background-color: #283b62;
-        color: white;
-    }
-}
-</style>
+<style scoped lang="scss"></style>

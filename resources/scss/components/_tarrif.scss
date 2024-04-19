@@ -1,0 +1,52 @@
+.tarrife-card {
+    min-width: 254px;
+    min-height: 260px;
+    padding: 24px;
+    background-color: $functionalWhite;
+    border: 0.5px solid $neuralNeural4;
+    border-radius: 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__info {
+        margin-bottom: 16px;
+
+        h1 {
+            font-size: 35px;
+            line-height: 48px;
+            letter-spacing: -0.2px;
+            font-weight: 600;
+        }
+        h5 {
+            font-size: 15px;
+            line-height: 22px;
+            letter-spacing: -0.02px;
+            font-weight: 400;
+            color: $neuralNeural8;
+        }
+    }
+
+    &__blueCard {
+        background-color: $functionalBlue;
+        color: $functionalWhite;
+
+        .tarrife-card__info {
+            h5 {
+                color: $neuralNeural6;
+            }
+        }
+    }
+
+    &__darkCard {
+        background-color: $functionalBlueDark;
+        color: $functionalWhite;
+
+        .tarrife-card__info {
+            h5 {
+                color: $neuralNeural6;
+            }
+        }
+    }
+}
