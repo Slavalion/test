@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TarrifsSeeder extends Seeder
+class TariffsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class TarrifsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('tarrifs')->insert($this->getData());
+        DB::table('tariffs')->insert($this->getData());
     }
 
 

@@ -1,11 +1,9 @@
 <script setup>
+import { reactive, ref } from 'vue'
 import { Head } from '@inertiajs/vue3'
 import TarrifeCard from '@/Components/Partials/TarrifeCard.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import AppButton from '@/Components/AppButton.vue'
-
-import { reactive, ref } from 'vue'
-import AppIcon from '@/Components/AppIcon.vue'
 
 const props = defineProps({
     tariffs: {
@@ -34,7 +32,7 @@ const tariffsItems = reactive(
 const actualSection = reactive(
     tariffsItems.reduce((acc, curVal) => {
         if (acc.includes(curVal.task_type)) {
-            return acc // если значение уже есть, то просто возвращаем аккумулятор
+            return acc
         }
         return [...acc, curVal.task_type]
     }, [])

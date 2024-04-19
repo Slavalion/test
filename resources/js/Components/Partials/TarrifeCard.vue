@@ -1,39 +1,39 @@
 <script setup>
-import { watch, computed } from 'vue'
+import { computed } from 'vue'
 import AppButton from '@/Components/AppButton.vue'
 import { fillUpBalance } from '@/modals'
 
-const props = defineProps(['tarrif', 'keyID'])
+const props = defineProps(['tariff', 'keyID'])
 
 const formatter = new Intl.NumberFormat('ru-RU')
 
 const oldSum = computed(() => {
-    return formatter.format(Math.round(+props.tarrif.price_old * +props.tarrif.quantity))
+    return formatter.format(Math.round(+props.tariff.price_old * +props.tariff.quantity))
 })
 
 const newSum = computed(() => {
-    return formatter.format(Math.round(+props.tarrif.price_single * +props.tarrif.quantity))
+    return formatter.format(Math.round(+props.tariff.price_single * +props.tariff.quantity))
 })
 </script>
 <template>
     <div
         :class="
             props.keyID === 1
-                ? 'tarrife-card tarrife-card__blueCard'
+                ? 'tariffe-card tariffe-card__blueCard'
                 : props.keyID === 5
-                  ? 'tarrife-card tarrife-card__darkCard'
-                  : 'tarrife-card '
+                  ? 'tariffe-card tariffe-card__darkCard'
+                  : 'tariffe-card '
         "
     >
         <div>
-            <h4>{{ $t(props.tarrif.type) }}</h4>
+            <h4>{{ $t(props.tariff.type) }}</h4>
         </div>
 
         <div>
-            <div class="tarrife-card__info">
-                <h1>{{ props.tarrif.quantity }} {{ $t(props.tarrif.task_type) }}</h1>
-                <h5>{{ props.tarrif.price_old }}&#8381; за штуку</h5>
-                <h5 v-if="+props.tarrif.price_old > +props.tarrif.price_single">
+            <div class="tariffe-card__info">
+                <h1>{{ props.tariff.quantity }} {{ $t(props.tariff.task_type) }}</h1>
+                <h5>{{ props.tariff.price_old }}&#8381; за штуку</h5>
+                <h5 v-if="+props.tariff.price_old > +props.tariff.price_single">
                     <span class="oldSum">
                         {{ oldSum }}
                     </span>
@@ -43,7 +43,7 @@ const newSum = computed(() => {
                 <h5 v-else>{{ newSum }} &#8381; в месяц</h5>
             </div>
 
-            <div class="tarrife-card__buyIt">
+            <div class="tariffe-card__buyIt">
                 <AppButton
                     :theme="props.keyID === 1 || props.keyID === 5 ? 'outline' : 'active'"
                     fillwidth
