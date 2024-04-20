@@ -32,11 +32,11 @@ export default {
                     icon: 'message',
                     counter: ref(0),
                 },
-                // questions: {
-                //     title: 'Вопросы',
-                //     route: 'question',
-                //     icon: 'question',
-                // },
+                questions: {
+                    title: 'Вопросы',
+                    route: 'question',
+                    icon: 'question',
+                },
                 reviewReactions: {
                     title: 'Реакции на отзывы',
                     route: 'review-reactions',
