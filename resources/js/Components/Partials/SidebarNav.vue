@@ -83,13 +83,13 @@ const checkCondition = (condition) => {
                             <p>{{ item.counter }}</p>
                         </div>
                         <div v-if="item.route === 'wallets'" class="menu__link__alertOctagon">
-                            &nbsp;
+                            <AppIcon icon="alert-octagon" />
                         </div>
                         <div
                             v-if="item.route === 'purchase.list'"
                             class="menu__link__alertTriangle"
                         >
-                            &nbsp;
+                            <AppIcon icon="alert-triangle" />
                         </div>
                     </div>
                 </NavLink>
@@ -97,7 +97,7 @@ const checkCondition = (condition) => {
         </template>
     </nav>
 </template>
-<style lang="scss" scoped>
+<style lang="scss">
 .menu__link,
 .menu__link__title {
     display: flex;
@@ -142,12 +142,12 @@ const checkCondition = (condition) => {
         background-size: contain;
     }
 
-    &__alertOctagon {
-        background-image: url('images/alert-octagon.svg');
+    &__alertOctagon svg g path {
+        stroke: #e0281b;
     }
 
-    &__alertTriangle {
-        background-image: url('images/alert-triangle.svg');
+    &__alertTriangle svg g path {
+        stroke: #d89b00;
     }
 }
 </style>
