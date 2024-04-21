@@ -87,8 +87,9 @@ const setSection = (section) => {
 
                 <tr v-for="question in questions" :key="question" class="main-table__tr">
                     <td>
-                        <div>{{ question.product?.name }}</div>
-                        <div class="text-xs text-gray-400">
+                        <div>Описание товара</div>
+
+                        <!-- <div class="text-xs text-gray-400">
                             ID{{ question.id }} от
                             {{ dayjs(question.created_at).format('D/M/YYYY h:m') }}
                         </div>
@@ -105,49 +106,45 @@ const setSection = (section) => {
                                     </span>
                                 </div>
                             </div>
-                        </template>
+                        </template> -->
                     </td>
                     <td>
                         <div class="pr-6">
-                            {{ question.product_id }}
+                            <span class="blueText">{{ question.product_id }}</span>
                         </div>
                     </td>
                     <td>
-                        <div class="w-[234px]">
+                        <!-- <div class="w-[234px]">
                             <div>{{ question.progress }} из {{ question.total }}</div>
-                        </div>
+                        </div> -->
+                        <p>456</p>
+                    </td>
+                    <td>
+                        <p>{{ question.gender === 0 ? 'М' : 'Ж' }}</p>
+                    </td>
+                    <td>
+                        <p>XL</p>
+                    </td>
+                    <td>
+                        <p>Кроссовки</p>
+                    </td>
+                    <td>
+                        <p>10</p>
                     </td>
                     <td>
                         <div class="pl-6 flex justify-end">
-                            <LabelText v-if="question.status == 1" theme="info"
-                                >В процессе</LabelText
+                            <a
+                                class="ml-auto"
+                                :href="'/purchase/download?status=' + currentSection"
+                                target="_blank"
+                                download
                             >
-                            <LabelText v-else theme="success">Завершено</LabelText>
+                                <AppButton>Добавить вопрос</AppButton>
+                            </a>
                         </div>
                     </td>
                 </tr>
             </AppTable>
-
-            <!-- <div
-                v-for="question in questions"
-                :key="question"
-                class="bg-white shadow-sm sm:rounded-lg p-6 text-gray-900"
-            >
-                <div class="flex flex-col gap-2 leading-tight">
-                    <span class="text-xl font-medium"
-                        >Вопрос к товару №{{ question.product_id }}</span
-                    >
-                    <span class="">Дата публикации: {{ question.pub_date }}</span>
-                    <span>
-                        Статус:
-                        <span v-if="question.status == 'process'" class="text-amber-500">
-                            ожидает</span
-                        >
-                        <span v-else class="text-lime-600"> завершен</span>
-                    </span>
-                    <span class="">{{ question.question }}</span>
-                </div>
-            </div> -->
         </div>
 
         <div v-else class="panel flex flex-col grow">
@@ -309,5 +306,8 @@ const setSection = (section) => {
 }
 .center {
     text-align: center;
+}
+.blueText {
+    color: #1665ff;
 }
 </style>
