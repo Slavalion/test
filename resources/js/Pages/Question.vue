@@ -5,9 +5,14 @@ import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 //import TextInput from '@/Components/TextInput.vue'
+import EmptyState from '@/Components/EmptyState.vue'
 import TextInput from '@/Components/Inputs/TextInput.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
+import AppTable from '@/Components/AppTable.vue'
+import dayjs from 'dayjs'
+import TableTh from '@/Components/Table/TableTh.vue'
+import LabelText from '@/Components/LabelText.vue'
 
 defineProps({
     result: {
@@ -26,8 +31,6 @@ const form = useForm({
     pub_date: '',
     question: '',
 })
-
-const questions1 = []
 
 const searchVendorCode = ref('')
 
@@ -67,7 +70,85 @@ const setSection = (section) => {
             </div>
         </div>
 
-        <div v-if="questions1.length" class="panel panel_product grow">gfdgf</div>
+        <div v-if="questions.length" class="panel panel_product grow">
+            <AppTable>
+                <template #head>
+                    <tr>
+                        <TableTh class="text-left">Товар</TableTh>
+                        <TableTh class="text-left">Артикул</TableTh>
+                        <TableTh class="text-left">Кол-во</TableTh>
+                        <TableTh class="text-left">Пол</TableTh>
+                        <TableTh class="text-left">Размер</TableTh>
+                        <TableTh class="text-left">Поисковой запрос</TableTh>
+                        <TableTh class="text-left">Доступно вопросов</TableTh>
+                        <TableTh class="text-left"></TableTh>
+                    </tr>
+                </template>
+
+                <tr v-for="question in questions" :key="question" class="main-table__tr">
+                    <td>
+                        <div>{{ question.product?.name }}</div>
+                        <div class="text-xs text-gray-400">
+                            ID{{ question.id }} от
+                            {{ dayjs(question.created_at).format('D/M/YYYY h:m') }}
+                        </div>
+
+                        <template v-if="true">
+                            <div>
+                                Process:
+                                <div class="flex gap-1 flex-wrap leading-none text-gray-300">
+                                    <span
+                                        v-for="item in question.question_reactions"
+                                        :key="item.task_id"
+                                    >
+                                        {{ item.task_id }},
+                                    </span>
+                                </div>
+                            </div>
+                        </template>
+                    </td>
+                    <td>
+                        <div class="pr-6">
+                            {{ question.product_id }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w-[234px]">
+                            <div>{{ question.progress }} из {{ question.total }}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pl-6 flex justify-end">
+                            <LabelText v-if="question.status == 1" theme="info"
+                                >В процессе</LabelText
+                            >
+                            <LabelText v-else theme="success">Завершено</LabelText>
+                        </div>
+                    </td>
+                </tr>
+            </AppTable>
+
+            <!-- <div
+                v-for="question in questions"
+                :key="question"
+                class="bg-white shadow-sm sm:rounded-lg p-6 text-gray-900"
+            >
+                <div class="flex flex-col gap-2 leading-tight">
+                    <span class="text-xl font-medium"
+                        >Вопрос к товару №{{ question.product_id }}</span
+                    >
+                    <span class="">Дата публикации: {{ question.pub_date }}</span>
+                    <span>
+                        Статус:
+                        <span v-if="question.status == 'process'" class="text-amber-500">
+                            ожидает</span
+                        >
+                        <span v-else class="text-lime-600"> завершен</span>
+                    </span>
+                    <span class="">{{ question.question }}</span>
+                </div>
+            </div> -->
+        </div>
 
         <div v-else class="panel flex flex-col grow">
             <EmptyState class="grow growCenter">
@@ -184,7 +265,20 @@ const setSection = (section) => {
 
                 <div
                     v-for="question in questions"
-                    :key="question"
+                 <div class="flex flex-col gap-2 leading-tight">
+                        <span class="text-xl font-medium"
+                            >Вопрос к товару №{{ question.product_id }}</span
+                        >
+                        <span class="">Дата публикации: {{ question.pub_date }}</span>
+                        <span>
+                            Статус:
+                            <span v-if="question.status == 'process'" class="text-amber-500">
+                                ожидает</span
+                            >
+                            <span v-else class="text-lime-600"> завершен</span>
+                        </span>
+                        <span class="">{{ question.question }}</span>
+                    </div>
                     class="bg-white shadow-sm sm:rounded-lg p-6 text-gray-900"
                 >
                     <div class="flex flex-col gap-2 leading-tight">
