@@ -82,5 +82,7 @@
     "question": "вопросов",
     "purchaseTitle": "Выкупы",
     "reviewTitle": "Отзывы",
-    "questionTitle": "Вопросы"
+    "questionTitle": "Вопросы",
+    "availableTitle": "Доступные",
+    "publishedTitle": "Опубликованные"
 }

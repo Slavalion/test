@@ -1,8 +1,11 @@
 <script setup>
+import { ref } from 'vue'
+import AppButton from '@/Components/AppButton.vue'
 import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
-import TextInput from '@/Components/TextInput.vue'
+//import TextInput from '@/Components/TextInput.vue'
+import TextInput from '@/Components/Inputs/TextInput.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 
@@ -23,13 +26,44 @@ const form = useForm({
     pub_date: '',
     question: '',
 })
+
+const searchVendorCode = ref('')
+
+const currentSection = ref('available')
+
+const actualSection = ['available', 'published']
+
+const setSection = (section) => {
+    currentSection.value = section
+}
 </script>
 
 <template>
-    <Head title="Liker" />
+    <Head title="Questions" />
 
     <AuthenticatedLayout>
         <template #header>Вопросы</template>
+
+        <div class="panel mb-6">
+            <div class="flex flex-row gap-1.5">
+                <AppButton
+                    v-for="section in actualSection"
+                    theme="normal"
+                    :class="{ btn_selected: section == currentSection }"
+                    @click="setSection(section)"
+                >
+                    {{ $t(section + 'Title') }}
+                </AppButton>
+
+                <div class="ml-auto flex gap-3">
+                    <TextInput
+                        v-model="searchVendorCode"
+                        size="md"
+                        placeholder="Поиск по артикулу"
+                    />
+                </div>
+            </div>
+        </div>
 
         <div class="py-12">
             <div class="max-w-3xl mx-auto sm:px-6 lg:px-8 space-y-6">
