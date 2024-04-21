@@ -27,6 +27,8 @@ const form = useForm({
     question: '',
 })
 
+const questions1 = []
+
 const searchVendorCode = ref('')
 
 const currentSection = ref('available')
@@ -65,7 +67,19 @@ const setSection = (section) => {
             </div>
         </div>
 
-        <div class="py-12">
+        <div v-if="questions1.length" class="panel panel_product grow">gfdgf</div>
+
+        <div v-else class="panel flex flex-col grow">
+            <EmptyState class="grow growCenter">
+                <div class="flex flex-col">
+                    <div class="header-5 mb-1.5">Доступных вопросов пока нет</div>
+                    <div class="paragraph-3 center">Чтобы добавить вопрос,</div>
+                    <div class="paragraph-3 center">заберите товар из ПВЗ</div>
+                </div>
+            </EmptyState>
+        </div>
+
+        <!-- <div class="py-12">
             <div class="max-w-3xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div class="bg-white shadow-sm sm:rounded-lg p-6 text-gray-900">
                     <form @submit.prevent="form.post(route('question.add'))" class="mt-6 space-y-6">
@@ -189,6 +203,17 @@ const setSection = (section) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </AuthenticatedLayout>
 </template>
+
+<style lang="scss" scoped>
+.growCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.center {
+    text-align: center;
+}
+</style>
