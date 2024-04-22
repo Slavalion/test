@@ -46,6 +46,11 @@ const setSection = (section) => {
 
 watch(searchVendorCode, () => {
     if (searchVendorCode.value.length > 0) {
+        actualQuestions.value = props.questions.filter(
+            (question) =>
+                question.product_id.substring(0, searchVendorCode.value.length) ===
+                searchVendorCode.value
+        )
         console.log(props.questions)
         console.log(searchVendorCode.value)
     } else {
@@ -320,5 +325,29 @@ watch(searchVendorCode, () => {
 }
 .blueText {
     color: #1665ff;
+}
+thead th:nth-child(1) {
+    width: 22.14%;
+}
+thead th:nth-child(2) {
+    width: 8.86%;
+}
+thead th:nth-child(3) {
+    width: 5.17%;
+}
+thead th:nth-child(4) {
+    width: 5.17%;
+}
+thead th:nth-child(5) {
+    width: 5.17%;
+}
+thead th:nth-child(6) {
+    width: 21.49%;
+}
+thead th:nth-child(7) {
+    width: 13.1%;
+}
+thead th:nth-child(8) {
+    width: 18%;
 }
 </style>
