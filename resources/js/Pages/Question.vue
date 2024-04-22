@@ -10,6 +10,9 @@ import TextInput from '@/Components/Inputs/TextInput.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import AppTable from '@/Components/AppTable.vue'
+import { addWallet, addQuestion } from '@/modals'
+import AddWallet from '@/Modals/AddWallet.vue'
+import AddQuestion from '@/Modals/AddQuestion.vue'
 import dayjs from 'dayjs'
 import TableTh from '@/Components/Table/TableTh.vue'
 import LabelText from '@/Components/LabelText.vue'
@@ -149,14 +152,17 @@ watch(searchVendorCode, () => {
                     </td>
                     <td>
                         <div class="pl-6 flex justify-end">
-                            <a
+                            <AppButton @click="addQuestion.open(question.id)">
+                                Добавить вопрос
+                            </AppButton>
+                            <!-- <a
                                 class="ml-auto"
                                 :href="'/purchase/download?status=' + currentSection"
                                 target="_blank"
                                 download
                             >
                                 <AppButton>Добавить вопрос</AppButton>
-                            </a>
+                            </a> -->
                         </div>
                     </td>
                 </tr>
@@ -311,6 +317,10 @@ watch(searchVendorCode, () => {
                 </div>
             </div>
         </div> -->
+
+        <div>
+            <AddQuestion />
+        </div>
     </AuthenticatedLayout>
 </template>
 

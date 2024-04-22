@@ -35,6 +35,14 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    submitable: {
+        type: Boolean,
+        default: false,
+    },
+    clearable: {
+        type: Boolean,
+        default: false,
+    },
 })
 
 const emit = defineEmits(['close', 'open'])
@@ -145,9 +153,25 @@ onUnmounted(() => {
                         <div v-if="!hideFooter" class="modal__footer">
                             <div class="modal__footer-actions">
                                 <slot name="footer-logo"></slot>
-                                <AppButton size="lg" theme="normal" @click="close">
-                                    Отменить
-                                </AppButton>
+                                <div class="modal__footer-actions__right">
+                                    <AppButton size="lg" theme="normal" @click="close">
+                                        Отменить
+                                    </AppButton>
+                                    <AppButton v-if="submitable" size="lg" @click="close">
+                                        Отправить
+                                    </AppButton>
+                                </div>
+                                <div class="modal__footer-actions__left">
+                                    <AppButton
+                                        v-if="clearable"
+                                        size="lg"
+                                        theme="outline"
+                                        @click="close"
+                                    >
+                                        Очистить
+                                    </AppButton>
+                                </div>
+
                                 <slot name="actions"></slot>
                             </div>
                         </div>
@@ -157,3 +181,16 @@ onUnmounted(() => {
         </transition>
     </teleport>
 </template>
+<style lang="scss" scoped>
+.modal__footer-actions {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+
+    &__right {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 12px;
+    }
+}
+</style>

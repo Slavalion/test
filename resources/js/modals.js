@@ -185,6 +185,24 @@ export const addWallet = reactive({
     },
 })
 
+export const addQuestion = reactive({
+    show: false,
+    // walletCode: localStorage.getItem('addWallet_walletCode'),
+    close() {
+        this.show = false
+        // this.storeValue()
+    },
+    open(id) {
+        // this.walletCode = walletCode
+        this.show = true
+        // this.storeValue()
+    },
+    storeValue() {
+        localStorage.setItem('addQuestion', this.show)
+        // localStorage.setItem('addWallet_walletCode', this.walletCode)
+    },
+})
+
 export const addReview = reactive({
     // show: JSON.parse(localStorage.getItem('updateDeliveryData')) === true,
     show: false,
