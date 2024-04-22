@@ -1,22 +1,14 @@
 <script setup>
 import { ref, watch } from 'vue'
 import AppButton from '@/Components/AppButton.vue'
-import InputError from '@/Components/InputError.vue'
-import InputLabel from '@/Components/InputLabel.vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
-//import TextInput from '@/Components/TextInput.vue'
 import EmptyState from '@/Components/EmptyState.vue'
 import TextInput from '@/Components/Inputs/TextInput.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import AppTable from '@/Components/AppTable.vue'
-import { addWallet, addQuestion } from '@/modals'
-import AddWallet from '@/Modals/AddWallet.vue'
+import { addQuestion } from '@/modals'
 import AddQuestion from '@/Modals/AddQuestion.vue'
-import dayjs from 'dayjs'
 import TableTh from '@/Components/Table/TableTh.vue'
-import LabelText from '@/Components/LabelText.vue'
-import { set } from '@vueuse/core'
 
 const props = defineProps({
     result: {
@@ -90,83 +82,64 @@ watch(searchVendorCode, () => {
         </div>
 
         <div v-if="questions.length" class="panel panel_product grow">
-            <AppTable>
-                <template #head>
-                    <tr>
-                        <TableTh class="text-left">Товар</TableTh>
-                        <TableTh class="text-left">Артикул</TableTh>
-                        <TableTh class="text-left">Кол-во</TableTh>
-                        <TableTh class="text-left">Пол</TableTh>
-                        <TableTh class="text-left">Размер</TableTh>
-                        <TableTh class="text-left">Поисковой запрос</TableTh>
-                        <TableTh class="text-left">Доступно вопросов</TableTh>
-                        <TableTh class="text-left"></TableTh>
-                    </tr>
-                </template>
+            <template v-if="actualQuestions.length > 0">
+                <AppTable>
+                    <template #head>
+                        <tr>
+                            <TableTh class="text-left">Товар</TableTh>
+                            <TableTh class="text-left">Артикул</TableTh>
+                            <TableTh class="text-left">Кол-во</TableTh>
+                            <TableTh class="text-left">Пол</TableTh>
+                            <TableTh class="text-left">Размер</TableTh>
+                            <TableTh class="text-left">Поисковый запрос</TableTh>
+                            <TableTh class="text-left">Доступно вопросов</TableTh>
+                            <TableTh class="text-left"></TableTh>
+                        </tr>
+                    </template>
 
-                <tr v-for="question in actualQuestions" :key="question" class="main-table__tr">
-                    <td>
-                        <div>Описание товара</div>
-
-                        <!-- <div class="text-xs text-gray-400">
-                            ID{{ question.id }} от
-                            {{ dayjs(question.created_at).format('D/M/YYYY h:m') }}
-                        </div>
-
-                        <template v-if="true">
-                            <div>
-                                Process:
-                                <div class="flex gap-1 flex-wrap leading-none text-gray-300">
-                                    <span
-                                        v-for="item in question.question_reactions"
-                                        :key="item.task_id"
-                                    >
-                                        {{ item.task_id }},
-                                    </span>
-                                </div>
+                    <tr v-for="question in actualQuestions" :key="question" class="main-table__tr">
+                        <td>
+                            <div>Описание товара</div>
+                        </td>
+                        <td>
+                            <div class="pr-6">
+                                <span class="blueText">{{ question.product_id }}</span>
                             </div>
-                        </template> -->
-                    </td>
-                    <td>
-                        <div class="pr-6">
-                            <span class="blueText">{{ question.product_id }}</span>
+                        </td>
+                        <td>
+                            <p>456</p>
+                        </td>
+                        <td>
+                            <p>{{ question.gender === 0 ? 'М' : 'Ж' }}</p>
+                        </td>
+                        <td>
+                            <p>XL</p>
+                        </td>
+                        <td>
+                            <p>Кроссовки</p>
+                        </td>
+                        <td>
+                            <p>10</p>
+                        </td>
+                        <td>
+                            <div class="pl-6 flex justify-end">
+                                <AppButton @click="addQuestion.open(question.id)">
+                                    Добавить вопрос
+                                </AppButton>
+                            </div>
+                        </td>
+                    </tr>
+                </AppTable>
+            </template>
+            <template v-else>
+                <EmptyState class="grow growCenter">
+                    <div class="flex flex-col">
+                        <div class="header-5 mb-1.5">
+                            нет данных удовлетворяющих условиям поиска
                         </div>
-                    </td>
-                    <td>
-                        <!-- <div class="w-[234px]">
-                            <div>{{ question.progress }} из {{ question.total }}</div>
-                        </div> -->
-                        <p>456</p>
-                    </td>
-                    <td>
-                        <p>{{ question.gender === 0 ? 'М' : 'Ж' }}</p>
-                    </td>
-                    <td>
-                        <p>XL</p>
-                    </td>
-                    <td>
-                        <p>Кроссовки</p>
-                    </td>
-                    <td>
-                        <p>10</p>
-                    </td>
-                    <td>
-                        <div class="pl-6 flex justify-end">
-                            <AppButton @click="addQuestion.open(question.id)">
-                                Добавить вопрос
-                            </AppButton>
-                            <!-- <a
-                                class="ml-auto"
-                                :href="'/purchase/download?status=' + currentSection"
-                                target="_blank"
-                                download
-                            >
-                                <AppButton>Добавить вопрос</AppButton>
-                            </a> -->
-                        </div>
-                    </td>
-                </tr>
-            </AppTable>
+                    </div>
+                </EmptyState>
+            </template>
         </div>
 
         <div v-else class="panel flex flex-col grow">
@@ -178,146 +151,6 @@ watch(searchVendorCode, () => {
                 </div>
             </EmptyState>
         </div>
-
-        <!-- <div class="py-12">
-            <div class="max-w-3xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="bg-white shadow-sm sm:rounded-lg p-6 text-gray-900">
-                    <form @submit.prevent="form.post(route('question.add'))" class="mt-6 space-y-6">
-                        <div>
-                            <InputLabel for="product_id" value="Артикул" />
-
-                            <TextInput
-                                id="product_id"
-                                type="text"
-                                class="mt-1 block w-full"
-                                v-model="form.product_id"
-                            />
-
-                            <InputError class="mt-2" :message="form.errors.product_id" />
-                        </div>
-
-                        <div>
-                            <InputLabel value="Пол" />
-
-                            <div class="flex space-x-4">
-                                <div class="flex items-center">
-                                    <input
-                                        id="genderMale"
-                                        type="radio"
-                                        value="1"
-                                        v-model="form.gender"
-                                        class="rounded-full cursor-pointer border-gray-300 text-cyan-600 shadow-sm focus:ring-cyan-600 mb-1"
-                                    />
-
-                                    <InputLabel
-                                        for="genderMale"
-                                        value="М"
-                                        class="pl-2 cursor-pointer"
-                                    />
-                                </div>
-
-                                <div class="flex items-center">
-                                    <input
-                                        id="genderFemale"
-                                        type="radio"
-                                        value="2"
-                                        v-model="form.gender"
-                                        class="rounded-full cursor-pointer border-gray-300 text-cyan-600 shadow-sm focus:ring-cyan-600 mb-1"
-                                    />
-
-                                    <InputLabel
-                                        for="genderFemale"
-                                        value="Ж"
-                                        class="pl-2 cursor-pointer"
-                                    />
-                                </div>
-                            </div>
-
-                            <InputError class="mt-2" :message="form.errors.gender" />
-                        </div>
-
-                        <div>
-                            <InputLabel for="pub_date" value="Дата публикации" />
-
-                            <TextInput
-                                id="pub_date"
-                                type="datetime-local"
-                                class="mt-1 block w-full"
-                                v-model="form.pub_date"
-                                required
-                                autofocus
-                                autocomplete="pub_date"
-                            />
-
-                            <InputError class="mt-2" :message="form.errors.pub_date" />
-                        </div>
-
-                        <div>
-                            <InputLabel for="question" value="Вопрос" />
-
-                            <TextInput
-                                id="question"
-                                type="text"
-                                class="mt-1 block w-full"
-                                v-model="form.question"
-                                required
-                            />
-
-                            <InputError class="mt-2" :message="form.errors.question" />
-                        </div>
-
-                        <div class="flex items-center gap-4">
-                            <PrimaryButton :disabled="form.processing">Отправить</PrimaryButton>
-
-                            <Transition
-                                enter-from-class="opacity-0"
-                                leave-to-class="opacity-0"
-                                class="transition ease-in-out"
-                            >
-                                <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">
-                                    {{ result }}
-                                </p>
-                            </Transition>
-                        </div>
-                    </form>
-                </div>
-
-                <div
-                    v-for="question in questions"
-                 <div class="flex flex-col gap-2 leading-tight">
-                        <span class="text-xl font-medium"
-                            >Вопрос к товару №{{ question.product_id }}</span
-                        >
-                        <span class="">Дата публикации: {{ question.pub_date }}</span>
-                        <span>
-                            Статус:
-                            <span v-if="question.status == 'process'" class="text-amber-500">
-                                ожидает</span
-                            >
-                            <span v-else class="text-lime-600"> завершен</span>
-                        </span>
-                        <span class="">{{ question.question }}</span>
-                    </div>
-                    class="bg-white shadow-sm sm:rounded-lg p-6 text-gray-900"
-                >
-                    <div class="flex flex-col gap-2 leading-tight">
-                        <span class="text-xl font-medium"
-                            >Вопрос к товару №{{ question.product_id }}</span
-                        >
-                        <span class="">Дата публикации: {{ question.pub_date }}</span>
-                        <span>
-                            Статус:
-                            <span v-if="question.status == 'process'" class="text-amber-500">
-                                ожидает</span
-                            >
-                            <span v-else class="text-lime-600"> завершен</span>
-                        </span>
-                        <span class="">{{ question.question }}</span>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
         <div>
             <AddQuestion />
         </div>
