@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import AppButton from '@/Components/AppButton.vue'
 import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
@@ -13,8 +13,9 @@ import AppTable from '@/Components/AppTable.vue'
 import dayjs from 'dayjs'
 import TableTh from '@/Components/Table/TableTh.vue'
 import LabelText from '@/Components/LabelText.vue'
+import { set } from '@vueuse/core'
 
-defineProps({
+const props = defineProps({
     result: {
         type: String,
         default: '',
@@ -33,6 +34,7 @@ const form = useForm({
 })
 
 const searchVendorCode = ref('')
+const actualQuestions = ref(props.questions)
 
 const currentSection = ref('available')
 
@@ -41,6 +43,15 @@ const actualSection = ['available', 'published']
 const setSection = (section) => {
     currentSection.value = section
 }
+
+watch(searchVendorCode, () => {
+    if (searchVendorCode.value.length > 0) {
+        console.log(props.questions)
+        console.log(searchVendorCode.value)
+    } else {
+        actualQuestions.value = props.questions
+    }
+})
 </script>
 
 <template>
@@ -85,7 +96,7 @@ const setSection = (section) => {
                     </tr>
                 </template>
 
-                <tr v-for="question in questions" :key="question" class="main-table__tr">
+                <tr v-for="question in actualQuestions" :key="question" class="main-table__tr">
                     <td>
                         <div>Описание товара</div>
 
