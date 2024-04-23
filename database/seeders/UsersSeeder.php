@@ -30,14 +30,14 @@ class UsersSeeder extends Seeder
                 // "price_old" => 70,
 
 
-                "name"=> "user",
-                "email" => "user@mail.com",
-                "balance" => 10000,
-                "password" => "$2y$10$4k1hi0aKPKAVzKSaI5ND3.oG4TfhtMwuxWBmhExRa0PstBgEn41xK",
-                "ip" => null,
-                "telegram_id" => 7895464,
-                "preferences" => json_encode('{"use_livecargo": false}'),
-                "role" => 0
+                // "name"=> "user",
+                // "email" => "user@mail.com",
+                // "balance" => 10000,
+                // "password" => "$2y$10$4k1hi0aKPKAVzKSaI5ND3.oG4TfhtMwuxWBmhExRa0PstBgEn41xK",
+                // "ip" => null,
+                // "telegram_id" => 7895464,
+                // "preferences" => json_encode('{"use_livecargo": false}'),
+                // "role" => 0
             ],
            
         ];

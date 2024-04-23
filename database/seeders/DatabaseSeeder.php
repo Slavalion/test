@@ -21,6 +21,6 @@ class DatabaseSeeder extends Seeder
         // ]);
 
          $this->call(TariffsSeeder::class);
-         $this->call(UsersSeeder::class);
+        // $this->call(UsersSeeder::class);
     }
 }
