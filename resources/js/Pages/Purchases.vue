@@ -1,9 +1,9 @@
 <script setup>
 import { Head, router } from '@inertiajs/vue3'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
 import { useAxios } from '@/Composables/useAxios'
-
+import AppIcon from '@/Components/AppIcon.vue'
 import { genders, statuses } from '@/Data/purchase'
 import { purchaseSlide } from '@/modals'
 import { WbHelperImage } from '@/wbHelper.js'
@@ -14,7 +14,7 @@ import EmptyState from '@/Components/EmptyState.vue'
 import LabelText from '@/Components/LabelText.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 
-defineProps({
+const props = defineProps({
     section: {
         type: String,
         default: 'processing',
@@ -59,6 +59,18 @@ const deletePurchase = (purchaseId) => {
             alert(error.response.data.message)
         })
 }
+
+const purchaseGroupsItems = reactive(
+    props.purchaseGroups.reduce((acc, curVal) => {
+        return [
+            ...acc,
+            {
+                ...curVal,
+                collapsed: true,
+            },
+        ]
+    }, [])
+)
 </script>
 
 <template>
@@ -124,8 +136,19 @@ const deletePurchase = (purchaseId) => {
         </div>
 
         <template v-if="purchaseGroups.length > 0">
-            <div v-for="group in purchaseGroups" :key="group.id" class="panel panel_product mb-6">
+            <div
+                v-for="group in purchaseGroupsItems"
+                :key="group.id"
+                class="panel panel_product mb-6"
+            >
                 <div class="purchase-group">
+                    <div
+                        :class="{ 'rotate-180': !group.collapsed }"
+                        class="transition-all"
+                        @click="group.collapsed = !group.collapsed"
+                    >
+                        <AppIcon icon="chevron-down" />
+                    </div>
                     <div class="purhcase-group__title">
                         #{{ group.id }} Выкуп от {{ group.created_ts }}
                     </div>
@@ -140,7 +163,7 @@ const deletePurchase = (purchaseId) => {
                     </LabelText>
                 </div>
 
-                <div class="products-header products-header_deliveries">
+                <div class="products-header products-header_deliveries" v-show="group.collapsed">
                     <div class="products-header__product">Товар</div>
                     <div class="products-header__code">Артикул</div>
                     <div class="products-header__quantity">Кол-во</div>
@@ -152,7 +175,12 @@ const deletePurchase = (purchaseId) => {
                     </div>
                 </div>
                 <div class="product-list product-list_deliveries">
-                    <div v-for="purchase in group.purchases" :key="purchase.id" class="product">
+                    <div
+                        v-for="purchase in group.purchases"
+                        :key="purchase.id"
+                        class="product"
+                        v-show="group.collapsed"
+                    >
                         <div class="product__product">
                             <div class="product__image">
                                 <a
