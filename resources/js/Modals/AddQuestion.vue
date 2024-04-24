@@ -5,11 +5,13 @@ import TextareaInput from '@/Components/Inputs/TextareaInput.vue'
 import RadioGroupInput from '@/Components/Inputs/RadioGroupInput.vue'
 import TextInput from '@/Components/Inputs/TextInput.vue'
 import Modal from '@/Components/Modal.vue'
+import DatePicker from '@/Components/Inputs/AddQuestionDatePicker.vue'
 
 const question = reactive({
     gender: null,
     content: '',
     errors: {},
+    date: null,
 })
 
 const closeModal = () => {
@@ -28,11 +30,12 @@ const closeModal = () => {
             class="mb-6"
         />
 
-        <TextInput
-            size="lg"
+        <DatePicker
+            v-model="question.date"
             label="Дата и время публикации"
-            placeholder="Опубликовать сейчас"
-            class="mb-6"
+            size="lg"
+            type="date"
+            class="basis-1/4 mb-6"
         />
 
         <TextareaInput
