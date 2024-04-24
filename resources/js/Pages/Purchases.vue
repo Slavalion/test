@@ -7,7 +7,7 @@ import AppIcon from '@/Components/AppIcon.vue'
 import { genders, statuses } from '@/Data/purchase'
 import { purchaseSlide } from '@/modals'
 import { WbHelperImage } from '@/wbHelper.js'
-
+import ProgressBar from '@/Components/PurchaseProgressBar.vue'
 import AppButton from '@/Components/AppButton.vue'
 import AppPagination from '@/Components/AppPagination.vue'
 import EmptyState from '@/Components/EmptyState.vue'
@@ -67,6 +67,7 @@ const purchaseGroupsItems = reactive(
             {
                 ...curVal,
                 collapsed: true,
+                progress: 100,
             },
         ]
     }, [])
@@ -142,25 +143,48 @@ const purchaseGroupsItems = reactive(
                 class="panel panel_product mb-6"
             >
                 <div class="purchase-group">
-                    <div
-                        :class="{ 'rotate-180': !group.collapsed }"
-                        class="transition-all"
-                        @click="group.collapsed = !group.collapsed"
-                    >
-                        <AppIcon icon="chevron-down" />
+                    <div class="purchase-group purchase-group__title">
+                        <div
+                            :class="{ 'rotate-180': !group.collapsed }"
+                            class="transition-all"
+                            @click="group.collapsed = !group.collapsed"
+                        >
+                            <AppIcon icon="chevron-down" />
+                        </div>
+                        <div class="purhcase-group__title">
+                            #{{ group.id }} Выкуп от {{ group.created_ts }}
+                        </div>
+                        <div></div>
+                        <LabelText>
+                            Товаров:
+                            {{ group.purchases.length }} шт.
+                        </LabelText>
+                        <LabelText>
+                            Сумма выкупов:
+                            {{ group.total_sum }} ₽
+                        </LabelText>
                     </div>
-                    <div class="purhcase-group__title">
-                        #{{ group.id }} Выкуп от {{ group.created_ts }}
+                    <div class="purchase-group__progress">
+                        <p>
+                            Завершено
+                            {{
+                                group.purchases.filter((purchase) => purchase.status === 'done')
+                                    .length
+                            }}
+                            из {{ group.purchases.length }}
+                        </p>
+                        <ProgressBar
+                            :progress="
+                                Math.round(
+                                    (group.purchases.filter(
+                                        (purchase) => purchase.status === 'done'
+                                    ).length *
+                                        100) /
+                                        group.purchases.length
+                                )
+                            "
+                        />
                     </div>
-                    <div></div>
-                    <LabelText>
-                        Товаров:
-                        {{ group.purchases.length }} шт.
-                    </LabelText>
-                    <LabelText>
-                        Сумма выкупов:
-                        {{ group.total_sum }} ₽
-                    </LabelText>
                 </div>
 
                 <div class="products-header products-header_deliveries" v-show="group.collapsed">
@@ -285,3 +309,29 @@ const purchaseGroupsItems = reactive(
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style lang="scss" scoped>
+.purchase-group {
+    justify-content: space-between;
+
+    &__progress {
+        display: flex;
+        flex-direction: column;
+        width: 22.15%;
+
+        p {
+            font-size: 13px;
+            line-height: 20px;
+            letter-spacing: 0.22px;
+        }
+    }
+
+    &__title {
+        padding-bottom: 0;
+    }
+}
+
+.transition-all {
+    cursor: pointer;
+}
+</style>
