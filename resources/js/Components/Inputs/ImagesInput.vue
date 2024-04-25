@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import AppIcon from '../AppIcon.vue'
 
 defineOptions({
@@ -8,7 +8,7 @@ defineOptions({
 
 const props = defineProps({
     modelValue: {
-        type: [String, Number, null],
+        type: [Object, File, null],
         required: true,
     },
     size: {
@@ -37,22 +37,20 @@ const props = defineProps({
     },
 })
 
-defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue'])
 
-const files = ref([])
 const filesError = ref(false)
 
 const selectFile = (e) => {
-    if (e.target.files.length > 8) {
+    if (e.target.files.length > props.maxQuantity) {
         filesError.value = true
         e.target.value = null
-        files.value = []
+        emit('update:modelValue', [])
         return
     }
 
     filesError.value = false
-    files.value = e.target.files
-    console.log(files)
+    emit('update:modelValue', e.target.files)
 }
 
 const createImageUrl = (file) => {
@@ -60,10 +58,14 @@ const createImageUrl = (file) => {
 }
 
 const removeFile = (index) => {
-    console.log(index)
+    var arr = [...props.modelValue]
+    arr.splice(index, 1)
+    var dt = new DataTransfer()
+    arr.forEach((file) => {
+        dt.items.add(file)
+    })
+    emit('update:modelValue', dt.files)
 }
-
-const validationClass = computed(() => (props.hasError ? 'text-input_error' : ''))
 </script>
 
 <template>
@@ -71,7 +73,7 @@ const validationClass = computed(() => (props.hasError ? 'text-input_error' : ''
         <label v-if="label" class="text-input__label">{{ label }}</label>
         <div class="input-wrapper" :class="wrapperClass">
             <div class="image-input">
-                <div v-for="(file, idx) in files" :key="file" class="relative">
+                <div v-for="(file, idx) in modelValue" :key="file" class="relative">
                     <img
                         :src="createImageUrl(file)"
                         alt=""
@@ -86,7 +88,7 @@ const validationClass = computed(() => (props.hasError ? 'text-input_error' : ''
                 </div>
 
                 <div
-                    v-for="n in maxQuantity - files.length"
+                    v-for="n in maxQuantity - modelValue.length"
                     :key="'block' + n"
                     class="image-input__empty"
                 >
@@ -103,6 +105,9 @@ const validationClass = computed(() => (props.hasError ? 'text-input_error' : ''
                         accept="image/png, image/jpg, image/jpeg"
                     />
                 </div>
+            </div>
+            <div v-if="filesError" class="text-input__caption" style="bottom: -4px">
+                Можно выбрать максимум {{ maxQuantity }} файлов
             </div>
             <div v-if="hasError" class="text-input__caption">{{ errorMessage }}</div>
         </div>
@@ -135,6 +140,7 @@ const validationClass = computed(() => (props.hasError ? 'text-input_error' : ''
 
 .relative {
     min-width: 72px;
+    overflow: visible;
 }
 
 .relative span {
