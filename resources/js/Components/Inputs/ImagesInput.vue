@@ -42,6 +42,27 @@ defineEmits(['update:modelValue'])
 const files = ref([])
 const filesError = ref(false)
 
+const selectFile = (e) => {
+    if (e.target.files.length > 8) {
+        filesError.value = true
+        e.target.value = null
+        files.value = []
+        return
+    }
+
+    filesError.value = false
+    files.value = e.target.files
+    console.log(files)
+}
+
+const createImageUrl = (file) => {
+    return URL.createObjectURL(file)
+}
+
+const removeFile = (index) => {
+    console.log(index)
+}
+
 const validationClass = computed(() => (props.hasError ? 'text-input_error' : ''))
 </script>
 
@@ -50,6 +71,20 @@ const validationClass = computed(() => (props.hasError ? 'text-input_error' : ''
         <label v-if="label" class="text-input__label">{{ label }}</label>
         <div class="input-wrapper" :class="wrapperClass">
             <div class="image-input">
+                <div v-for="(file, idx) in files" :key="file" class="relative">
+                    <img
+                        :src="createImageUrl(file)"
+                        alt=""
+                        class="w-16 h-16 rounded-md object-cover"
+                    />
+                    <span
+                        class="block cursor-pointer -right-1 -top-1 absolute bg-white rounded-full"
+                        @click="removeFile(idx)"
+                    >
+                        <AppIcon icon="delete" />
+                    </span>
+                </div>
+
                 <div
                     v-for="n in maxQuantity - files.length"
                     :key="'block' + n"
@@ -96,5 +131,17 @@ const validationClass = computed(() => (props.hasError ? 'text-input_error' : ''
             display: none;
         }
     }
+}
+
+.relative {
+    min-width: 72px;
+}
+
+.relative span {
+    display: none;
+}
+
+.relative:hover span {
+    display: flex;
 }
 </style>
