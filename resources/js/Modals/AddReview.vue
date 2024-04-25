@@ -158,7 +158,7 @@ const createReview = function () {
                 :error-message="review.errors?.rating"
             />
 
-            <label class="text-input__label">Фото для отзыва</label>
+            <!-- <label class="text-input__label">Фото для отзыва</label>
             <div class="input-wrapper">
                 <input
                     type="file"
@@ -177,14 +177,14 @@ const createReview = function () {
                         alt=""
                         class="w-16 h-16 rounded-md object-cover"
                     />
-                    <!-- <span
+                    <span
                             class="block cursor-pointer -right-1 -top-1 absolute bg-white rounded-full"
                             @click="removeFile(idx)"
                         >
                             <AppIcon icon="delete" />
-                        </span> -->
+                        </span>
                 </div>
-            </div>
+            </div>--->
             <ImagesInput label="Фото для отзыва" v-model="files2" />
         </div>
 
