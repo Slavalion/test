@@ -6,7 +6,7 @@ import AppButton from '../AppButton.vue'
 
 const props = defineProps({
     modelValue: {
-        type: Number,
+        type: Array,
         required: true,
     },
     min: {

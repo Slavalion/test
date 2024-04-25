@@ -55,7 +55,18 @@ const validationClass = computed(() => (props.hasError ? 'text-input_error' : ''
                     :key="'block' + n"
                     class="image-input__empty"
                 >
-                    <AppIcon icon="img" />
+                    <label :for="'ava' + n" class="image-input__empty">
+                        <AppIcon icon="img" />
+                    </label>
+                    <input
+                        class="avaInput"
+                        :id="'ava' + n"
+                        :name="'ava' + n"
+                        type="file"
+                        multiple
+                        @change="selectFile"
+                        accept="image/png, image/jpg, image/jpeg"
+                    />
                 </div>
             </div>
             <div v-if="hasError" class="text-input__caption">{{ errorMessage }}</div>
@@ -79,6 +90,11 @@ const validationClass = computed(() => (props.hasError ? 'text-input_error' : ''
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
+
+        .avaInput {
+            display: none;
+        }
     }
 }
 </style>

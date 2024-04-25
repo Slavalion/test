@@ -21,6 +21,8 @@ const props = defineProps({
     },
 })
 
+const files2 = ref([])
+
 const toast = useToast()
 const api = useAxios()
 const { loading } = api
@@ -183,7 +185,7 @@ const createReview = function () {
                         </span> -->
                 </div>
             </div>
-            <ImagesInput label="Фото для отзыва" />
+            <ImagesInput label="Фото для отзыва" v-model="files2" />
         </div>
 
         <template #actions>
