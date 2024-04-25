@@ -121,9 +121,14 @@ const createReview = function () {
         })
         .catch((error) => alert(JSON.stringify(error.response.data.errors)))
 }
+
+const closeAddRewiewModal = () => {
+    files.value = []
+    addReview.close()
+}
 </script>
 <template>
-    <Modal :show="addReview.show" @close="addReview.close()" @open="open">
+    <Modal :show="addReview.show" @close="closeAddRewiewModal" @open="open">
         <template #header> Оставить отзыв </template>
 
         <div class="space-y-6">
@@ -185,7 +190,7 @@ const createReview = function () {
                         </span>
                 </div>
             </div>--->
-            <ImagesInput label="Фото для отзыва" v-model="files2" />
+            <ImagesInput label="Фото для отзыва" v-model="files" />
         </div>
 
         <template #actions>
