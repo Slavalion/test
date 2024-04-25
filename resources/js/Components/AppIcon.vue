@@ -20,6 +20,7 @@ import IconExcelFile from '../Icons/ExcelFile.vue'
 import IconEye from '../Icons/Eye.vue'
 import IconHeart from '../Icons/Heart.vue'
 import IconInfo from '../Icons/Info.vue'
+import IconImage from '../Icons/Image.vue'
 import IconLayers from '../Icons/Layers.vue'
 import IconLock from '../Icons/Lock.vue'
 import IconLogout from '../Icons/Logout.vue'
@@ -62,6 +63,7 @@ const icons = {
     'file-download': IconFileDownload,
     heart: IconHeart,
     info: IconInfo,
+    img: IconImage,
     layers: IconLayers,
     like: IconLike,
     loader: IconLoader,

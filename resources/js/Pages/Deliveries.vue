@@ -6,7 +6,7 @@ import { genders } from '@/Data/purchase'
 import { currencyFormater } from '@/Helpers/formater.js'
 import { updateDeliveryData } from '@/modals'
 import { WbHelperImage } from '@/wbHelper.js'
-
+import TextInput from '@/Components/Inputs/TextInput.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 
 import AppButton from '@/Components/AppButton.vue'
@@ -33,7 +33,7 @@ const props = defineProps({
 })
 
 const page = usePage()
-
+const searchPickUpPoint = ref('')
 const state = reactive({ deliveries: props.deliveries })
 
 watch(
@@ -140,14 +140,9 @@ onUnmounted(() => {
                     Все
                 </AppButton>
 
-                <a
-                    class="ml-auto"
-                    :href="'/deliveries/download/xls?status=' + currentStatus"
-                    target="_blank"
-                    download
-                >
-                    <AppButton>Скачать XLS</AppButton>
-                </a>
+                <div class="ml-auto flex gap-3">
+                    <TextInput v-model="searchPickUpPoint" size="md" placeholder="Адрес ПВЗ" />
+                </div>
             </div>
         </div>
 

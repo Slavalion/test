@@ -6,7 +6,7 @@ import { useToast } from 'vue-toastification'
 import { useAxios } from '@/Composables/useAxios'
 
 import { addReview } from '@/modals.js'
-
+import ImagesInput from '@/Components/Inputs/ImagesInput.vue'
 import AppButton from '@/Components/AppButton.vue'
 import DatePicker from '@/Components/Inputs/DatePicker.vue'
 import RadioGroupInput from '@/Components/Inputs/RadioGroupInput.vue'
@@ -183,6 +183,7 @@ const createReview = function () {
                         </span> -->
                 </div>
             </div>
+            <ImagesInput label="Фото для отзыва" />
         </div>
 
         <template #actions>
