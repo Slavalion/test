@@ -42,6 +42,21 @@ const emit = defineEmits(['update:modelValue'])
 const filesError = ref(false)
 
 const selectFile = (e) => {
+    if (props.modelValue.length > 0) {
+        if (e.target.files.length > props.maxQuantity - props.modelValue.length) {
+            filesError.value = true
+            e.target.value = null
+            return
+        }
+
+        var arr = [...props.modelValue]
+        var dt = new DataTransfer()
+        arr.concat([...e.target.files]).forEach((file) => {
+            dt.items.add(file)
+        })
+        emit('update:modelValue', dt.files)
+        return
+    }
     if (e.target.files.length > props.maxQuantity) {
         filesError.value = true
         e.target.value = null
