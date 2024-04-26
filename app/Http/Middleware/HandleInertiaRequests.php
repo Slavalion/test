@@ -65,6 +65,11 @@ class HandleInertiaRequests extends Middleware
                 'availableReviews' => Purchase::availableReviews()
                     ->where('user_id', $request->user()?->id)
                     ->count(),
+                'allDeliveres' =>  Purchase::where('user_id', $request->user()->id)
+                    ->count(),
+                'finishedDeliveres' =>  Purchase::where('user_id', $request->user()->id)
+                    ->where('status', 'done')    
+                    ->count(),     
 
             ],
             'settings' => [

@@ -14,12 +14,16 @@ import FillUpBalanceModal from '@/Modals/FillUpBalance.vue'
 import PurchaseGenerator from '@/Modals/PurchaseGenerator.vue'
 import PurchaseImport from '@/Modals/PurchaseImport.vue'
 import PurchaseSlide from '@/Modals/PurchaseSlide.vue'
-
+import ProgressBar from '@/Components/PurchaseProgressBar.vue'
 import AppDropdown from '@/Components/AppDropdown.vue'
 import AppIcon from '@/Components/AppIcon.vue'
 import { globalSettings } from '@/Store/globalSettings'
 
 const sidebarCollapsed = ref(localStorage.getItem('sidebar-collapsed') == 'true')
+
+const page = usePage()
+const totalDeliveres = page.props.data.allDeliveres
+const finishedDeliveres = page.props.data.finishedDeliveres
 
 const collapseIcon = computed(() => {
     return sidebarCollapsed.value ? 'chevrons-right' : 'chevrons-left'
@@ -38,6 +42,15 @@ globalSettings.value = {
     ...globalSettings.value,
     ...usePage().props.settings,
 }
+
+window.Echo.channel('tasks').listen('TaskProgressUpdate', (e) => {
+    // const task = e.task
+    // let localTask = state.tasks.find((el) => {
+    //     return el.id == task.id
+    // })
+    console.log(e.task)
+    // localTask.progress = task.progress
+})
 </script>
 
 <template>
@@ -82,6 +95,11 @@ globalSettings.value = {
         </div>
 
         <div class="topbar fixed inset-x-0">
+            <div class="purchase-group__progress">
+                <p>Завершено выкупов: {{ finishedDeliveres }} из {{ totalDeliveres }}</p>
+                <ProgressBar :progress="Math.round((finishedDeliveres * 100) / totalDeliveres)" />
+            </div>
+
             <AppButton class="ml-auto" icon="plus-circle" @click="purchaseSlide.open()">
                 Создать выкуп
             </AppButton>
