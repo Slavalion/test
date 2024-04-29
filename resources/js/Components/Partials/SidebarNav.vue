@@ -71,26 +71,13 @@ const checkCondition = (condition) => {
                     :href="route(item.route)"
                     :active="route().current(item.route)"
                     :counter="item.counter?.value"
+                    :itemroute="item.route"
                     status="warning"
                     class="menu__link"
                 >
                     <div class="menu__link__title">
                         <AppIcon :icon="item.icon" />
                         <span>{{ item.title }}</span>
-                    </div>
-                    <div class="menu__link__signal">
-                        <div v-if="Boolean(item.counter)" class="menu__link__counter">
-                            <p>{{ item.counter }}</p>
-                        </div>
-                        <div v-if="item.route === 'wallets'" class="menu__link__alertOctagon">
-                            <AppIcon icon="alert-octagon" />
-                        </div>
-                        <div
-                            v-if="item.route === 'purchase.list'"
-                            class="menu__link__alertTriangle"
-                        >
-                            <AppIcon icon="alert-triangle" />
-                        </div>
                     </div>
                 </NavLink>
             </template>
