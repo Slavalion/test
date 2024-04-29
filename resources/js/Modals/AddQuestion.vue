@@ -19,7 +19,13 @@ const closeModal = () => {
 }
 </script>
 <template>
-    <Modal :show="addQuestion.show" @close="closeModal" submitable clearable>
+    <Modal
+        :show="addQuestion.show"
+        @close="closeModal"
+        submitable
+        clearable
+        bodyClass="addQuestion"
+    >
         <template #header>Вопросы</template>
 
         <RadioGroupInput
@@ -46,3 +52,9 @@ const closeModal = () => {
         />
     </Modal>
 </template>
+
+<style lang="scss" scoped>
+.addQuestion {
+    overflow-y: visible;
+}
+</style>
