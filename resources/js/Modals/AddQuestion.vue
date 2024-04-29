@@ -52,9 +52,3 @@ const closeModal = () => {
         />
     </Modal>
 </template>
-
-<style lang="scss" scoped>
-.addQuestion {
-    overflow-y: visible;
-}
-</style>
