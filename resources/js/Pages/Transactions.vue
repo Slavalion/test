@@ -2,7 +2,7 @@
 import { Head, router, usePage } from '@inertiajs/vue3'
 import dayjs from 'dayjs'
 import { computed, ref } from 'vue'
-
+import moment from 'moment'
 import { currencyFormater } from '@/Helpers/formater'
 import AppIcon from '@/Components/AppIcon.vue'
 import AppButton from '@/Components/AppButton.vue'
@@ -208,7 +208,7 @@ const setSection = (section) => {
                     </td>
                 </tr>
             </AppTable>
-            <AppTable v-else>
+            <AppTable v-else class="transactions-table">
                 <template #head>
                     <tr>
                         <TableTh>ID</TableTh>
@@ -221,13 +221,13 @@ const setSection = (section) => {
                 </template>
 
                 <tr v-for="transaction in transactions" :key="transaction" class="main-table__tr">
-                    <td class="text-center">{{ transaction.id }}</td>
+                    <td class="text-left">{{ transaction.id }}</td>
                     <td class="text-left p-6">
                         <span v-if="transaction.status == 1" class="functionalBlue">
                             {{ transaction.type == -1 ? '-' : '+' }}
                             {{ currencyFormater.format(transaction.amount / 100) }}
                         </span>
-                        <span v-else-if="transaction.status == -1" class="accentRed">
+                        <span v-else-if="transaction.status == -1" class="accentRedtext">
                             {{ transaction.type == -1 ? '-' : '+ ' }}
                             {{ currencyFormater.format(transaction.amount / 100) }}
                         </span>
@@ -236,16 +236,19 @@ const setSection = (section) => {
                             {{ currencyFormater.format(transaction.amount / 100) }}
                         </span>
                     </td>
-                    <td class="text-center">
+                    <td class="text-left">
                         {{ targetOnlyText(transaction.target) }}
                     </td>
-                    <td class="text-center">
+                    <td class="text-left">
                         <span v-if="transaction.type == -1">Списание</span>
                         <span v-else>Пополнение</span>
                     </td>
-                    <td class="text-center">{{ transaction.created_ts }}</td>
+                    <td class="text-left">
+                        {{ moment(transaction.created_ts).format('DD.MM.YYYY') }} в
+                        {{ moment(transaction.created_ts).format('hh:mm') }}
+                    </td>
                     <td class="text-left p-6">
-                        <div v-if="transaction.status == 1" class="accentGreen flex">
+                        <div v-if="transaction.status == 1" class="accentGreen flex badge">
                             <AppIcon
                                 icon="check-circle"
                                 width="16"
@@ -254,7 +257,7 @@ const setSection = (section) => {
                             />
                             Выполнено
                         </div>
-                        <div v-else-if="transaction.status == -1" class="accentRed flex">
+                        <div v-else-if="transaction.status == -1" class="accentRed flex badge">
                             <AppIcon
                                 icon="alert-octagon"
                                 width="16"
@@ -263,7 +266,7 @@ const setSection = (section) => {
                             />
                             Ошибка выполнения
                         </div>
-                        <div v-else class="accentYellow flex">
+                        <div v-else class="accentYellow flex badge">
                             <AppIcon icon="timer" class="mr-1" />Выполняется
                         </div>
                     </td>
@@ -275,11 +278,32 @@ const setSection = (section) => {
     </AuthenticatedLayout>
 </template>
 
-<style lang="scss">
-.alertOctagon g path {
-    stroke: #e0281b;
+<style lang="scss" scoped>
+.accentGreen {
+    background-color: rgba(22, 192, 80, 0.1);
 }
-.checkCircle g path {
-    stroke: #16c050;
+.accentYellow {
+    background-color: rgba(216, 155, 0, 0.1);
+}
+.accentRed {
+    background-color: rgba(224, 40, 27, 0.1);
+}
+.transactions-table thead th:nth-child(1) {
+    width: 5.81%;
+}
+.transactions-table thead th:nth-child(2) {
+    width: 14.86%;
+}
+.transactions-table thead th:nth-child(3) {
+    width: 25.1%;
+}
+.transactions-table thead th:nth-child(4) {
+    width: 11.62%;
+}
+.transactions-table thead th:nth-child(5) {
+    width: 19.37%;
+}
+.transactions-table thead th:nth-child(6) {
+    width: 21.49%;
 }
 </style>

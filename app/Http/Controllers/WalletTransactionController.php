@@ -26,8 +26,10 @@ class WalletTransactionController extends Controller
             $activeSection = 'debit';
             $transactionsQuery = $request->user()->transactions()->whereIn('type', [-1]);
         } else {
-            $activeSection = 'wallets';
-            $transactionsQuery = $request->user()->walletTransactions()->with(['purchase', 'purchase.product']);
+             $activeSection = 'balance';
+            $transactionsQuery = $request->user()->transactions();
+            // $activeSection = 'wallets';
+            // $transactionsQuery = $request->user()->walletTransactions()->with(['purchase', 'purchase.product']);
         }
 
         $transactionsPaginator = $transactionsQuery->orderByDesc('created_at')->paginate(10)->withQueryString();

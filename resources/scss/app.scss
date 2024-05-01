@@ -690,13 +690,20 @@
     }
 }
 
+.badge {
+    align-items: center;
+    padding: 6px;
+    border-radius: 6px;
+}
 .addQuestion {
     overflow: visible !important;
 }
 .accentGreen {
     color: $accentGreen;
 }
-.accentRed {
+.accentRed,
+.accentRedtext,
+.alertOctagon g path {
     color: $accentRed;
 }
 .accentYellow {
@@ -704,4 +711,10 @@
 }
 .functionalBlue {
     color: $functionalBlue;
+}
+.alertOctagon g path {
+    stroke: $accentRed;
+}
+.checkCircle g path {
+    stroke: $accentGreen;
 }
