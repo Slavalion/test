@@ -19,6 +19,12 @@ class WalletTransactionController extends Controller
         } elseif ($request->section == 'telegram') {
             $activeSection = 'telegram';
             $transactionsQuery = $request->user()->tgTransactions()->with(['purchase', 'purchase.product']);
+        } elseif ($request->section == 'refill') {
+            $activeSection = 'refill';
+            $transactionsQuery = $request->user()->transactions()->whereIn('type', [1]);
+        }elseif ($request->section == 'debit') {
+            $activeSection = 'debit';
+            $transactionsQuery = $request->user()->transactions()->whereIn('type', [-1]);
         } else {
             $activeSection = 'wallets';
             $transactionsQuery = $request->user()->walletTransactions()->with(['purchase', 'purchase.product']);

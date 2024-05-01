@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { computed, ref } from 'vue'
 
 import { currencyFormater } from '@/Helpers/formater'
-
+import AppIcon from '@/Components/AppIcon.vue'
 import AppButton from '@/Components/AppButton.vue'
 import AppPagination from '@/Components/AppPagination.vue'
 import AppTable from '@/Components/AppTable.vue'
@@ -94,7 +94,7 @@ const setSection = (section) => {
 
         <div class="panel mb-6">
             <div class="flex gap-1.5">
-                <AppButton
+                <!-- <AppButton
                     theme="normal"
                     :class="{ btn_selected: activeSection == 'wallets' }"
                     @click="setSection('wallets')"
@@ -108,13 +108,27 @@ const setSection = (section) => {
                     @click="setSection('telegram')"
                 >
                     Телеграм
-                </AppButton>
+                </AppButton> -->
                 <AppButton
                     theme="normal"
                     :class="{ btn_selected: activeSection == 'balance' }"
                     @click="setSection('balance')"
                 >
-                    Баланс
+                    Все
+                </AppButton>
+                <AppButton
+                    theme="normal"
+                    :class="{ btn_selected: activeSection == 'refill' }"
+                    @click="setSection('refill')"
+                >
+                    Пополнение
+                </AppButton>
+                <AppButton
+                    theme="normal"
+                    :class="{ btn_selected: activeSection == 'debit' }"
+                    @click="setSection('debit')"
+                >
+                    Списание
                 </AppButton>
 
                 <div class="ml-auto">
@@ -199,25 +213,59 @@ const setSection = (section) => {
                     <tr>
                         <TableTh>ID</TableTh>
                         <TableTh>Сумма</TableTh>
-                        <TableTh>Назначение</TableTh>
+                        <TableTh>Описание</TableTh>
+                        <TableTh>Тип</TableTh>
                         <TableTh>Дата</TableTh>
-                        <TableTh>Кошелек</TableTh>
+                        <TableTh>Статус</TableTh>
                     </tr>
                 </template>
 
                 <tr v-for="transaction in transactions" :key="transaction" class="main-table__tr">
                     <td class="text-center">{{ transaction.id }}</td>
-                    <td class="text-center">
-                        {{ currencyFormater.format(transaction.amount / 100) }}
+                    <td class="text-left p-6">
+                        <span v-if="transaction.status == 1" class="functionalBlue">
+                            {{ transaction.type == -1 ? '-' : '+' }}
+                            {{ currencyFormater.format(transaction.amount / 100) }}
+                        </span>
+                        <span v-else-if="transaction.status == -1" class="accentRed">
+                            {{ transaction.type == -1 ? '-' : '+ ' }}
+                            {{ currencyFormater.format(transaction.amount / 100) }}
+                        </span>
+                        <span v-else>
+                            {{ transaction.type == -1 ? '-' : '+' }}
+                            {{ currencyFormater.format(transaction.amount / 100) }}
+                        </span>
                     </td>
                     <td class="text-center">
                         {{ targetOnlyText(transaction.target) }}
                     </td>
-
-                    <td class="text-center">{{ transaction.created_ts }}</td>
                     <td class="text-center">
                         <span v-if="transaction.type == -1">Списание</span>
                         <span v-else>Пополнение</span>
+                    </td>
+                    <td class="text-center">{{ transaction.created_ts }}</td>
+                    <td class="text-left p-6">
+                        <div v-if="transaction.status == 1" class="accentGreen flex">
+                            <AppIcon
+                                icon="check-circle"
+                                width="16"
+                                height="16"
+                                class="checkCircle mr-1"
+                            />
+                            Выполнено
+                        </div>
+                        <div v-else-if="transaction.status == -1" class="accentRed flex">
+                            <AppIcon
+                                icon="alert-octagon"
+                                width="16"
+                                height="16"
+                                class="alertOctagon mr-1"
+                            />
+                            Ошибка выполнения
+                        </div>
+                        <div v-else class="accentYellow flex">
+                            <AppIcon icon="timer" class="mr-1" />Выполняется
+                        </div>
                     </td>
                 </tr>
             </AppTable>
@@ -226,3 +274,12 @@ const setSection = (section) => {
         <AppPagination :links="paginator" />
     </AuthenticatedLayout>
 </template>
+
+<style lang="scss">
+.alertOctagon g path {
+    stroke: #e0281b;
+}
+.checkCircle g path {
+    stroke: #16c050;
+}
+</style>

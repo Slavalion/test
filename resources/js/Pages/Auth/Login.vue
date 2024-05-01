@@ -122,7 +122,7 @@ const regClick = () => {
                 <!-- <div class="telegram-login" @click="widgetButtonClick">
                     <span>Войти с помощью Telegram</span>
                 </div> -->
-                <!-- <div ref="telegram" id="tg-auth-widget" style=""></div> -->
+                <div ref="telegram" id="tg-auth-widget" style="display: none"></div>
             </div>
         </template>
     </GuestLayout>
