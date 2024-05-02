@@ -3,7 +3,6 @@ import { Head, Link, useForm } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import device from 'vue3-device-detector'
 import { useWindowSize } from '@vueuse/core'
-const { width } = useWindowSize()
 import { useTelegramAuth } from '@/Composables/telegramAuth'
 
 import GuestLayout from '@/Layouts/GuestLayout.vue'
@@ -21,6 +20,8 @@ defineProps({
         default: '',
     },
 })
+
+const { width } = useWindowSize()
 
 let params = new URLSearchParams(document.location.search)
 let refCode = params.get('ref')

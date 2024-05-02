@@ -47,6 +47,11 @@
         color: $neuralNeural10;
 
         @include paragraph(2);
+
+        @media (min-width: 1441px) {
+            @include largeparagraph1;
+            margin-bottom: 0.6944vw;
+        }
     }
 
     &_error,
@@ -94,17 +99,31 @@
                 width: 20px;
                 height: 20px;
             }
+
+            @media (min-width: 1441px) {
+                padding: 0.6944vw 1.0417vw;
+                border-radius: 0.6944vw;
+                @include largeparagraph1;
+
+                & + svg {
+                    right: 0.8333vw;
+                    width: 1.3889vw;
+                    height: 1.3889vw;
+                }
+            }
         }
 
         &-lg-mobile {
-            padding: 10px 15px;
-            border-radius: 10px;
+            padding: 2.5641vw 3.8462vw;
+            border-radius: 2.5641vw;
             @include mobileparagraph1;
+            display: flex;
+            align-items: center;
 
             & + svg {
-                right: 12px;
-                width: 20px;
-                height: 20px;
+                right: 3.0769vw;
+                width: 5.12vw;
+                height: 5.12vw;
             }
         }
 

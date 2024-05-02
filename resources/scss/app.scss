@@ -289,6 +289,70 @@
     }
 }
 
+@media (min-width: 1441px) {
+    .auth-layout {
+        &__logo {
+            left: 0.9722vw;
+            top: 0.9722vw;
+
+            img {
+                height: 2.5vw;
+            }
+        }
+    }
+
+    .auth-panel {
+        width: 33.3333vw;
+        border-radius: 1.7361vw;
+        box-shadow: -0.694vw 0.208vw 0.555vw 0px rgba(89, 128, 206, 0.05);
+
+        &__head {
+            padding: 2.5vw;
+
+            &-title {
+                margin-bottom: 0.8333vw;
+
+                @include largeheader2;
+            }
+
+            &-caption {
+                color: $neuralNeural8;
+
+                @include largeparagraph1;
+            }
+        }
+
+        &__body {
+            padding: 2.5vw;
+        }
+
+        &__footer {
+            padding: 2.5vw;
+
+            & a button,
+            & button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 3.0556vw;
+                border-radius: 0.69vw;
+                padding-left: 1.11vw;
+                padding-right: 1.11vw;
+                @include largeparagraph1;
+            }
+        }
+    }
+
+    .checkbox-input input {
+        width: 0.8333vw;
+        height: 0.8333vw;
+    }
+
+    .checkbox-input__label {
+        @include largeparagraph1;
+    }
+}
+
 .auth-layout-mobile {
     display: flex;
     align-items: center;
@@ -325,6 +389,8 @@
     border-radius: 6.15vw 6.15vw 0 0;
     background-color: $functionalWhite;
     overflow-y: auto;
+
+    flex-grow: 1;
 
     &__head {
         min-height: 28.2vw;
