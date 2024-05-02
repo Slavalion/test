@@ -5,7 +5,7 @@
 .text-input {
     width: 100%;
     border: 1.5px solid $neuralNeural6;
-    transition: ease all .3s;
+    transition: ease all 0.3s;
     @include paragraph(3);
     color: $neuralNeural8;
 
@@ -24,14 +24,14 @@
     }
 
     &:disabled {
-        opacity: .5;
+        opacity: 0.5;
 
-        &+svg {
-            opacity: .5;
+        & + svg {
+            opacity: 0.5;
         }
     }
 
-    &+svg {
+    & + svg {
         position: absolute;
         right: 0;
         top: 50%;
@@ -60,7 +60,7 @@
             padding: 3px 5px;
             border-radius: 6px;
 
-            &+svg {
+            & + svg {
                 right: 6px;
             }
         }
@@ -69,8 +69,18 @@
             padding: 7px 11px;
             border-radius: 8px;
 
-            &+svg {
+            & + svg {
                 right: 12px;
+            }
+        }
+
+        &-md-mobile {
+            @include mobileparagraph1;
+            padding: 1.79vw 2.82vw;
+            border-radius: 2vw;
+
+            & + svg {
+                right: 3vw;
             }
         }
 
@@ -79,7 +89,19 @@
             border-radius: 10px;
             @include paragraph(2);
 
-            &+svg {
+            & + svg {
+                right: 12px;
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        &-lg-mobile {
+            padding: 10px 15px;
+            border-radius: 10px;
+            @include mobileparagraph1;
+
+            & + svg {
                 right: 12px;
                 width: 20px;
                 height: 20px;
@@ -95,7 +117,7 @@
             line-height: 36px;
             letter-spacing: -0.01px;
 
-            &+svg {
+            & + svg {
                 right: 24px;
                 width: 32px;
                 height: 32px;
@@ -114,14 +136,14 @@
     &_select {
         cursor: pointer;
 
-        &+svg {
+        & + svg {
             cursor: pointer;
         }
 
         &:disabled {
             cursor: not-allowed;
 
-            &+svg {
+            & + svg {
                 cursor: not-allowed;
             }
 
@@ -169,7 +191,7 @@
 
     @include paragraph(3);
 
-    input[type=radio] {
+    input[type='radio'] {
         position: relative;
         height: 20px;
         width: 20px;
@@ -218,7 +240,7 @@
 
         &_active {
             path {
-                fill: #FFCE00;
+                fill: #ffce00;
             }
         }
     }

@@ -289,6 +289,88 @@
     }
 }
 
+.auth-layout-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    flex-direction: column;
+
+    &__bg {
+        background-color: $functionalBlue;
+        top: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        left: 0;
+        z-index: -1;
+        position: absolute;
+        overflow: hidden;
+    }
+    &__logo {
+        width: 100vw;
+        height: 14.359vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            height: 78.5714%;
+        }
+    }
+}
+
+.auth-panel-mobile {
+    width: 100%;
+    border-radius: 6.15vw 6.15vw 0 0;
+    background-color: $functionalWhite;
+    overflow-y: auto;
+
+    &__head {
+        min-height: 28.2vw;
+        padding: 5.128vw;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 3.07vw;
+        border-bottom: 1px solid $neuralNeural4;
+
+        &-title {
+            width: 87vw;
+            height: 10.2564vw;
+            color: $neuralNeural10;
+
+            @include mobileheader2;
+        }
+
+        &-caption {
+            width: 87vw;
+            color: $neuralNeural8;
+            @include mobileparagraph1;
+        }
+    }
+
+    &__body {
+        padding: 5.128vw;
+        gap: 5.128vw;
+    }
+
+    &__footer {
+        padding: 5.128vw;
+        border-top: 1px solid $neuralNeural4;
+    }
+}
+
+.mobileparagraph1 {
+    @include mobileparagraph1;
+}
+
+.checkbox-input-mobile input {
+    width: 3.07vw;
+    height: 3.07vw;
+}
+
 .telegram-login {
     display: flex;
     align-items: center;
