@@ -153,9 +153,27 @@ window.Echo.channel('tasks').listen('TaskProgressUpdate', (e) => {
                 </div>
                 <AppButton icon="plus-circle"></AppButton>
             </div>
-            <div class="wrapper-mobile__desk-body">
+            <!-- Page Content -->
+            <main class="wrapper-mobile__desk-body">
+                <!-- Page Heading -->
+                <div v-if="globalSettings.maintenance_mode" class="mobile-maintenance-mode">
+                    <div class="flex items-center gap-6">
+                        <AppIcon icon="alert-triangle" width="30" height="30" />
+                        <div class="mobile-maintenance-mode__infotext">
+                            <h6>Режим обслуживания</h6>
+                            <p>На данный момент можно только пополнить кошелек</p>
+                        </div>
+                    </div>
+                </div>
+
+                <header v-if="$slots.header">
+                    <h1 class="main__headline flex items-center wrapper-mobile__header">
+                        <slot name="header" />
+                    </h1>
+                </header>
+
                 <slot></slot>
-            </div>
+            </main>
         </div>
     </div>
 </template>

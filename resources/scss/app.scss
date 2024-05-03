@@ -885,6 +885,7 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
+            border-bottom: 1px solid $neuralNeural4;
 
             & button {
                 width: 11.2821vw;
@@ -908,6 +909,18 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
+
+            & header {
+                width: 89.7435vw;
+                text-align: left;
+                user-select: none;
+                & h1 {
+                    @include mobileheader2;
+                    margin: 0;
+                    padding: 3.333vw 0 2.8205vw 0;
+                }
+            }
         }
     }
 
@@ -971,5 +984,34 @@
         &__title {
             @include mobileheader4;
         }
+    }
+}
+
+.mobile-maintenance-mode {
+    background-color: $accentYellow;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2.25vw 5.1282vw;
+
+    &__infotext {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        & h6 {
+            @include mobileheader4;
+        }
+        & p {
+            @include mobileparagraph1;
+            text-align: center;
+        }
+    }
+
+    & .items-center svg {
+        width: 12.8205vw;
+        height: 12.8205vw;
     }
 }
