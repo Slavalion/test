@@ -1,7 +1,8 @@
 <script setup>
 import { Head, router } from '@inertiajs/vue3'
 import { ref, reactive } from 'vue'
-
+import device from 'vue3-device-detector'
+import { useWindowSize } from '@vueuse/core'
 import { useAxios } from '@/Composables/useAxios'
 import AppIcon from '@/Components/AppIcon.vue'
 import { genders, statuses } from '@/Data/purchase'
@@ -30,7 +31,7 @@ const props = defineProps({
 })
 
 const api = useAxios()
-
+const { width } = useWindowSize()
 const currentSection = ref('processing')
 
 const setSection = (section) => {
@@ -80,7 +81,7 @@ const purchaseGroupsItems = reactive(
     <AuthenticatedLayout>
         <template #header> Выкупы </template>
 
-        <div class="panel mb-6">
+        <div :class="device().isDesktop && width > 390 ? 'panel mb-6' : 'mobile-purchases-filters'">
             <div class="flex gap-1.5">
                 <AppButton
                     theme="normal"
@@ -288,7 +289,15 @@ const purchaseGroupsItems = reactive(
             <AppPagination :links="paginator" />
         </template>
 
-        <div v-if="purchaseGroups.length == 0" class="panel flex flex-col grow">
+        <div
+            v-if="purchaseGroups.length == 0"
+            class="panel flex flex-col grow"
+            :class="
+                device().isDesktop && width > 390
+                    ? 'panel flex flex-col grow'
+                    : 'mobile-purchases-empty'
+            "
+        >
             <EmptyState class="grow">
                 <template #title>Нет активных выкупов</template>
                 <template #image>

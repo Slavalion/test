@@ -1,7 +1,8 @@
 <script setup>
 import { Link, usePage } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
-
+import device from 'vue3-device-detector'
+import { useWindowSize } from '@vueuse/core'
 import { purchaseGenerator, purchaseImport, purchaseSlide } from '@/modals'
 
 import ApplicationLogo from '@/Components/ApplicationLogo.vue'
@@ -20,7 +21,7 @@ import AppIcon from '@/Components/AppIcon.vue'
 import { globalSettings } from '@/Store/globalSettings'
 
 const sidebarCollapsed = ref(localStorage.getItem('sidebar-collapsed') == 'true')
-
+const { width } = useWindowSize()
 const page = usePage()
 const totalDeliveres = page.props.data.allDeliveres
 const finishedDeliveres = page.props.data.finishedDeliveres
@@ -55,6 +56,7 @@ window.Echo.channel('tasks').listen('TaskProgressUpdate', (e) => {
 
 <template>
     <div
+        v-if="device().isDesktop && width > 390"
         class="wrapper min-h-screen z-50"
         :class="{
             sidebar_collapsed: sidebarCollapsed,
@@ -140,5 +142,20 @@ window.Echo.channel('tasks').listen('TaskProgressUpdate', (e) => {
         <PurchaseSlide />
         <PurchaseGenerator />
         <PurchaseImport />
+    </div>
+
+    <div v-else class="wrapper-mobile">
+        <div class="wrapper-mobile__desk">
+            <div class="wrapper-mobile__desk-topmenu">
+                <AppButton icon="menu" theme="outline"></AppButton>
+                <div class="wrapper-mobile__logo">
+                    <img src="/images/LogoColor.svg" alt="MPB.top" height="44" />
+                </div>
+                <AppButton icon="plus-circle"></AppButton>
+            </div>
+            <div class="wrapper-mobile__desk-body">
+                <slot></slot>
+            </div>
+        </div>
     </div>
 </template>

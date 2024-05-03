@@ -866,3 +866,110 @@
 .checkCircle g path {
     stroke: $accentGreen;
 }
+
+.wrapper-mobile {
+    width: 100vw;
+    min-height: 100vh;
+
+    &__desk {
+        width: 100vw;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+
+        &-topmenu {
+            width: 100%;
+            height: 16.4103vw;
+            padding: 2.564vw;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            & button {
+                width: 11.2821vw;
+                height: 11.2821vw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 1vw;
+                border-radius: 2.5641vw;
+
+                & svg {
+                    width: 5.1282vw;
+                    height: 5.1282vw;
+                }
+            }
+        }
+
+        &-body {
+            width: 100%;
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    &__logo img {
+        height: 11.2821vw;
+    }
+}
+
+.mobile-purchases-filters {
+    display: none;
+}
+
+.mobile-purchases-empty {
+    flex-grow: 1;
+
+    & .empty-state {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5.1282vw;
+
+        &__image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 81.28vw;
+        }
+
+        &__info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            & p {
+                width: 80%;
+                text-align: center;
+                margin-bottom: 4.615vw;
+                @include mobileparagraph1;
+            }
+
+            & button {
+                min-width: 45.3846vw;
+                height: 11.2821vw;
+                padding-left: 4.103vw;
+                padding-right: 4.103vw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 2.564vw;
+                @include mobileparagraph1;
+
+                & svg {
+                    width: 5.128vw;
+                    height: 5.128vw;
+                }
+            }
+        }
+
+        &__title {
+            @include mobileheader4;
+        }
+    }
+}

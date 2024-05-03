@@ -40,6 +40,13 @@
     letter-spacing: -0.01px;
 }
 
+@mixin mobileheader4 {
+    font-size: 4.359vw;
+    line-height: 7.1794vw;
+    font-weight: 500;
+    letter-spacing: 0.18px;
+}
+
 @mixin mobileparagraph1 {
     font-size: 3.8461vw;
     line-height: 5.641vw;
