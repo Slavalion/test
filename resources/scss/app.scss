@@ -1035,4 +1035,24 @@
     left: 0;
     z-index: 2;
     background-color: rgba(0, 0, 0, 0.25);
+
+    & .mobile-purchases-filters {
+        padding-top: 6.41vw;
+        border-radius: 10px 10px 0 0;
+        background-color: $functionalWhite;
+
+        & button {
+            border-radius: 0;
+            padding-left: 5.128vw;
+            justify-content: flex-start;
+        }
+
+        &__hr {
+            border: 2.5px solid $neuralNeural6;
+            margin-left: 41.282vw;
+            border-radius: 2.5px;
+            height: 0px;
+            width: 17.4359vw;
+        }
+    }
 }

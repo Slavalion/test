@@ -1,6 +1,6 @@
 <script setup>
 import { Link, usePage } from '@inertiajs/vue3'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import device from 'vue3-device-detector'
 import { useWindowSize } from '@vueuse/core'
 import { purchaseGenerator, purchaseImport, purchaseSlide } from '@/modals'
@@ -51,6 +51,12 @@ window.Echo.channel('tasks').listen('TaskProgressUpdate', (e) => {
     // })
     console.log(e.task)
     // localTask.progress = task.progress
+})
+
+watch(width, (width) => {
+    if (width < 390 && document.getElementsByTagName('jdiv').length > 0) {
+        document.getElementsByTagName('jdiv')[0].style.display = 'none'
+    }
 })
 </script>
 

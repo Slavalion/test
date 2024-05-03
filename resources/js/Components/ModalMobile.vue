@@ -60,6 +60,7 @@ onUnmounted(() => {
         <transition leave-active-class="duration-200">
             <div class="mobile-modal" v-show="show">
                 <div class="mobile-purchases-filters">
+                    <div class="mobile-purchases-filters__hr"></div>
                     <AppButton
                         theme="normal"
                         :class="{ btn_selected: 'processing' == currentSection }"

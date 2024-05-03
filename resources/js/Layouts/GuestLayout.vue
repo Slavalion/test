@@ -53,4 +53,3 @@ const { width } = useWindowSize()
         </div>
     </div>
 </template>
-s
