@@ -84,5 +84,6 @@
     "reviewTitle": "Отзывы",
     "questionTitle": "Вопросы",
     "availableTitle": "Доступные",
-    "publishedTitle": "Опубликованные"
+    "publishedTitle": "Опубликованные",
+    "processing": "Активные"
 }

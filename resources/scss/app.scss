@@ -930,7 +930,10 @@
 }
 
 .mobile-purchases-filters {
-    display: none;
+    display: flex;
+    position: absolute;
+    width: 100vw;
+    flex-direction: column;
 }
 
 .mobile-purchases-empty {
@@ -1014,4 +1017,22 @@
         width: 12.8205vw;
         height: 12.8205vw;
     }
+}
+
+.mobile-section-input {
+    width: 89.7435vw;
+    height: 11.2821vw;
+    user-select: none;
+}
+
+.mobile-modal {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.25);
 }

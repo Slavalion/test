@@ -1,6 +1,6 @@
 <script setup>
 import { Head, router } from '@inertiajs/vue3'
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import device from 'vue3-device-detector'
 import { useWindowSize } from '@vueuse/core'
 import { useAxios } from '@/Composables/useAxios'
@@ -14,6 +14,8 @@ import AppPagination from '@/Components/AppPagination.vue'
 import EmptyState from '@/Components/EmptyState.vue'
 import LabelText from '@/Components/LabelText.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import TextInput from '@/Components/Inputs/TextInput.vue'
+import Modal from '@/Components/ModalMobile.vue'
 
 const props = defineProps({
     section: {
@@ -33,6 +35,24 @@ const props = defineProps({
 const api = useAxios()
 const { width } = useWindowSize()
 const currentSection = ref('processing')
+const isModalShowed = ref(false)
+const disableInput = ref(false)
+const mobileCurrentSection = ref('Активные')
+
+watch(
+    () => currentSection.value,
+    () => {
+        if (currentSection.value === 'processing') {
+            mobileCurrentSection.value = 'Активные'
+        } else if (currentSection.value === 'done') {
+            mobileCurrentSection.value = 'Завершенные'
+        } else if (currentSection.value === 'unavailable') {
+            mobileCurrentSection.value = ' Недоступные'
+        } else {
+            mobileCurrentSection.value = 'Все'
+        }
+    }
+)
 
 const setSection = (section) => {
     currentSection.value = section
@@ -73,6 +93,12 @@ const purchaseGroupsItems = reactive(
         ]
     }, [])
 )
+
+const nextSection = (nextSection) => {
+    isModalShowed.value = false
+    disableInput.value = false
+    setSection(nextSection)
+}
 </script>
 
 <template>
@@ -81,7 +107,19 @@ const purchaseGroupsItems = reactive(
     <AuthenticatedLayout>
         <template #header> Выкупы </template>
 
-        <div :class="device().isDesktop && width > 390 ? 'panel mb-6' : 'mobile-purchases-filters'">
+        <div v-if="!(device().isDesktop && width > 390)">
+            <TextInput
+                v-model="mobileCurrentSection"
+                icon="chevron-down"
+                size="lg"
+                type="text"
+                class="mobile-section-input"
+                @click="isModalShowed = !isModalShowed"
+                :disabled="disableInput"
+            />
+        </div>
+
+        <div v-if="device().isDesktop && width > 390" class="panel mb-6">
             <div class="flex gap-1.5">
                 <AppButton
                     theme="normal"
@@ -104,7 +142,7 @@ const purchaseGroupsItems = reactive(
                 >
                     Недоступные
                 </AppButton>
-                <AppButton
+                <!-- <AppButton
                     theme="normal"
                     :class="{ btn_selected: 'not_enough_w_balance' == currentSection }"
                     @click="setSection('not_enough_w_balance')"
@@ -117,7 +155,7 @@ const purchaseGroupsItems = reactive(
                     @click="setSection('pickpoint_overloaded')"
                 >
                     ПВЗ перегружен
-                </AppButton>
+                </AppButton> -->
                 <AppButton
                     theme="normal"
                     :class="{ btn_selected: 'all' == currentSection }"
@@ -316,6 +354,13 @@ const purchaseGroupsItems = reactive(
                 >
             </EmptyState>
         </div>
+
+        <Modal
+            :show="isModalShowed"
+            :currentSection="currentSection"
+            @close="nextSection"
+            @open="disableInput = true"
+        />
     </AuthenticatedLayout>
 </template>
 
