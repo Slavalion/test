@@ -1023,6 +1023,24 @@
     width: 89.7435vw;
     height: 11.2821vw;
     user-select: none;
+    cursor: pointer;
+    border: 1.5px solid $neuralNeural6;
+    transition: ease all 0.3s;
+    color: $neuralNeural8;
+    border-radius: 2.5641vw;
+    padding: 2.821vw 4.102vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & p {
+        @include mobileparagraph1;
+    }
+
+    & svg {
+        width: 5.128vw;
+        height: 5.128vw;
+    }
 }
 
 .mobile-modal {
@@ -1053,6 +1071,123 @@
             border-radius: 2.5px;
             height: 0px;
             width: 17.4359vw;
+        }
+    }
+}
+
+.mobile-modalSlide {
+    width: 100vw;
+    min-height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    & .modal__wrapper_slide {
+        width: 100%;
+        min-height: 100vh;
+        border-bottom-left-radius: 0px;
+
+        & .modal__header {
+            padding: 5.128vw;
+            border-bottom: 1.5px solid $neuralNeural6;
+
+            & .modal__header-wrapper .modal__header-title {
+                @include mobileheader2;
+
+                & .label_theme-danger {
+                    display: none;
+                }
+                & button {
+                    display: none;
+                }
+            }
+
+            &-caption {
+                @include mobileparagraph1;
+            }
+        }
+
+        & .modal__header-close {
+            width: 10.256vw;
+            height: 10.256vw;
+            & .btn {
+                width: 10.256vw;
+                height: 10.256vw;
+                padding: 2.564vw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                & svg {
+                    margin: 0;
+                    width: 10.256vw;
+                    height: 10.256vw;
+                }
+            }
+        }
+
+        & .modal__footer {
+            padding: 5.128vw;
+
+            & .modal__footer-actions {
+                display: flex;
+                flex-direction: column;
+                & button {
+                    height: 11.128vw;
+                    padding: 0.5vw;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 2.564vw;
+
+                    & span {
+                        @include mobileparagraph1;
+                    }
+                }
+
+                & .btn_theme-normal {
+                    display: none;
+                }
+            }
+        }
+
+        & .modal__body {
+            padding: 9.2307vw;
+
+            & .empty-state {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 6.153vw;
+
+                &__title {
+                    @include mobileheader4;
+                }
+
+                &__list {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    &__input-block {
+        display: flex;
+        flex-direction: column;
+        gap: 2.564vw;
+
+        & button {
+            height: 11.128vw;
+            padding: 0.5vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 2.564vw;
+
+            & span {
+                @include mobileparagraph1;
+            }
         }
     }
 }

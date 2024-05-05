@@ -3,6 +3,10 @@ import { onMounted, onUnmounted, watch } from 'vue'
 import AppButton from './AppButton.vue'
 import { ref } from 'vue'
 
+import device from 'vue3-device-detector'
+import { useWindowSize } from '@vueuse/core'
+
+const { width } = useWindowSize()
 const props = defineProps({
     show: {
         type: Boolean,
@@ -63,7 +67,11 @@ onUnmounted(() => {
         <transition leave-active-class="duration-200">
             <div
                 v-show="show"
-                class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-40"
+                :class="
+                    device().isDesktop && width > 390
+                        ? 'fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-40'
+                        : 'mobile-modalSlide'
+                "
                 scroll-region
             >
                 <transition
@@ -111,7 +119,13 @@ onUnmounted(() => {
                                 <slot name="caption"></slot>
                             </div>
 
-                            <div class="flex gap-1.5">
+                            <div
+                                :class="
+                                    device().isDesktop && width > 390
+                                        ? 'flex gap-1.5'
+                                        : 'mobile-modalSlide__input-block'
+                                "
+                            >
                                 <slot name="search"></slot>
                             </div>
                         </div>

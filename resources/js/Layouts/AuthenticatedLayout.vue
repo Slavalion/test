@@ -157,7 +157,7 @@ watch(width, (width) => {
                 <div class="wrapper-mobile__logo">
                     <img src="/images/LogoColor.svg" alt="MPB.top" height="44" />
                 </div>
-                <AppButton icon="plus-circle"></AppButton>
+                <AppButton icon="plus-circle" @click="purchaseSlide.open()"></AppButton>
             </div>
             <!-- Page Content -->
             <main class="wrapper-mobile__desk-body">
@@ -181,5 +181,6 @@ watch(width, (width) => {
                 <slot></slot>
             </main>
         </div>
+        <PurchaseSlide />
     </div>
 </template>

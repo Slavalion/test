@@ -38,18 +38,23 @@ const currentSection = ref('processing')
 const isModalShowed = ref(false)
 const disableInput = ref(false)
 const mobileCurrentSection = ref('Активные')
+const messageTitle = ref('Нет активных выкупов')
 
 watch(
     () => currentSection.value,
     () => {
         if (currentSection.value === 'processing') {
             mobileCurrentSection.value = 'Активные'
+            messageTitle.value = 'Нет активных выкупов'
         } else if (currentSection.value === 'done') {
             mobileCurrentSection.value = 'Завершенные'
+            messageTitle.value = 'Нет завершёных выкупов'
         } else if (currentSection.value === 'unavailable') {
             mobileCurrentSection.value = ' Недоступные'
+            messageTitle.value = 'Нет недоступных выкупов'
         } else {
             mobileCurrentSection.value = 'Все'
+            messageTitle.value = 'Пока нет выкупов'
         }
     }
 )
@@ -107,16 +112,13 @@ const nextSection = (nextSection) => {
     <AuthenticatedLayout>
         <template #header> Выкупы </template>
 
-        <div v-if="!(device().isDesktop && width > 390)">
-            <TextInput
-                v-model="mobileCurrentSection"
-                icon="chevron-down"
-                size="lg"
-                type="text"
-                class="mobile-section-input"
-                @click="isModalShowed = !isModalShowed"
-                :disabled="disableInput"
-            />
+        <div
+            v-if="!(device().isDesktop && width > 390)"
+            @click="isModalShowed = !isModalShowed"
+            class="input-wrapper mobile-section-input"
+        >
+            <p>{{ mobileCurrentSection }}</p>
+            <AppIcon icon="chevron-down" />
         </div>
 
         <div v-if="device().isDesktop && width > 390" class="panel mb-6">
@@ -337,7 +339,7 @@ const nextSection = (nextSection) => {
             "
         >
             <EmptyState class="grow">
-                <template #title>Нет активных выкупов</template>
+                <template #title>{{ messageTitle }}</template>
                 <template #image>
                     <img
                         src="/images/empty-purchases.svg"
