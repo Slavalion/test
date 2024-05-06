@@ -157,7 +157,12 @@ watch(width, (width) => {
                 <div class="wrapper-mobile__logo">
                     <img src="/images/LogoColor.svg" alt="MPB.top" height="44" />
                 </div>
-                <AppButton icon="plus-circle" @click="purchaseSlide.open()"></AppButton>
+                <AppButton
+                    v-if="purchaseSlide.show"
+                    icon="close"
+                    @click="purchaseSlide.close()"
+                ></AppButton>
+                <AppButton v-else icon="plus-circle" @click="purchaseSlide.open()"></AppButton>
             </div>
             <!-- Page Content -->
             <main class="wrapper-mobile__desk-body" v-if="!sidebarCollapsed">
