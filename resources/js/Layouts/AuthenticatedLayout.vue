@@ -153,14 +153,22 @@ watch(width, (width) => {
     <div v-else class="wrapper-mobile">
         <div class="wrapper-mobile__desk">
             <div class="wrapper-mobile__desk-topmenu">
-                <AppButton icon="menu" theme="outline"></AppButton>
+                <AppButton icon="menu" theme="outline" @click="toggleSidebar"></AppButton>
                 <div class="wrapper-mobile__logo">
                     <img src="/images/LogoColor.svg" alt="MPB.top" height="44" />
                 </div>
                 <AppButton icon="plus-circle" @click="purchaseSlide.open()"></AppButton>
             </div>
             <!-- Page Content -->
-            <main class="wrapper-mobile__desk-body">
+            <main class="wrapper-mobile__desk-body" v-if="!sidebarCollapsed">
+                <div class="wrapper-mobile__sidebar">
+                    <ProfileCard />
+
+                    <SidebarNav />
+                </div>
+            </main>
+
+            <main class="wrapper-mobile__desk-body" v-else>
                 <!-- Page Heading -->
                 <div v-if="globalSettings.maintenance_mode" class="mobile-maintenance-mode">
                     <div class="flex items-center gap-6">

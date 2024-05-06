@@ -887,6 +887,9 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid $neuralNeural4;
+            background-color: $functionalWhite;
+            position: fixed;
+            z-index: 9999;
 
             & button {
                 width: 11.2821vw;
@@ -905,6 +908,7 @@
         }
 
         &-body {
+            margin-top: 16.4103vw;
             width: 100%;
             flex-grow: 1;
             display: flex;
@@ -927,6 +931,76 @@
 
     &__logo img {
         height: 11.2821vw;
+    }
+
+    &__sidebar {
+        width: 100vw;
+        padding: 3vw;
+
+        & .profile-card {
+            border-radius: 4.1vw;
+            padding: 3.077vw;
+            margin: 0;
+
+            &__email,
+            &__balance {
+                @include mobileparagraph1;
+            }
+
+            &__fillup button {
+                @include mobileparagraph1;
+                border-radius: 2.5641vw;
+                padding: 2.5641vw 3.8462vw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 1.5438vw;
+
+                & svg {
+                    display: none;
+                }
+            }
+
+            &__settings a svg {
+                width: 5.128vw;
+                height: 5.128vw;
+            }
+        }
+
+        & .menu {
+            & .menu__section {
+                @include mobileparagraph1;
+            }
+
+            & .menu__link {
+                align-items: center;
+                @include mobileparagraph1;
+
+                &-counter {
+                    min-width: 5.128vw;
+                    height: 5.128vw;
+                    padding: 0 1.2821vw;
+                    border-radius: 2.5641vw;
+                    top: 2.5641vw;
+                    right: 2.5641vw;
+                    @include mobileparagraph1;
+                }
+
+                &__alertTriangle,
+                &__alertOctagon {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                & .menu__link__title svg,
+                &__alertTriangle svg,
+                &__alertOctagon svg {
+                    width: 5.128vw;
+                    height: 5.128vw;
+                }
+            }
+        }
     }
 }
 
