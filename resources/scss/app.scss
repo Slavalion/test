@@ -1390,3 +1390,33 @@
         }
     }
 }
+
+.mobile-tarifCard {
+    width: 100vw;
+    padding: 0 5.128vw 0 5.128vw;
+
+    & .tariffe-card {
+        min-width: 65.1282vw;
+        min-height: 66.6667vw;
+        padding: 6.1538vw;
+        border-radius: 4.1025vw;
+        @include mobileparagraph1;
+
+        &__info h1 {
+            @include mobileheader2;
+        }
+
+        &__info h5 {
+            @include mobileparagraph1;
+        }
+
+        &__info {
+            margin-bottom: 4.1026vw;
+        }
+        &__buyIt button {
+            border-radius: 2.5641vw;
+            padding: 2.5641vw 3.8462vw;
+            @include mobileparagraph1;
+        }
+    }
+}

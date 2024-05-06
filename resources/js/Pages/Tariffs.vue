@@ -4,6 +4,10 @@ import { Head } from '@inertiajs/vue3'
 import TarrifeCard from '@/Components/Partials/TarrifeCard.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import AppButton from '@/Components/AppButton.vue'
+import device from 'vue3-device-detector'
+import { useWindowSize } from '@vueuse/core'
+
+const { width } = useWindowSize()
 
 const props = defineProps({
     tariffs: {
@@ -59,7 +63,7 @@ const actualSection = reactive(
 
         <div class="container flex flex-row">
             <div
-                class="tarifCard"
+                :class="device().isDesktop && width > 390 ? 'tarifCard' : 'mobile-tarifCard'"
                 v-for="(tarrif, index) in tariffsItems.filter(
                     (tarrif) => tarrif.task_type === currentSection
                 )"
@@ -97,7 +101,9 @@ const actualSection = reactive(
 
 @media (max-width: 750px) {
     .container {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        grid: 4.1025vw;
     }
 }
 </style>
