@@ -181,9 +181,13 @@ const nextSection = (nextSection) => {
             <div
                 v-for="group in purchaseGroupsItems"
                 :key="group.id"
-                class="panel panel_product mb-6"
+                :class="
+                    device().isDesktop && width > 390
+                        ? 'panel panel_product mb-6'
+                        : 'mobile-purchasesGroup'
+                "
             >
-                <div class="purchase-group">
+                <div class="purchase-group" v-if="device().isDesktop && width > 390">
                     <div class="purchase-group purchase-group__title">
                         <div
                             :class="{ 'rotate-180': !group.collapsed }"
@@ -228,7 +232,58 @@ const nextSection = (nextSection) => {
                     </div>
                 </div>
 
-                <div class="products-header products-header_deliveries" v-show="group.collapsed">
+                <div class="mobile-purchase-group" v-else>
+                    <div class="mobile-purchase-group__title">
+                        #{{ group.id }} Выкуп от {{ group.created_ts }}
+                    </div>
+                    <div class="mobile-purchase-group__body">
+                        <div
+                            :class="{ 'rotate-180': !group.collapsed }"
+                            class="transition-all mobile-purchase-group__body__collapsed"
+                            @click="group.collapsed = !group.collapsed"
+                        >
+                            <AppIcon icon="chevron-down" />
+                        </div>
+                        <div class="mobile-purchase-group__info">
+                            <div class="mobile-purchase-group__progress">
+                                <p>
+                                    Завершено
+                                    {{
+                                        group.purchases.filter(
+                                            (purchase) => purchase.status === 'done'
+                                        ).length
+                                    }}
+                                    из {{ group.purchases.length }}
+                                </p>
+                                <ProgressBar
+                                    :progress="
+                                        Math.round(
+                                            (group.purchases.filter(
+                                                (purchase) => purchase.status === 'done'
+                                            ).length *
+                                                100) /
+                                                group.purchases.length
+                                        )
+                                    "
+                                />
+                            </div>
+                            <div class="mobile-purchase-group__info__text">
+                                Товаров:
+                                {{ group.purchases.length }} шт.
+                            </div>
+                            <div class="mobile-purchase-group__info__text">
+                                Сумма выкупов:
+                                {{ group.total_sum }} ₽
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="products-header products-header_deliveries"
+                    v-show="group.collapsed"
+                    v-if="device().isDesktop && width > 390"
+                >
                     <div class="products-header__product">Товар</div>
                     <div class="products-header__code">Артикул</div>
                     <div class="products-header__quantity">Кол-во</div>
@@ -241,6 +296,7 @@ const nextSection = (nextSection) => {
                 </div>
                 <div class="product-list product-list_deliveries">
                     <div
+                        v-if="device().isDesktop && width > 390"
                         v-for="purchase in group.purchases"
                         :key="purchase.id"
                         class="product"
@@ -323,10 +379,56 @@ const nextSection = (nextSection) => {
                             />
                         </div>
                     </div>
+                    <div
+                        v-else
+                        v-for="purchase in group.purchases"
+                        :key="'mobile-' + purchase.id"
+                        class="mobile-product-card"
+                        v-show="group.collapsed"
+                    >
+                        <div class="mobile-product-card__image">
+                            <a
+                                :href="
+                                    'https://www.wildberries.ru/catalog/' +
+                                    purchase.product?.remote_id +
+                                    '/detail.aspx'
+                                "
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    :src="
+                                        WbHelperImage.constructHostV2(purchase.product?.remote_id) +
+                                        '/images/tm/1.webp'
+                                    "
+                                    alt=""
+                                    width="30"
+                                    height="40"
+                                />
+                            </a>
+                        </div>
+                        <div class="mobile-product-card__info">
+                            <div class="mobile-product-card__info__top">
+                                <div class="product__code">
+                                    <span class="product__code__text">Код:</span>
+                                    {{ purchase.product?.remote_id }}
+                                </div>
+                                <div class="product__quantity">Кол-во: {{ purchase.quantity }}</div>
+                            </div>
+                            <div class="mobile-product-card__info__bottom">
+                                <!-- <div class="product__quantity">Кол-во: {{ purchase.quantity }}</div> -->
+                                <div class="product__actions">
+                                    <LabelText :theme="statuses[purchase.status].theme">
+                                        {{ statuses[purchase.status].title }}
+                                    </LabelText>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <AppPagination :links="paginator" />
+            <AppPagination :links="paginator" v-if="device().isDesktop && width > 390" />
         </template>
 
         <div

@@ -870,6 +870,7 @@
 .wrapper-mobile {
     width: 100vw;
     min-height: 100vh;
+    overflow: hidden;
 
     &__desk {
         width: 100vw;
@@ -1187,6 +1188,130 @@
 
             & span {
                 @include mobileparagraph1;
+            }
+        }
+    }
+}
+
+.mobile-purchasesGroup {
+    width: 88vw;
+    margin-top: 2vw;
+    border: 1px solid $neuralNeural6;
+    border-radius: 2.564vw;
+}
+
+.mobile-purchase-group {
+    width: 100%;
+    padding: 2.564vw;
+    display: flex;
+    flex-direction: column;
+
+    &__title {
+        @include mobileheader4;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        &__collapsed {
+            width: 12vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+        max-width: 55vw;
+
+        &__text {
+            @include mobileparagraph1;
+        }
+    }
+    &__progress {
+        max-width: 55vw;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2vw;
+
+        & p {
+            @include mobileparagraph1;
+            text-align: right;
+        }
+
+        & .progress {
+            width: 45vw;
+            height: 1.538vw !important;
+            min-width: 50px !important;
+        }
+    }
+}
+
+.product-list_deliveries .mobile-product-card {
+    border-top: 1px solid $neuralNeural6;
+    padding: 2.564vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 88vw;
+
+    &__image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 82%;
+
+        &__top {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 1vw;
+
+            & .product__code,
+            & .product__quantity {
+                display: flex;
+                flex-direction: row;
+                white-space: nowrap;
+                @include mobileparagraph0;
+
+                & .product__code__text {
+                    color: $neuralNeural8 !important;
+                }
+            }
+        }
+
+        &__bottom {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            width: 100%;
+
+            & .product__actions .label {
+                padding: 1.5384vw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                @include mobileparagraph1;
+
+                & svg {
+                    width: 4.102vw;
+                    height: 4.102vw;
+                }
             }
         }
     }
