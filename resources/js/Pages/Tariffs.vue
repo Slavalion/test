@@ -6,7 +6,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import AppButton from '@/Components/AppButton.vue'
 import device from 'vue3-device-detector'
 import { useWindowSize } from '@vueuse/core'
-import Modal from '@/Components/ModalMobile.vue'
+import Modal from '@/Components/ModalMobileTariffs.vue'
+import AppIcon from '@/Components/AppIcon.vue'
 
 const { width } = useWindowSize()
 const isModalShowed = ref(false)
@@ -18,7 +19,7 @@ const props = defineProps({
 })
 
 const currentSection = ref('purchase')
-const mobileCurrentSection = ref('Активные')
+const mobileCurrentSection = ref('Выкупы')
 
 watch(
     () => currentSection.value,
@@ -35,6 +36,11 @@ watch(
 
 const setSection = (section) => {
     currentSection.value = section
+}
+
+const nextSection = (section) => {
+    setSection(section)
+    isModalShowed.value = false
 }
 
 const tariffsItems = reactive(
@@ -98,6 +104,7 @@ const actualSection = reactive(
         <Modal
             :show="isModalShowed"
             :currentSection="currentSection"
+            :sections="actualSection"
             @close="nextSection"
             @open="disableInput = true"
         />
