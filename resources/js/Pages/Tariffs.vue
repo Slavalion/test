@@ -1,14 +1,15 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { Head } from '@inertiajs/vue3'
 import TarrifeCard from '@/Components/Partials/TarrifeCard.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import AppButton from '@/Components/AppButton.vue'
 import device from 'vue3-device-detector'
 import { useWindowSize } from '@vueuse/core'
+import Modal from '@/Components/ModalMobile.vue'
 
 const { width } = useWindowSize()
-
+const isModalShowed = ref(false)
 const props = defineProps({
     tariffs: {
         type: Array,
@@ -17,6 +18,20 @@ const props = defineProps({
 })
 
 const currentSection = ref('purchase')
+const mobileCurrentSection = ref('Активные')
+
+watch(
+    () => currentSection.value,
+    () => {
+        if (currentSection.value === 'processing') {
+            mobileCurrentSection.value = 'Выкупы'
+        } else if (currentSection.value === 'review') {
+            mobileCurrentSection.value = 'Отзывы'
+        } else {
+            mobileCurrentSection.value = 'Вопросы'
+        }
+    }
+)
 
 const setSection = (section) => {
     currentSection.value = section
@@ -48,7 +63,16 @@ const actualSection = reactive(
     <AuthenticatedLayout>
         <template #header>Тарифы</template>
 
-        <div class="panel mb-6">
+        <div
+            v-if="!(device().isDesktop && width > 390)"
+            @click="isModalShowed = !isModalShowed"
+            class="input-wrapper mobile-section-input"
+        >
+            <p>{{ mobileCurrentSection }}</p>
+            <AppIcon icon="chevron-down" />
+        </div>
+
+        <div class="panel mb-6" v-if="device().isDesktop && width > 390">
             <div class="flex flex-row gap-1.5">
                 <AppButton
                     v-for="section in actualSection"
@@ -71,6 +95,12 @@ const actualSection = reactive(
                 <TarrifeCard :tariff="tarrif" :keyID="index" />
             </div>
         </div>
+        <Modal
+            :show="isModalShowed"
+            :currentSection="currentSection"
+            @close="nextSection"
+            @open="disableInput = true"
+        />
     </AuthenticatedLayout>
 </template>
 <style lang="scss" scoped>
@@ -91,6 +121,10 @@ const actualSection = reactive(
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 260px;
     gap: 16px;
+}
+
+.mobile-section-input {
+    margin-bottom: 4.1025vw;
 }
 
 @media (max-width: 1000px) {
