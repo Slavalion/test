@@ -1,6 +1,6 @@
 <script setup>
 import { Link, usePage } from '@inertiajs/vue3'
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 import device from 'vue3-device-detector'
 import { useWindowSize } from '@vueuse/core'
 import { purchaseGenerator, purchaseImport, purchaseSlide } from '@/modals'
@@ -57,6 +57,10 @@ watch(width, (width) => {
     if (width < 390 && document.getElementsByTagName('jdiv').length > 0) {
         document.getElementsByTagName('jdiv')[0].style.display = 'none'
     }
+})
+
+onMounted(() => {
+    console.log(usePage().component)
 })
 </script>
 
@@ -150,7 +154,7 @@ watch(width, (width) => {
         <PurchaseImport />
     </div>
 
-    <div v-else class="wrapper-mobile">
+    <div v-else :class="'wrapper-mobile ' + usePage().component.toLowerCase() + '-mobile'">
         <div class="wrapper-mobile__desk">
             <div class="wrapper-mobile__desk-topmenu">
                 <AppButton icon="menu" theme="outline" @click="toggleSidebar"></AppButton>

@@ -25,8 +25,10 @@ import IconLayers from '../Icons/Layers.vue'
 import IconLock from '../Icons/Lock.vue'
 import IconLogout from '../Icons/Logout.vue'
 import IconMessage from '../Icons/Message.vue'
+import IconMinus from '../Icons/Minus.vue'
 import IconMenu from '../Icons/Menu.vue'
 import IconPackage from '../Icons/Package.vue'
+import IconPlus from '../Icons/Plus.vue'
 import IconPlusCircle from '../Icons/PlusCircle.vue'
 import IconQr from '../Icons/Qr.vue'
 import IconQuestion from '../Icons/Question.vue'
@@ -72,8 +74,10 @@ const icons = {
     lock: IconLock,
     logout: IconLogout,
     message: IconMessage,
+    minus: IconMinus,
     menu: IconMenu,
     package: IconPackage,
+    plus: IconPlus,
     'plus-circle': IconPlusCircle,
     qr: IconQr,
     question: IconQuestion,

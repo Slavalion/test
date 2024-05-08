@@ -870,7 +870,6 @@
 .wrapper-mobile {
     width: 100vw;
     min-height: 100vh;
-    overflow: hidden;
 
     &__desk {
         width: 100vw;
@@ -889,7 +888,7 @@
             border-bottom: 1px solid $neuralNeural4;
             background-color: $functionalWhite;
             position: fixed;
-            z-index: 9999;
+            z-index: 10;
 
             & button {
                 width: 11.2821vw;
@@ -1123,10 +1122,10 @@
     height: 100vh;
     display: flex;
     align-items: flex-end;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 13;
     background-color: rgba(0, 0, 0, 0.25);
 
     & .mobile-purchases-filters {
@@ -1400,6 +1399,7 @@
         min-height: 55.6667vw;
         padding: 6.1538vw;
         border-radius: 4.1025vw;
+        border: 1px solid $neuralNeural4;
         @include mobileparagraph1;
 
         &__info h1 {
@@ -1417,6 +1417,115 @@
             border-radius: 2.5641vw;
             padding: 2.5641vw 3.8462vw;
             @include mobileparagraph1;
+        }
+    }
+}
+
+.tariffs-mobile,
+.transactions-mobile,
+.purchases-mobile {
+    & .wrapper-mobile__desk {
+        & .wrapper-mobile__desk-body {
+            justify-content: flex-start;
+            & .input-wrapper {
+                width: 100vw;
+                background-color: $functionalWhite;
+                position: sticky;
+                top: 0px;
+                z-index: 11;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 16.4103vw;
+                // & .mobile-section-input {
+                // }
+            }
+        }
+    }
+}
+
+.mobile-product-card {
+    border-top: 1px solid $neuralNeural6;
+    padding: 2.564vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 92vw;
+
+    &__image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & svg {
+            width: 4.102vw;
+            height: 4.102vw;
+        }
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 82%;
+
+        &__top {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 1vw;
+
+            & .product__code,
+            & .product__quantity {
+                display: flex;
+                flex-direction: row;
+                white-space: nowrap;
+                @include mobileparagraph0;
+            }
+
+            & .product__code__text {
+                color: $neuralNeural8 !important;
+            }
+        }
+
+        &__bottom {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+
+            & .product__actions {
+                @include mobileheader4;
+            }
+
+            & .product__actions .label {
+                padding: 1.5384vw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                @include mobileparagraph1;
+
+                & svg {
+                    width: 4.102vw;
+                    height: 4.102vw;
+                }
+            }
+
+            & .product__status {
+                & .badge {
+                    @include mobileparagraph0;
+                    padding-top: 0.3vw;
+                    padding-bottom: 0.3vw;
+
+                    & svg {
+                        width: 3vw;
+                        height: 3vw;
+                    }
+                }
+            }
         }
     }
 }

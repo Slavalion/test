@@ -1,7 +1,7 @@
 <script setup>
 import { Head, router, usePage } from '@inertiajs/vue3'
 import dayjs from 'dayjs'
-import { computed, ref } from 'vue'
+import { computed, ref, reactive, watch } from 'vue'
 import moment from 'moment'
 import { currencyFormater } from '@/Helpers/formater'
 import AppIcon from '@/Components/AppIcon.vue'
@@ -10,6 +10,9 @@ import AppPagination from '@/Components/AppPagination.vue'
 import AppTable from '@/Components/AppTable.vue'
 import TableTh from '@/Components/Table/TableTh.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import device from 'vue3-device-detector'
+import { useWindowSize } from '@vueuse/core'
+import Modal from '@/Components/ModalMobileTariffs.vue'
 
 const props = defineProps({
     transactions: {
@@ -25,6 +28,26 @@ const props = defineProps({
         required: true,
     },
 })
+
+const { width } = useWindowSize()
+const isModalShowed = ref(false)
+const mobileCurrentSection = ref('Баланс')
+
+const actualSections = ['balance', 'refill', 'debit']
+
+const actualSection = reactive(
+    props.transactions.reduce((acc, curVal) => {
+        if (acc.includes(curVal.task_type)) {
+            return acc
+        }
+        return [...acc, curVal.task_type]
+    }, [])
+)
+
+const nextSection = (section) => {
+    setSection(section)
+    isModalShowed.value = false
+}
 
 const targetToText = {
     'App\\Models\\PurchaseGroup': 'Группа выкупов',
@@ -83,8 +106,21 @@ const setSection = (section) => {
         },
     })
 }
+
+watch(
+    () => currentSection.value,
+    () => {
+        if (currentSection.value === 'balance') {
+            mobileCurrentSection.value = 'Баланс'
+        } else if (currentSection.value === 'refill') {
+            mobileCurrentSection.value = 'Пополнение'
+        } else {
+            mobileCurrentSection.value = 'Списание'
+        }
+    }
+)
 </script>
-<template>
+<template class="transactions">
     <Head>
         <title>Транзакции</title>
     </Head>
@@ -92,7 +128,14 @@ const setSection = (section) => {
     <AuthenticatedLayout>
         <template #header>Транзакции</template>
 
-        <div class="panel mb-6">
+        <div v-if="!(device().isDesktop && width > 390)" class="input-wrapper">
+            <div @click="isModalShowed = !isModalShowed" class="mobile-section-input">
+                <p>{{ mobileCurrentSection }}</p>
+                <AppIcon icon="chevron-down" />
+            </div>
+        </div>
+
+        <div class="panel mb-6" v-if="device().isDesktop && width > 390">
             <div class="flex gap-1.5">
                 <!-- <AppButton
                     theme="normal"
@@ -208,7 +251,7 @@ const setSection = (section) => {
                     </td>
                 </tr>
             </AppTable>
-            <AppTable v-else class="transactions-table">
+            <AppTable v-else-if="device().isDesktop && width > 390" class="transactions-table">
                 <template #head>
                     <tr>
                         <TableTh>ID</TableTh>
@@ -272,9 +315,99 @@ const setSection = (section) => {
                     </td>
                 </tr>
             </AppTable>
+            <div v-else>
+                <div
+                    v-for="transaction in transactions"
+                    :key="'mobile-' + transaction.id"
+                    class="mobile-product-card"
+                >
+                    <div class="mobile-product-card__image">
+                        <AppIcon
+                            v-if="transaction.type === -1"
+                            icon="minus"
+                            class="mobile-product-card__symbol"
+                            :fill="
+                                transaction.status < 0
+                                    ? 'red'
+                                    : transaction.status > 0
+                                      ? '#1665FF'
+                                      : 'black'
+                            "
+                        />
+                        <AppIcon
+                            v-if="transaction.type === 1"
+                            icon="plus"
+                            class="mobile-product-card__symbol"
+                            :fill="
+                                transaction.status < 0
+                                    ? 'red'
+                                    : transaction.status > 0
+                                      ? '#1665FF'
+                                      : 'black'
+                            "
+                        />
+                    </div>
+                    <div class="mobile-product-card__info">
+                        <div class="mobile-product-card__info__top">
+                            <div class="product__code product__code__text">
+                                {{ moment(transaction.created_ts).format('DD.MM.YYYY') }}
+                            </div>
+                            <div class="product__quantity">
+                                {{ targetOnlyText(transaction.target) }}
+                            </div>
+                        </div>
+                        <div class="mobile-product-card__info__bottom">
+                            <div class="product__actions">
+                                <span v-if="transaction.status == 1" class="functionalBlue">
+                                    {{ currencyFormater.format(transaction.amount / 100) }}
+                                </span>
+                                <span v-else-if="transaction.status == -1" class="accentRedtext">
+                                    {{ currencyFormater.format(transaction.amount / 100) }}
+                                </span>
+                                <span v-else>
+                                    {{ currencyFormater.format(transaction.amount / 100) }}
+                                </span>
+                            </div>
+                            <div class="product__status">
+                                <div v-if="transaction.status == 1" class="accentGreen flex badge">
+                                    <AppIcon
+                                        icon="check-circle"
+                                        width="16"
+                                        height="16"
+                                        class="checkCircle mr-1"
+                                    />
+                                    Выполнено
+                                </div>
+                                <div
+                                    v-else-if="transaction.status == -1"
+                                    class="accentRed flex badge"
+                                >
+                                    <AppIcon
+                                        icon="alert-octagon"
+                                        width="16"
+                                        height="16"
+                                        class="alertOctagon mr-1"
+                                    />
+                                    Ошибка выполнения
+                                </div>
+                                <div v-else class="accentYellow flex badge">
+                                    <AppIcon icon="timer" class="mr-1" />Выполняется
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <AppPagination :links="paginator" />
+        <AppPagination :links="paginator" v-if="device().isDesktop && width > 390" />
+        <Modal
+            :show="isModalShowed"
+            :currentSection="currentSection"
+            :sections="actualSections"
+            @close="nextSection"
+            @open="disableInput = true"
+        />
     </AuthenticatedLayout>
 </template>
 

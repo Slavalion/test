@@ -112,13 +112,11 @@ const nextSection = (nextSection) => {
     <AuthenticatedLayout>
         <template #header> Выкупы </template>
 
-        <div
-            v-if="!(device().isDesktop && width > 390)"
-            @click="isModalShowed = !isModalShowed"
-            class="input-wrapper mobile-section-input"
-        >
-            <p>{{ mobileCurrentSection }}</p>
-            <AppIcon icon="chevron-down" />
+        <div v-if="!(device().isDesktop && width > 390)" class="input-wrapper">
+            <div @click="isModalShowed = !isModalShowed" class="mobile-section-input">
+                <p>{{ mobileCurrentSection }}</p>
+                <AppIcon icon="chevron-down" />
+            </div>
         </div>
 
         <div v-if="device().isDesktop && width > 390" class="panel mb-6">

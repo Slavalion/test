@@ -192,8 +192,6 @@ onMounted(() => {
         document.getElementById('purchaseSladeInput').type = 'number'
         document.getElementById('purchaseSladeInput').pattern = '\\d*'
         document.getElementById('purchaseSladeInput').inputmode = 'decimal'
-
-        console.log(document.getElementById('purchaseSladeInput').type)
     }
 })
 </script>

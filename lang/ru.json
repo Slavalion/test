@@ -85,5 +85,8 @@
     "questionTitle": "Вопросы",
     "availableTitle": "Доступные",
     "publishedTitle": "Опубликованные",
-    "processing": "Активные"
+    "processing": "Активные",
+    "balanceTitle": "Баланс",
+    "refillTitle": "Пополнение",
+    "debitTitle": "Списание"
 }
