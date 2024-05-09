@@ -1421,6 +1421,7 @@
     }
 }
 
+.pickups-mobile,
 .wallets-mobile,
 .faq-mobile,
 .tariffs-mobile,
@@ -1687,4 +1688,118 @@
 }
 .wallet__info-balance-sum {
     @include mobileheader4;
+}
+
+.mobile-pickup-danger {
+    & .label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include mobileparagraph0;
+
+        & svg {
+            width: 4vw;
+            height: 4vw;
+        }
+    }
+}
+
+.mobile-pickup {
+    &__body {
+        width: 90vw;
+        gap: 5vw;
+        margin-bottom: 3vw;
+    }
+    &__item {
+        background-color: $functionalWhite;
+        gap: 1.5385vw;
+        margin-top: 3.077vw;
+        padding: 2.0513vw 3.077vw;
+        border-radius: 3.077vw;
+        position: relative;
+        display: flex;
+        align-items: center;
+        border: 1px solid #e7eaf0;
+        flex-direction: column;
+    }
+    &__empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+
+        & .empty-state {
+            & .empty-state__info {
+                & .header-5 {
+                    @include mobileheader4;
+                }
+            }
+        }
+    }
+    &__bottom {
+        width: 100%;
+        flex-direction: row;
+        justify-content: flex-end;
+        & .label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 1.5385vw;
+            padding: 1.0256vw;
+            @include mobileparagraph0;
+
+            & svg {
+                width: 4vw;
+                height: 4vw;
+            }
+        }
+    }
+    &__top {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        &-header {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        &-phone,
+        &-id {
+            @include mobileparagraph1;
+        }
+        &-tel,
+        &-span {
+            @include mobileparagraph0;
+        }
+        &-tel,
+        &-phone {
+            color: $neuralNeural8;
+        }
+    }
+    &__name {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        @include mobileheader4;
+    }
+    &__adress {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        @include mobileparagraph1;
+        color: $neuralNeural8;
+    }
+    &__pickup {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        @include mobileparagraph0;
+        color: $neuralNeural10;
+        &-span {
+            color: $neuralNeural8;
+        }
+    }
 }

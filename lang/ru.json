@@ -88,5 +88,9 @@
     "processing": "Активные",
     "balanceTitle": "Баланс",
     "refillTitle": "Пополнение",
-    "debitTitle": "Списание"
+    "debitTitle": "Списание",
+    "allTitle": "Все",
+    "doneTitle": "Завершенные",
+    "pendingTitle": "Ожидает обработки",
+    "processTitle": "В процессе"
 }
