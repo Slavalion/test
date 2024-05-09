@@ -1421,6 +1421,7 @@
     }
 }
 
+.wallets-mobile,
 .faq-mobile,
 .tariffs-mobile,
 .transactions-mobile,
@@ -1561,4 +1562,129 @@
             }
         }
     }
+}
+
+.wallets-mobile {
+    .wrapper-mobile__desk {
+        &-body {
+            background-color: $neuralNeural2;
+        }
+    }
+
+    &-groups {
+        width: 90vw;
+        gap: 5vw;
+        margin-bottom: 3vw;
+        display: flex;
+        flex-direction: column;
+    }
+    &-group {
+        background-color: $functionalWhite;
+        border-radius: 4.102vw;
+        padding: 3vw;
+
+        & .wallet-header {
+            display: flex;
+            flex-direction: column;
+            &__top {
+                & .label {
+                    gap: 1.5385vw;
+                    border-radius: 2.0513vw;
+                    padding: 1.795vw 2.8205vw;
+                    @include mobileparagraph1;
+
+                    & svg {
+                        width: 4.1025vw;
+                        height: 4.1025vw;
+                    }
+                }
+            }
+
+            &__bottom {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                & img {
+                    height: 9.231vw;
+                    width: auto;
+                }
+                & button {
+                    gap: 1.5385vw;
+                    border-radius: 2.0513vw;
+                    padding: 1.795vw 2.8205vw;
+                    @include mobileparagraph1;
+
+                    & svg {
+                        width: 4.1025vw;
+                        height: 4.1025vw;
+                    }
+                }
+            }
+        }
+
+        & .mobile-wallet {
+            gap: 1.5385vw;
+            margin-top: 3.077vw;
+            padding: 2.0513vw 3.077vw;
+            border-radius: 3.077vw;
+            position: relative;
+            display: flex;
+            align-items: center;
+            border: 1px solid #e7eaf0;
+            flex-direction: column;
+
+            &__top {
+                gap: 1.5385vw;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+
+                & .wallet__info {
+                    @include mobileparagraph1;
+                }
+            }
+
+            &__right {
+                height: 16.1538vw;
+                gap: 0.7692vw;
+                display: flex;
+                flex-direction: column-reverse;
+                justify-content: flex-end;
+                align-items: flex-start;
+
+                &-btn button {
+                    width: 7.6923vw;
+                    height: 7.6923vw;
+                    border-radius: 1.5385vw;
+                    padding: 1.0256vw;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+
+            &__bottom {
+                display: flex;
+                width: 100%;
+                flex-direction: row;
+                justify-content: flex-end;
+
+                &-label {
+                    @include mobileparagraph1;
+                    padding: 1.5385vw;
+                    border-radius: 1.5385vw;
+                }
+            }
+        }
+    }
+    &-description {
+        @include mobileparagraph0;
+    }
+}
+.wallet__info-balance-sum {
+    @include mobileheader4;
 }
