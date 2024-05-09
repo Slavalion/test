@@ -1421,6 +1421,7 @@
     }
 }
 
+.faq-mobile,
 .tariffs-mobile,
 .transactions-mobile,
 .purchases-mobile {
@@ -1523,6 +1524,38 @@
                     & svg {
                         width: 3vw;
                         height: 3vw;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.faq-mobile {
+    & .wrapper-mobile__desk {
+        &-body {
+            & .mobile-faq-card {
+                margin-bottom: 3vw;
+                width: 89.7435vw;
+                border-radius: 2.5641vw;
+                padding: 2.5641vw 3.8462vw;
+                border: 1px solid $neuralNeural6;
+
+                &__title {
+                    @include mobileheader4;
+
+                    & .transition-all svg {
+                        width: 5vw;
+                        height: 5vw;
+                    }
+                }
+
+                &__body {
+                    border-top: 1px solid $neuralNeural6;
+                    @include mobileparagraph1;
+
+                    &-content {
+                        @include mobileparagraph0;
                     }
                 }
             }

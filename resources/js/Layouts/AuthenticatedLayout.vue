@@ -60,7 +60,10 @@ watch(width, (width) => {
 })
 
 onMounted(() => {
-    console.log(usePage().component)
+    if (!(device().isDesktop && width > 390)) {
+        sidebarCollapsed.value = true
+        localStorage.setItem('sidebar-collapsed', true)
+    }
 })
 </script>
 
