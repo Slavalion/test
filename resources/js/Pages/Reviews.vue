@@ -1,13 +1,14 @@
 <script setup>
 import { Head, router } from '@inertiajs/vue3'
-import { ref } from 'vue'
-
+import { ref, watch, onMounted } from 'vue'
+import AppIcon from '@/Components/AppIcon.vue'
 import { currencyFormater } from '@/Helpers/formater'
 import { addReview } from '@/modals'
 import { WbHelperImage } from '@/wbHelper'
-
+import Modal from '@/Components/ModalMobileReview.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-
+import device from 'vue3-device-detector'
+import { useWindowSize } from '@vueuse/core'
 import AppButton from '@/Components/AppButton.vue'
 import AppPagination from '@/Components/AppPagination.vue'
 import EmptyState from '@/Components/EmptyState.vue'
@@ -34,9 +35,13 @@ const props = defineProps({
 })
 
 const stars = [1, 2, 3, 4, 5]
-
+const { width } = useWindowSize()
+const isSmallScreen = ref(false)
 const currentSection = ref(props.section)
 const selectedPurchase = ref(0)
+const isModalShowed = ref(false)
+const mobileCurrentSection = ref('Доступные')
+const actualSections = ['', 'processing', 'done']
 
 const openAddReview = (purchaseIndex) => {
     selectedPurchase.value = purchaseIndex
@@ -53,6 +58,32 @@ const setSection = (section) => {
         },
     })
 }
+
+const nextSection = (section) => {
+    setSection(section)
+    isModalShowed.value = false
+}
+
+watch(width, () => {
+    isSmallScreen.value = !(device().isDesktop && width.value > 390)
+})
+
+watch(
+    () => currentSection.value,
+    () => {
+        if (currentSection.value === 'processing') {
+            mobileCurrentSection.value = ' В работе'
+        } else if (currentSection.value === 'done') {
+            mobileCurrentSection.value = 'Опубликованные'
+        } else {
+            mobileCurrentSection.value = 'Доступные'
+        }
+    }
+)
+
+onMounted(() => {
+    isSmallScreen.value = !(device().isDesktop && width.value > 390)
+})
 </script>
 
 <template>
@@ -63,7 +94,14 @@ const setSection = (section) => {
     <AuthenticatedLayout>
         <template #header>Отзывы</template>
 
-        <div class="panel mb-6">
+        <div v-if="isSmallScreen" class="input-wrapper">
+            <div @click="isModalShowed = !isModalShowed" class="mobile-section-input">
+                <p>{{ mobileCurrentSection }}</p>
+                <AppIcon icon="chevron-down" />
+            </div>
+        </div>
+
+        <div class="panel mb-6" v-else>
             <div class="flex gap-1.5">
                 <AppButton
                     theme="normal"
@@ -90,15 +128,18 @@ const setSection = (section) => {
         </div>
 
         <template v-if="!currentSection">
-            <div v-if="availablePurchases.length" class="panel panel_product">
-                <div class="products-header products-header_deliveries">
+            <div
+                v-if="availablePurchases.length"
+                :class="isSmallScreen ? 'mobile-review' : 'panel panel_product'"
+            >
+                <div v-if="!isSmallScreen" class="products-header products-header_deliveries">
                     <div class="products-header__product" style="flex: 0 0 52.1946564885%">
                         Товар
                     </div>
                     <div class="products-header__code">Артикул</div>
                     <div class="products-header__address">Доступно отзывов</div>
                 </div>
-                <div class="product-list product-list_deliveries">
+                <div v-if="!isSmallScreen" class="product-list product-list_deliveries">
                     <div
                         v-for="(purchase, index) in availablePurchases"
                         :key="purchase.id"
@@ -152,6 +193,66 @@ const setSection = (section) => {
                         </div>
                         <div class="product__address">{{ purchase.total }} шт.</div>
                         <div class="product__actions">
+                            <AppButton @click="openAddReview(index)">Оставить отзыв</AppButton>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-else class="mobile-review__body">
+                    <div
+                        v-for="(purchase, index) in availablePurchases"
+                        :key="purchase.id"
+                        class="mobile-review__item"
+                    >
+                        <div class="product__image mobile-review__item-image">
+                            <a
+                                :href="
+                                    'https://www.wildberries.ru/catalog/' +
+                                    purchase?.product?.remote_id +
+                                    '/detail.aspx'
+                                "
+                                target="_blank"
+                            >
+                                <img
+                                    :src="
+                                        WbHelperImage.constructHostV2(
+                                            purchase?.product?.remote_id
+                                        ) + '/images/tm/1.webp'
+                                    "
+                                    alt=""
+                                    width="30"
+                                    height="40"
+                                />
+                            </a>
+                        </div>
+                        <div class="mobile-review__item-info">
+                            <div class="mobile-review__item-info-top">
+                                <div class="product__info-price">
+                                    {{ currencyFormater.format(purchase?.product?.price / 100) }}
+                                </div>
+                                <div class="product__address">{{ purchase.total }} шт.</div>
+                            </div>
+                            <div class="mobile-review__item-info-bottom">
+                                <a
+                                    :href="
+                                        'https://www.wildberries.ru/catalog/' +
+                                        purchase?.product?.remote_id +
+                                        '/detail.aspx'
+                                    "
+                                    target="_blank"
+                                >
+                                    {{ purchase?.product?.name }}
+                                </a>
+                            </div>
+                            <div
+                                class="mobile-review__item-info-code"
+                                v-if="purchase?.product?.remote_id"
+                            >
+                                code: <span>{{ purchase?.product?.remote_id }}</span>
+                            </div>
+                        </div>
+
+                        <div class="mobile-review__item-addBtn">
                             <AppButton @click="openAddReview(index)">Оставить отзыв</AppButton>
                         </div>
                     </div>
@@ -306,6 +407,13 @@ const setSection = (section) => {
         <AddReview
             v-if="availablePurchases.length"
             :model-value="availablePurchases[selectedPurchase]?.product_id"
+        />
+        <Modal
+            :show="isModalShowed"
+            currentSection="currentSection"
+            :sections="actualSections"
+            @close="nextSection"
+            @open="disableInput = true"
         />
     </AuthenticatedLayout>
 </template>

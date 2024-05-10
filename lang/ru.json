@@ -98,5 +98,8 @@
     "on_the_wayTitle": "В пути",
     "available_for_pick_upTitle": "Готов к выдаче",
     "picked_upTitle": "Завершен",
-    "canceledTitle": "Отменен"
+    "canceledTitle": "Отменен",
+    "TitleReview": "Доступные",
+    "processingTitleReview": "В работе",
+    "doneTitleReview": "Опубликованные"
 }

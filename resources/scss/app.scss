@@ -1421,6 +1421,7 @@
     }
 }
 
+.reviews-mobile,
 .deliveries-mobile,
 .pickups-mobile,
 .wallets-mobile,
@@ -1852,6 +1853,92 @@
         }
         &__info__bottom {
             @include mobileparagraph1;
+        }
+    }
+}
+
+.mobile-review {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    &__body {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1.538vw;
+    }
+
+    &__item {
+        width: 90vw;
+        padding: 2.0513vw 3.077vw;
+        border-radius: 3.077vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        border: 1px solid $neuralNeural6;
+        background-color: $functionalWhite;
+
+        &-image {
+            width: 15%;
+        }
+
+        &-info {
+            width: 58%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-direction: column;
+
+            &-top {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                @include mobileparagraph0;
+
+                & .product__info-price {
+                    @include mobileparagraph0;
+                }
+            }
+
+            &-bottom {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                @include mobileparagraph0;
+            }
+            &-code {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                @include mobileparagraph0;
+                & span {
+                    color: $functionalBlue;
+                    @include mobileparagraph0;
+                }
+            }
+        }
+
+        &-addBtn {
+            width: 25%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            & button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 1.5385vw;
+                padding: 1.0256vw;
+                @include mobileparagraph0;
+            }
         }
     }
 }

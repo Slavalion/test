@@ -34,7 +34,7 @@ const props = defineProps({
 
 const api = useAxios()
 const { width } = useWindowSize()
-const currentSection = ref('processing')
+const currentSection = ref(props.section)
 const isModalShowed = ref(false)
 const disableInput = ref(false)
 const mobileCurrentSection = ref('Активные')
