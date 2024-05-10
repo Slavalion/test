@@ -21,6 +21,7 @@ import AppIcon from '@/Components/AppIcon.vue'
 import { globalSettings } from '@/Store/globalSettings'
 
 const sidebarCollapsed = ref(localStorage.getItem('sidebar-collapsed') == 'true')
+const isSmallScreen = ref(false)
 const { width } = useWindowSize()
 const page = usePage()
 const totalDeliveres = page.props.data.allDeliveres
@@ -33,6 +34,11 @@ const collapseIcon = computed(() => {
 const logoViewBox = computed(() => {
     return sidebarCollapsed.value ? '0 0 36 36' : '0 0 156 36'
 })
+
+// const isSmallScreen = computed(() => {
+//     console.log(width)
+//     return !(device().isDesktop && width > 390)
+// })
 
 const toggleSidebar = () => {
     sidebarCollapsed.value = !sidebarCollapsed.value
@@ -53,13 +59,15 @@ window.Echo.channel('tasks').listen('TaskProgressUpdate', (e) => {
     // localTask.progress = task.progress
 })
 
-watch(width, (width) => {
-    if (width < 390 && document.getElementsByTagName('jdiv').length > 0) {
+watch(width, () => {
+    isSmallScreen.value = !(device().isDesktop && width.value > 390)
+    if (width.value < 390 && document.getElementsByTagName('jdiv').length > 0) {
         document.getElementsByTagName('jdiv')[0].style.display = 'none'
     }
 })
 
 onMounted(() => {
+    isSmallScreen.value = !(device().isDesktop && width.value > 390)
     if (!(device().isDesktop && width > 390)) {
         sidebarCollapsed.value = true
         localStorage.setItem('sidebar-collapsed', true)
@@ -69,7 +77,57 @@ onMounted(() => {
 
 <template>
     <div
-        v-if="device().isDesktop && width > 390"
+        v-if="isSmallScreen"
+        :class="'wrapper-mobile ' + usePage().component.toLowerCase() + '-mobile'"
+    >
+        <div class="wrapper-mobile__desk">
+            <div class="wrapper-mobile__desk-topmenu">
+                <AppButton icon="menu" theme="outline" @click="toggleSidebar"></AppButton>
+                <div class="wrapper-mobile__logo">
+                    <img src="/images/LogoColor.svg" alt="MPB.top" height="44" />
+                </div>
+                <AppButton
+                    v-if="purchaseSlide.show"
+                    icon="close"
+                    @click="purchaseSlide.close()"
+                ></AppButton>
+                <AppButton v-else icon="plus-circle" @click="purchaseSlide.open()"></AppButton>
+            </div>
+            <!-- Page Content -->
+            <main class="wrapper-mobile__desk-body" v-if="!sidebarCollapsed">
+                <div class="wrapper-mobile__sidebar">
+                    <ProfileCard />
+
+                    <SidebarNav />
+                </div>
+            </main>
+
+            <main class="wrapper-mobile__desk-body" v-else>
+                <!-- Page Heading -->
+                <div v-if="globalSettings.maintenance_mode" class="mobile-maintenance-mode">
+                    <div class="flex items-center gap-6">
+                        <AppIcon icon="alert-triangle" width="30" height="30" />
+                        <div class="mobile-maintenance-mode__infotext">
+                            <h6>Режим обслуживания</h6>
+                            <p>На данный момент можно только пополнить кошелек</p>
+                        </div>
+                    </div>
+                </div>
+
+                <header v-if="$slots.header">
+                    <h1 class="main__headline flex items-center wrapper-mobile__header">
+                        <slot name="header" />
+                    </h1>
+                </header>
+
+                <slot></slot>
+            </main>
+        </div>
+        <PurchaseSlide />
+    </div>
+
+    <div
+        v-else
         class="wrapper min-h-screen z-50"
         :class="{
             sidebar_collapsed: sidebarCollapsed,
@@ -147,7 +205,7 @@ onMounted(() => {
                 </h1>
             </header>
 
-            <slot></slot>
+            <slot :isSmallScreen="isSmallScreen"></slot>
         </main>
 
         <!-- Modals -->
@@ -155,52 +213,5 @@ onMounted(() => {
         <PurchaseSlide />
         <PurchaseGenerator />
         <PurchaseImport />
-    </div>
-
-    <div v-else :class="'wrapper-mobile ' + usePage().component.toLowerCase() + '-mobile'">
-        <div class="wrapper-mobile__desk">
-            <div class="wrapper-mobile__desk-topmenu">
-                <AppButton icon="menu" theme="outline" @click="toggleSidebar"></AppButton>
-                <div class="wrapper-mobile__logo">
-                    <img src="/images/LogoColor.svg" alt="MPB.top" height="44" />
-                </div>
-                <AppButton
-                    v-if="purchaseSlide.show"
-                    icon="close"
-                    @click="purchaseSlide.close()"
-                ></AppButton>
-                <AppButton v-else icon="plus-circle" @click="purchaseSlide.open()"></AppButton>
-            </div>
-            <!-- Page Content -->
-            <main class="wrapper-mobile__desk-body" v-if="!sidebarCollapsed">
-                <div class="wrapper-mobile__sidebar">
-                    <ProfileCard />
-
-                    <SidebarNav />
-                </div>
-            </main>
-
-            <main class="wrapper-mobile__desk-body" v-else>
-                <!-- Page Heading -->
-                <div v-if="globalSettings.maintenance_mode" class="mobile-maintenance-mode">
-                    <div class="flex items-center gap-6">
-                        <AppIcon icon="alert-triangle" width="30" height="30" />
-                        <div class="mobile-maintenance-mode__infotext">
-                            <h6>Режим обслуживания</h6>
-                            <p>На данный момент можно только пополнить кошелек</p>
-                        </div>
-                    </div>
-                </div>
-
-                <header v-if="$slots.header">
-                    <h1 class="main__headline flex items-center wrapper-mobile__header">
-                        <slot name="header" />
-                    </h1>
-                </header>
-
-                <slot></slot>
-            </main>
-        </div>
-        <PurchaseSlide />
     </div>
 </template>

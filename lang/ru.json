@@ -92,5 +92,11 @@
     "allTitle": "Все",
     "doneTitle": "Завершенные",
     "pendingTitle": "Ожидает обработки",
-    "processTitle": "В процессе"
+    "processTitle": "В процессе",
+    "processingTitle": "Оплачен",
+    "sortedTitle": "Отсортирован",
+    "on_the_wayTitle": "В пути",
+    "available_for_pick_upTitle": "Готов к выдаче",
+    "picked_upTitle": "Завершен",
+    "canceledTitle": "Отменен"
 }

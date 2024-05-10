@@ -1421,6 +1421,7 @@
     }
 }
 
+.deliveries-mobile,
 .pickups-mobile,
 .wallets-mobile,
 .faq-mobile,
@@ -1800,6 +1801,57 @@
         color: $neuralNeural10;
         &-span {
             color: $neuralNeural8;
+        }
+    }
+}
+
+.mobile-deliveries__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1.538vw;
+
+    & .mobile-product-card {
+        padding: 2.0513vw 3.077vw;
+        border-radius: 3.077vw;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid $neuralNeural6;
+        background-color: $functionalWhite;
+
+        &-top {
+            width: 100%;
+            position: relative;
+            display: flex;
+            gap: 3vw;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        &-bottom {
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: row;
+            align-items: center;
+            & .label {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 1.5385vw;
+                padding: 1.0256vw;
+                @include mobileparagraph0;
+
+                & svg {
+                    width: 4vw;
+                    height: 4vw;
+                }
+            }
+        }
+        &__info__bottom {
+            @include mobileparagraph1;
         }
     }
 }
