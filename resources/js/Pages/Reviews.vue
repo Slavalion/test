@@ -14,6 +14,8 @@ import AppPagination from '@/Components/AppPagination.vue'
 import EmptyState from '@/Components/EmptyState.vue'
 import LabelText from '@/Components/LabelText.vue'
 import AddReview from '@/Modals/AddReview.vue'
+import ReviewCard from '@/Components/Cards/ReviewCard.vue'
+import ReviewInProcessCard from '@/Components/Cards/ReviewInProcessCard.vue'
 
 const props = defineProps({
     section: {
@@ -199,70 +201,29 @@ onMounted(() => {
                 </div>
 
                 <div v-else class="mobile-review__body">
-                    <div
+                    <ReviewCard
                         v-for="(purchase, index) in availablePurchases"
                         :key="purchase.id"
                         class="mobile-review__item"
-                    >
-                        <div class="product__image mobile-review__item-image">
-                            <a
-                                :href="
-                                    'https://www.wildberries.ru/catalog/' +
-                                    purchase?.product?.remote_id +
-                                    '/detail.aspx'
-                                "
-                                target="_blank"
-                            >
-                                <img
-                                    :src="
-                                        WbHelperImage.constructHostV2(
-                                            purchase?.product?.remote_id
-                                        ) + '/images/tm/1.webp'
-                                    "
-                                    alt=""
-                                    width="30"
-                                    height="40"
-                                />
-                            </a>
-                        </div>
-                        <div class="mobile-review__item-info">
-                            <div class="mobile-review__item-info-top">
-                                <div class="product__info-price">
-                                    {{ currencyFormater.format(purchase?.product?.price / 100) }}
-                                </div>
-                                <div class="product__address">{{ purchase.total }} шт.</div>
-                            </div>
-                            <div class="mobile-review__item-info-bottom">
-                                <a
-                                    :href="
-                                        'https://www.wildberries.ru/catalog/' +
-                                        purchase?.product?.remote_id +
-                                        '/detail.aspx'
-                                    "
-                                    target="_blank"
-                                >
-                                    {{ purchase?.product?.name }}
-                                </a>
-                            </div>
-                            <div
-                                class="mobile-review__item-info-code"
-                                v-if="purchase?.product?.remote_id"
-                            >
-                                code: <span>{{ purchase?.product?.remote_id }}</span>
-                            </div>
-                        </div>
-
-                        <div class="mobile-review__item-addBtn">
-                            <AppButton @click="openAddReview(index)">Оставить отзыв</AppButton>
-                        </div>
-                    </div>
+                        :purchase="purchase"
+                        :index="index"
+                        @openAddReview="openAddReview"
+                    />
                 </div>
             </div>
 
             <div v-else class="panel flex flex-col grow">
                 <EmptyState class="grow">
-                    <div class="header-5 mb-1.5 text-center">Доступных отзывов пока нет</div>
-                    <div class="text-center paragraph-3">
+                    <div
+                        class="header-5 mb-1.5 text-center"
+                        :class="isSmallScreen ? 'mobile-review__empty-title' : ''"
+                    >
+                        Доступных отзывов пока нет
+                    </div>
+                    <div
+                        class="text-center paragraph-3"
+                        :class="isSmallScreen ? 'mobile-review__empty-paragraph' : ''"
+                    >
                         Чтобы добавить отзыв, <br />
                         заберите товар из ПВЗ
                     </div>
@@ -272,14 +233,14 @@ onMounted(() => {
 
         <template v-else>
             <template v-if="reviews.length">
-                <div class="panel panel_product">
-                    <div class="products-header products-header_deliveries">
+                <div :class="isSmallScreen ? 'mobile-review' : 'panel panel_product'">
+                    <div v-if="!isSmallScreen" class="products-header products-header_deliveries">
                         <div class="products-header__product">Товар</div>
                         <div class="products-header__code">Артикул</div>
                         <div class="products-header__review">Отзыв</div>
                         <div class="products-header__address">Дата публикации</div>
                     </div>
-                    <div class="product-list product-list_deliveries">
+                    <div v-if="!isSmallScreen" class="product-list product-list_deliveries">
                         <div
                             v-for="review in reviews"
                             :key="review.id"
@@ -392,14 +353,26 @@ onMounted(() => {
                             </div>
                         </div>
                     </div>
+                    <div v-else class="mobile-review__body">
+                        <ReviewInProcessCard
+                            v-for="review in reviews"
+                            :review="review"
+                            :key="review.id"
+                        />
+                    </div>
                 </div>
 
-                <AppPagination :links="reviewsPaginator" />
+                <AppPagination :links="reviewsPaginator" v-if="!isSmallScreen" />
             </template>
 
             <div v-else class="panel flex flex-col grow">
                 <EmptyState class="grow">
-                    <div class="header-5 mb-1.5">Отзывов пока нет</div>
+                    <div
+                        class="header-5 mb-1.5"
+                        :class="isSmallScreen ? 'mobile-review__empty-title' : ''"
+                    >
+                        Отзывов пока нет
+                    </div>
                 </EmptyState>
             </div>
         </template>
