@@ -1,6 +1,6 @@
 <script setup>
 import { router, usePage } from '@inertiajs/vue3'
-import { computed, nextTick, ref } from 'vue'
+import { computed, nextTick, ref, onMounted } from 'vue'
 
 import { useAxios } from '@/Composables/useAxios'
 
@@ -186,11 +186,19 @@ const onAdressSelected = (pickpoint) => {
         selectedProduct.value = null
     }
 }
+
+onMounted(() => {
+    if (document.getElementById('purchaseSladeInput')) {
+        document.getElementById('purchaseSladeInput').type = 'number'
+        document.getElementById('purchaseSladeInput').pattern = '\\d*'
+        document.getElementById('purchaseSladeInput').inputmode = 'decimal'
+    }
+})
 </script>
 <template>
     <ModalSlide
         header-class="modal__header_noborder"
-        body-class="modal__body_nopadding-top"
+        body-class="modal__body_nopadding-top addPurchase"
         :show="purchaseSlide.show"
         @close="purchaseSlide.close()"
         @open="open"
@@ -230,6 +238,7 @@ const onAdressSelected = (pickpoint) => {
         <template #search>
             <TextInput
                 v-model="productCode"
+                id="purchaseSladeInput"
                 placeholder="Введите артикул"
                 wrapper-class="grow"
                 size="lg"

@@ -4,6 +4,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import AppButton from '@/Components/AppButton.vue'
 import { reactive } from 'vue'
 import AppIcon from '@/Components/AppIcon.vue'
+import device from 'vue3-device-detector'
+import { useWindowSize } from '@vueuse/core'
 
 const props = defineProps({
     faqs: {
@@ -23,6 +25,8 @@ const faqItems = reactive(
         ]
     }, [])
 )
+
+const { width } = useWindowSize()
 </script>
 <template>
     <Head title="FAQ" />
@@ -30,10 +34,14 @@ const faqItems = reactive(
     <AuthenticatedLayout>
         <template #header> FAQ </template>
 
-        <div v-for="faq in faqItems" class="panel panel_p-lg mb-6">
+        <div
+            v-for="faq in faqItems"
+            :class="device().isDesktop && width > 390 ? 'panel panel_p-lg mb-6' : 'mobile-faq-card'"
+        >
             <div
                 class="cursor-pointer flex justify-between items-center select-none"
                 @click="faq.collapsed = !faq.collapsed"
+                :class="device().isDesktop && width > 390 ? ' ' : 'mobile-faq-card__title'"
             >
                 <span>{{ faq.title }}</span>
                 <div :class="{ 'rotate-180': !faq.collapsed }" class="transition-all">
@@ -41,16 +49,30 @@ const faqItems = reactive(
                 </div>
             </div>
             <Transition>
-                <div v-show="!faq.collapsed" class="pt-6">
-                    <div v-html="faq.video" class="flex justify-center"></div>
-                    <div v-if="faq.content" class="pt-6">
+                <div
+                    v-show="!faq.collapsed"
+                    :class="device().isDesktop && width > 390 ? 'pt-6' : 'mobile-faq-card__body'"
+                >
+                    <div
+                        v-html="faq.video"
+                        :class="
+                            device().isDesktop && width > 390
+                                ? 'flex justify-center'
+                                : 'mobile-faq-card__body-header'
+                        "
+                    ></div>
+                    <div
+                        v-if="faq.content"
+                        :class="
+                            device().isDesktop && width > 390
+                                ? 'pt-6'
+                                : 'mobile-faq-card__body-content'
+                        "
+                    >
                         {{ faq.content }}
                     </div>
                 </div>
             </Transition>
-        </div>
-        <div v-if="!faqItems.lenght">
-        текущий раздел пока пуст
         </div>
     </AuthenticatedLayout>
 </template>

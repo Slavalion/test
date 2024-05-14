@@ -1,7 +1,8 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import { ref } from 'vue'
-
+import device from 'vue3-device-detector'
+import { useWindowSize } from '@vueuse/core'
 import { useTelegramAuth } from '@/Composables/telegramAuth'
 
 import GuestLayout from '@/Layouts/GuestLayout.vue'
@@ -19,6 +20,8 @@ defineProps({
         default: '',
     },
 })
+
+const { width } = useWindowSize()
 
 let params = new URLSearchParams(document.location.search)
 let refCode = params.get('ref')
@@ -74,7 +77,10 @@ const regClick = () => {
                 {{ status }}
             </div>
 
-            <form @submit.prevent="submit" class="space-y-6">
+            <form
+                @submit.prevent="submit"
+                :class="device().isDesktop && width > 390 ? 'space-y-6' : 'mobile-form'"
+            >
                 <TextInput
                     v-model="form.email"
                     :has-error="form.errors.email != undefined"
@@ -106,7 +112,7 @@ const regClick = () => {
         </template>
 
         <template #footer>
-            <div class="flex gap-3">
+            <div class="flex gap-3" v-if="device().isDesktop && width > 390">
                 <Link :href="route('register')" @click="regClick">
                     <AppButton size="lg" theme="outline"> Регистрация </AppButton>
                 </Link>
@@ -118,12 +124,53 @@ const regClick = () => {
                 <AppButton @click="submit" size="lg" :disabled="form.processing"> Войти </AppButton>
             </div>
 
+            <div v-else class="auth-panel-mobile__footer-btns">
+                <Link :href="route('register')" @click="regClick">
+                    <AppButton size="lg" theme="outline" class="mobileparagraph1">
+                        Регистрация
+                    </AppButton>
+                </Link>
+
+                <Link v-if="canResetPassword" :href="route('password.request')">
+                    <AppButton size="lg" theme="normal" class="mobileparagraph1">
+                        Забыли пароль
+                    </AppButton>
+                </Link>
+
+                <AppButton @click="submit" size="lg" :disabled="form.processing"> Войти </AppButton>
+            </div>
+
             <div class="pt-9 flex justify-center">
                 <!-- <div class="telegram-login" @click="widgetButtonClick">
                     <span>Войти с помощью Telegram</span>
                 </div> -->
-                <div ref="telegram" id="tg-auth-widget" style=""></div>
+                <div ref="telegram" id="tg-auth-widget" style="display: none"></div>
             </div>
         </template>
     </GuestLayout>
 </template>
+
+<style lang="scss" scoped>
+.auth-panel-mobile__footer-btns {
+    width: 87vw;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    gap: 2.051vw;
+
+    & a button,
+    & button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 11.282vw;
+        border-radius: 2.564vw;
+    }
+}
+.mobile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5.128vw;
+}
+</style>

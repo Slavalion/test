@@ -20,11 +20,15 @@ import IconExcelFile from '../Icons/ExcelFile.vue'
 import IconEye from '../Icons/Eye.vue'
 import IconHeart from '../Icons/Heart.vue'
 import IconInfo from '../Icons/Info.vue'
+import IconImage from '../Icons/Image.vue'
 import IconLayers from '../Icons/Layers.vue'
 import IconLock from '../Icons/Lock.vue'
 import IconLogout from '../Icons/Logout.vue'
 import IconMessage from '../Icons/Message.vue'
+import IconMinus from '../Icons/Minus.vue'
+import IconMenu from '../Icons/Menu.vue'
 import IconPackage from '../Icons/Package.vue'
+import IconPlus from '../Icons/Plus.vue'
 import IconPlusCircle from '../Icons/PlusCircle.vue'
 import IconQr from '../Icons/Qr.vue'
 import IconQuestion from '../Icons/Question.vue'
@@ -36,6 +40,7 @@ import IconShare from '../Icons/Share.vue'
 import IconShield from '../Icons/Shield.vue'
 import IconSort from '../Icons/Sort.vue'
 import IconStar from '../Icons/Star.vue'
+import IconTimer from '../Icons/Timer.vue'
 import IconTariffs from '../Icons/Tariffs.vue'
 import IconTransactions from '../Icons/Transactions.vue'
 import IconUser from '../Icons/User.vue'
@@ -62,13 +67,17 @@ const icons = {
     'file-download': IconFileDownload,
     heart: IconHeart,
     info: IconInfo,
+    img: IconImage,
     layers: IconLayers,
     like: IconLike,
     loader: IconLoader,
     lock: IconLock,
     logout: IconLogout,
     message: IconMessage,
+    minus: IconMinus,
+    menu: IconMenu,
     package: IconPackage,
+    plus: IconPlus,
     'plus-circle': IconPlusCircle,
     qr: IconQr,
     question: IconQuestion,
@@ -80,6 +89,7 @@ const icons = {
     shield: IconShield,
     sort: IconSort,
     star: IconStar,
+    timer: IconTimer,
     tariffs: IconTariffs,
     transactions: IconTransactions,
     user: IconUser,

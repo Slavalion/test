@@ -32,11 +32,11 @@ export default {
                     icon: 'message',
                     counter: ref(0),
                 },
-                // questions: {
-                //     title: 'Вопросы',
-                //     route: 'question',
-                //     icon: 'question',
-                // },
+                questions: {
+                    title: 'Вопросы',
+                    route: 'question',
+                    icon: 'question',
+                },
                 reviewReactions: {
                     title: 'Реакции на отзывы',
                     route: 'review-reactions',
@@ -106,7 +106,7 @@ export default {
             },
         },
         {
-            title: 'Другое',
+            title: 'Финансы',
             items: [
                 {
                     title: 'Заборы',
@@ -118,6 +118,11 @@ export default {
                     title: 'Кошельки',
                     route: 'wallets',
                     icon: 'wallet',
+                },
+                {
+                    title: 'Тарифы',
+                    route: 'tariffs.index',
+                    icon: 'tariffs',
                 },
                 {
                     title: 'Транзакции',

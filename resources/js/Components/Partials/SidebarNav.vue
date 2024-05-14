@@ -71,13 +71,70 @@ const checkCondition = (condition) => {
                     :href="route(item.route)"
                     :active="route().current(item.route)"
                     :counter="item.counter?.value"
+                    :itemroute="item.route"
                     status="warning"
                     class="menu__link"
                 >
-                    <AppIcon :icon="item.icon" />
-                    <span>{{ item.title }}</span>
+                    <div class="menu__link__title">
+                        <AppIcon :icon="item.icon" />
+                        <span>{{ item.title }}</span>
+                    </div>
                 </NavLink>
             </template>
         </template>
     </nav>
 </template>
+<style lang="scss">
+.menu__link,
+.menu__link__title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.menu__link {
+    justify-content: space-between;
+
+    &__title {
+        gap: 12px;
+    }
+
+    &__signal {
+        height: 100%;
+        min-width: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__counter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        background-color: #1665ff;
+
+        p {
+            color: white;
+            font-size: 13px;
+            line-height: 20px;
+        }
+    }
+
+    &__alertOctagon,
+    &__alertTriangle {
+        width: 20px;
+        height: 20px;
+        background-size: contain;
+    }
+
+    &__alertOctagon svg g path {
+        stroke: #e0281b;
+    }
+
+    &__alertTriangle svg g path {
+        stroke: #d89b00;
+    }
+}
+</style>
