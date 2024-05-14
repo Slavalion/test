@@ -2129,6 +2129,64 @@ body {
             right: 2.5vw;
         }
     }
+
+    .sidebar {
+        width: 27.0833vw;
+        padding-left: 1vw;
+        padding-right: 1vw;
+
+        & .menu {
+            &__section {
+                margin-bottom: 0.625vw;
+                font-size: 1.3542vw;
+                line-height: 1.6667vw;
+            }
+
+            &__link {
+                height: 4.1667vw;
+                margin-bottom: 0.3vw;
+                font-size: 1.4583vw;
+                line-height: 2.0833vw;
+                letter-spacing: 0.022vw;
+                padding: 0.9375vw 1.25vw;
+                border-radius: 1.0417vw;
+                gap: 0.8333vw;
+
+                &__title {
+                    gap: 1.25vw;
+
+                    & svg {
+                        width: 2.0833vw;
+                        height: 2.0833vw;
+                    }
+                }
+            }
+
+            & .sidebar-collapse {
+                padding-top: 1.6667vw;
+                padding-bottom: 1.6667vw;
+            }
+
+            .menu__section:first-child {
+                margin-top: 1.25vw;
+            }
+        }
+    }
+
+    .topbar {
+        margin-left: 27.0833vw !important;
+    }
+    .wrapper {
+        padding-left: 27.0833vw !important;
+    }
+
+    .menu__link__alertTriangle,
+    .menu__link__alertOctagon {
+        & svg {
+            width: 2.0833vw;
+            height: 2.0833vw;
+        }
+    }
 }
 
 @media (max-width: 390px) {
