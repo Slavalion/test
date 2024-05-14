@@ -447,12 +447,15 @@ body {
     justify-content: center;
     padding: 24px 19px;
     border-radius: 16px;
-
+    gap: 24px;
     background-color: $functionalBlue10;
     color: $neuralNeural10;
     transition: 0.3s;
     cursor: pointer;
-
+    width: 408px;
+    height: 80px;
+    display: flex;
+    align-items: center;
     @include paragraph(1);
 
     &:hover {
@@ -2178,10 +2181,10 @@ body {
     }
 
     .topbar {
-        margin-left: 27.0833vw !important;
+        margin-left: 27.0833vw;
     }
     .wrapper {
-        padding-left: 27.0833vw !important;
+        padding-left: 27.0833vw;
     }
 
     .menu__link__alertTriangle,
@@ -2237,6 +2240,33 @@ body {
             line-height: 2.2917vw;
             letter-spacing: 0.02vw;
             gap: 0.625vw;
+        }
+    }
+
+    .sidebar_collapsed {
+        &.wrapper {
+            padding-left: 65px;
+        }
+        & .topbar {
+            margin-left: 65px;
+        }
+    }
+
+    .sidebar_collapsed {
+        & .sidebar {
+            & nav {
+                & .menu__link {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    & .menu__link__title {
+                        & svg {
+                            width: 20px;
+                            height: 20px;
+                        }
+                    }
+                }
+            }
         }
     }
 }

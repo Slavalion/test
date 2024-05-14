@@ -40,6 +40,7 @@ import IconShare from '../Icons/Share.vue'
 import IconShield from '../Icons/Shield.vue'
 import IconSort from '../Icons/Sort.vue'
 import IconStar from '../Icons/Star.vue'
+import IconTelegramm from '../Icons/Telegramm.vue'
 import IconTimer from '../Icons/Timer.vue'
 import IconTariffs from '../Icons/Tariffs.vue'
 import IconTransactions from '../Icons/Transactions.vue'
@@ -89,6 +90,7 @@ const icons = {
     shield: IconShield,
     sort: IconSort,
     star: IconStar,
+    telegramm: IconTelegramm,
     timer: IconTimer,
     tariffs: IconTariffs,
     transactions: IconTransactions,
