@@ -124,6 +124,7 @@ onMounted(() => {
             </main>
         </div>
         <PurchaseSlide />
+        <FillUpBalanceModal />
     </div>
 
     <div

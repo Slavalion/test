@@ -198,7 +198,7 @@ onMounted(() => {
 <template>
     <ModalSlide
         header-class="modal__header_noborder"
-        body-class="modal__body_nopadding-top"
+        body-class="modal__body_nopadding-top addPurchase"
         :show="purchaseSlide.show"
         @close="purchaseSlide.close()"
         @open="open"
