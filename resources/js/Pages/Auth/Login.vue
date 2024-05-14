@@ -33,6 +33,7 @@ if (refCode) {
 refCode = localStorage.getItem('refCode')
 
 const telegram = ref()
+const isPasswordHide = ref(true)
 
 useTelegramAuth(telegram, route('telegram.auth', { refCode: refCode ?? 0 }))
 
@@ -95,11 +96,13 @@ const widgetButtonClick = () => {
                     :has-error="form.errors.password != undefined"
                     :error-message="form.errors.password"
                     label="Пароль"
-                    icon="eye"
+                    :icon="isPasswordHide ? 'eye' : 'eyeoff'"
                     size="lg"
-                    type="password"
+                    :type="isPasswordHide ? 'password' : 'text'"
                     required
                     autocomplete="current-password"
+                    @clickIcon="isPasswordHide = !isPasswordHide"
+                    class="passInput"
                 />
 
                 <CheckboxInput name="remember" v-model:checked="form.remember">

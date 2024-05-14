@@ -18,6 +18,7 @@ import IconDislike from '../Icons/Dislike.vue'
 import IconEdit from '../Icons/Edit.vue'
 import IconExcelFile from '../Icons/ExcelFile.vue'
 import IconEye from '../Icons/Eye.vue'
+import IconEyeOff from '../Icons/EyeOff.vue'
 import IconHeart from '../Icons/Heart.vue'
 import IconInfo from '../Icons/Info.vue'
 import IconImage from '../Icons/Image.vue'
@@ -65,6 +66,7 @@ const icons = {
     edit: IconEdit,
     'excel-file': IconExcelFile,
     eye: IconEye,
+    eyeoff: IconEyeOff,
     'file-download': IconFileDownload,
     heart: IconHeart,
     info: IconInfo,

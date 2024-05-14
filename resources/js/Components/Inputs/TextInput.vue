@@ -40,7 +40,7 @@ const props = defineProps({
     },
 })
 
-defineEmits(['update:modelValue'])
+defineEmits(['update:modelValue', 'clickIcon'])
 
 const input = ref(null)
 
@@ -80,7 +80,12 @@ const validationClass = computed(() => (props.hasError ? 'text-input_error' : ''
                 :class="['text-input_size-' + size, validationClass]"
                 v-bind="$attrs"
             />
-            <AppIcon v-if="icon" :icon="icon" />
+            <AppIcon
+                v-if="icon"
+                :icon="icon"
+                v-on:click="$emit('clickIcon')"
+                :style="icon === 'eye' || icon === 'eyeoff' ? 'cursor: pointer' : ''"
+            />
             <div v-if="hasError" class="text-input__caption">{{ errorMessage }}</div>
         </div>
     </div>
