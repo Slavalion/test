@@ -21,6 +21,7 @@ import AppIcon from '@/Components/AppIcon.vue'
 import { globalSettings } from '@/Store/globalSettings'
 
 const sidebarCollapsed = ref(localStorage.getItem('sidebar-collapsed') == 'true')
+const sidebarCollapsedMobile = ref(localStorage.getItem('sidebar-collapsed-mobile') == 'true')
 const isSmallScreen = ref(false)
 const { width } = useWindowSize()
 const page = usePage()
@@ -35,14 +36,14 @@ const logoViewBox = computed(() => {
     return sidebarCollapsed.value ? '0 0 36 36' : '0 0 156 36'
 })
 
-// const isSmallScreen = computed(() => {
-//     console.log(width)
-//     return !(device().isDesktop && width > 390)
-// })
-
 const toggleSidebar = () => {
     sidebarCollapsed.value = !sidebarCollapsed.value
     localStorage.setItem('sidebar-collapsed', sidebarCollapsed.value)
+}
+
+const toggleSidebarMobile = () => {
+    sidebarCollapsedMobile.value = !sidebarCollapsedMobile.value
+    localStorage.setItem('sidebar-collapsed-mobile', sidebarCollapsed.value)
 }
 
 globalSettings.value = {
@@ -69,8 +70,8 @@ watch(width, () => {
 onMounted(() => {
     isSmallScreen.value = !(device().isDesktop && width.value > 390)
     if (!(device().isDesktop && width > 390)) {
-        sidebarCollapsed.value = true
-        localStorage.setItem('sidebar-collapsed', true)
+        sidebarCollapsedMobile.value = true
+        localStorage.setItem('sidebar-collapsed-mobile', true)
     }
 })
 </script>
@@ -82,7 +83,7 @@ onMounted(() => {
     >
         <div class="wrapper-mobile__desk">
             <div class="wrapper-mobile__desk-topmenu">
-                <AppButton icon="menu" theme="outline" @click="toggleSidebar"></AppButton>
+                <AppButton icon="menu" theme="outline" @click="toggleSidebarMobile"></AppButton>
                 <div class="wrapper-mobile__logo">
                     <img src="/images/LogoColor.svg" alt="MPB.top" height="44" />
                 </div>
@@ -94,7 +95,7 @@ onMounted(() => {
                 <AppButton v-else icon="plus-circle" @click="purchaseSlide.open()"></AppButton>
             </div>
             <!-- Page Content -->
-            <main class="wrapper-mobile__desk-body" v-if="!sidebarCollapsed">
+            <main class="wrapper-mobile__desk-body" v-if="!sidebarCollapsedMobile">
                 <div class="wrapper-mobile__sidebar">
                     <ProfileCard />
 

@@ -1160,6 +1160,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 12;
 
     & .modal__wrapper_slide {
         width: 100%;
@@ -2132,9 +2133,12 @@ body {
         padding: 0 2vw;
     }
 
+    .wrapper-mobile {
+        background-color: $functionalWhite;
+    }
+
     .modal__wrapper {
         width: 95vw;
-        margin-left: 2.4vw;
     }
 
     .modal__header {
