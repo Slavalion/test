@@ -2272,6 +2272,141 @@ body {
             }
         }
     }
+
+    .main__headline {
+        padding: 2.5vw 0;
+        font-size: 2.8125vw;
+        line-height: 4.1667vw;
+        letter-spacing: -0.01vw;
+    }
+    .main {
+        padding-left: 2.5vw;
+        padding-right: 2.5vw;
+    }
+
+    .panel {
+        padding: 1.25vw;
+        border-radius: 1.6667vw;
+        box-shadow: 0px 0.3125vw 0.625vw 0px rgba(0, 0, 0, 0.03);
+    }
+    .mb-6 {
+        margin-bottom: 2.5vw;
+    }
+    .gap-1\.5 {
+        gap: 1.25vw;
+    }
+    .btn {
+        gap: 0.625vw;
+        border-radius: 0.8333vw;
+        padding: 0.7292vw 1.1458vw;
+        font-size: 1.3452vw;
+        line-height: 2.0833vw;
+        letter-spacing: 0.022vw;
+    }
+
+    .products-header {
+        gap: 0.625vw;
+        padding-bottom: 1.25vw;
+        font-size: 1.3542vw;
+        line-height: 1.6667vw;
+    }
+
+    .purchase-group {
+        padding-bottom: 2.3vw;
+        & .transition-all {
+            & svg {
+                width: 2.5vw;
+                height: 2.5vw;
+            }
+        }
+        &__title {
+            font-size: 1.5625vw;
+            line-height: 2.2917vw;
+            letter-spacing: 0.02vw;
+        }
+        & .label {
+            gap: 0.625vw;
+            padding: 0.625vw;
+            border-radius: 0.625vw;
+            font-size: 1.3542vw;
+            line-height: 1.6667vw;
+        }
+        &__progress {
+            & p {
+                font-size: 1.1vw !important;
+                line-height: 2.0833vw !important;
+                letter-spacing: 0 !important;
+            }
+            & .progress {
+                min-width: 30px !important;
+            }
+        }
+    }
+    .product {
+        gap: 0.625vw;
+        padding: 1.25vw 0;
+
+        &__code,
+        &__quantity,
+        &__gender,
+        &__size,
+        &__keywords,
+        &__address {
+            font-size: 1.3vw !important;
+            line-height: 2.0833vw !important;
+            letter-spacing: 0 !important;
+        }
+
+        &__info {
+            padding-right: 1.875vw;
+            &-title,
+            &-price {
+                font-size: 1.3452vw;
+                line-height: 2.0833vw;
+                letter-spacing: 0;
+            }
+        }
+
+        &__image {
+            padding-right: 0.625vw;
+            width: 3.125vw;
+            height: 4.1667vw;
+            flex: 0 0 3.75vw;
+
+            & a img {
+                width: 3.125vw;
+                height: 4.1667vw;
+                border-radius: 0.4167vw;
+            }
+        }
+
+        &__actions {
+            & .label {
+                gap: 0.625vw;
+                padding: 0.625vw;
+                border-radius: 0.625vw;
+                font-size: 1.3542vw;
+                line-height: 1.6667vw;
+                & svg {
+                    width: 1.6667vw;
+                    height: 1.6667vw;
+                }
+            }
+            & .btn {
+                gap: 0.625vw;
+                border-radius: 0.8333vw;
+                padding: 0.7292vw 1.1458vw;
+                font-size: 1.3452vw;
+                line-height: 2.0833vw;
+                letter-spacing: 0.022vw;
+
+                & svg {
+                    width: 1.6667vw;
+                    height: 1.6667vw;
+                }
+            }
+        }
+    }
 }
 
 @media (max-width: 390px) {
