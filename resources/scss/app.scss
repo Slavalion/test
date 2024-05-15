@@ -2295,6 +2295,10 @@ body {
     .gap-1\.5 {
         gap: 1.25vw;
     }
+
+    .pl-6 {
+        padding-left: 2.5vw;
+    }
     .btn {
         gap: 0.625vw;
         border-radius: 0.8333vw;
@@ -2302,6 +2306,83 @@ body {
         font-size: 1.3452vw;
         line-height: 2.0833vw;
         letter-spacing: 0.022vw;
+    }
+
+    .text-input {
+        padding: 0.7292vw 1.1458vw;
+        border-radius: 0.8333vw;
+        border: 1px solid #bbc1cd;
+        font-size: 1.3452vw;
+        line-height: 2.0833vw;
+        letter-spacing: 0px;
+    }
+
+    .tariffe-card {
+        min-height: 26.45vw;
+        padding: 2.5vw;
+        border-radius: 1.6667vw;
+
+        &__info {
+            & h1 {
+                font-size: 3.6458vw;
+                line-height: 5vw;
+                letter-spacing: 0px;
+            }
+            & h5 {
+                font-size: 1.5625vw;
+                line-height: 2.2917vw;
+                letter-spacing: 0px;
+            }
+        }
+    }
+
+    .profile-block {
+        gap: 1.25vw;
+        &__icon svg {
+            width: 2.9167vw;
+            height: 2.9167vw;
+        }
+        &__title {
+            margin-bottom: 0.3125vw;
+            font-size: 1.5625vw;
+            line-height: 2.2917vw;
+            letter-spacing: 0px;
+        }
+        &__desc {
+            max-width: 57.29vw;
+            font-size: 1.3452vw;
+            line-height: 2.0833vw;
+            letter-spacing: 0px;
+        }
+        &__action {
+            gap: 2vw;
+            font-size: 1.3452vw;
+            line-height: 2.0833vw;
+            letter-spacing: 0px;
+            & .btn {
+                border-radius: 1.0417vw;
+                padding: 1.0417vw 1.5625vw;
+                font-size: 1.5625vw;
+                line-height: 2.2917vw;
+                letter-spacing: 0.02vw;
+                gap: 0.625vw;
+
+                & svg {
+                    width: 1.5625vw;
+                    height: 1.5625vw;
+                }
+            }
+        }
+
+        & .tg-auth-widget {
+            width: 23vw;
+        }
+    }
+
+    #tg-auth-widget {
+        width: 23vw;
+        font-size: 1.3542vw;
+        line-height: 1.6667vw;
     }
 
     .products-header {
@@ -2405,6 +2486,20 @@ body {
                     height: 1.6667vw;
                 }
             }
+        }
+    }
+
+    .main-table__th {
+        padding-bottom: 1.25vw;
+        font-size: 1.3452vw;
+        line-height: 1.6667vw;
+    }
+    .main-table__tr {
+        & td {
+            padding: 1.25vw;
+            font-size: 1.3452vw;
+            line-height: 2.0833vw;
+            letter-spacing: 0;
         }
     }
 }
