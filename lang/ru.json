@@ -101,5 +101,9 @@
     "canceledTitle": "Отменен",
     "TitleReview": "Доступные",
     "processingTitleReview": "В работе",
-    "doneTitleReview": "Опубликованные"
+    "doneTitleReview": "Опубликованные",
+    "servicesTitle": "Услуги",
+    "stuckTitle": "Зависло",
+    "logisticTitle": "Логистика",
+    "accountsTitle": "Аккаунты"
 }

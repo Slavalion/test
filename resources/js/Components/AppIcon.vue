@@ -5,6 +5,11 @@ import IconLoader from '@/Icons/Loader.vue'
 import IconAlertOctagon from '../Icons/AlertOctagon.vue'
 import IconAlertTriangle from '../Icons/AlertTriangle.vue'
 import IconArrowUp from '../Icons/ArrowUp.vue'
+import IconBluePurchase from '../Icons/BluePurchase.vue'
+import IconBlueLike from '../Icons/BlueLike.vue'
+import IconBlueReview from '../Icons/BlueReview.vue'
+import IconBlueQuestion from '../Icons/BlueQuestion.vue'
+import IconBlueStar from '../Icons/BlueStar.vue'
 import IconCalendar from '../Icons/Calendar.vue'
 import IconCard from '../Icons/Card.vue'
 import IconCheckCircle from '../Icons/CheckCircle.vue'
@@ -53,6 +58,11 @@ const icons = {
     'alert-triangle': IconAlertTriangle,
     'alert-octagon': IconAlertOctagon,
     'arrow-up': IconArrowUp,
+    'blue-purchase': IconBluePurchase,
+    'blue-like': IconBlueLike,
+    'blue-review': IconBlueReview,
+    'blue-question': IconBlueQuestion,
+    'blue-star': IconBlueStar,
     calendar: IconCalendar,
     card: IconCard,
     'check-circle': IconCheckCircle,
