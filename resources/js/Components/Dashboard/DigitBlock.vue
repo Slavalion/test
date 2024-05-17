@@ -21,14 +21,14 @@ const headerLine = ref('56px')
 const svgWidth = ref('10px')
 const fontSize = ref('17px')
 const fontLine = ref('28px')
-const { width } = useElementSize(el)
+const { width, height } = useElementSize(el)
 
-watch(width, () => {
-    baseWidth.value = String(width.value.toFixed(2)) + 'px'
-    svgWidth.value = String((0.228 * width.value).toFixed(2)) + 'px'
-    headerLine.value = String((0.267 * width.value).toFixed(2)) + 'px'
-    fontSize.value = String((0.081 * width.value).toFixed(2)) + 'px'
-    fontLine.value = String((0.133 * width.value).toFixed(2)) + 'px'
+watch(height, () => {
+    baseWidth.value = String(height.value.toFixed(2)) + 'px'
+    svgWidth.value = String((0.228 * height.value).toFixed(2)) + 'px'
+    headerLine.value = String((0.267 * height.value).toFixed(2)) + 'px'
+    fontSize.value = String((0.081 * height.value).toFixed(2)) + 'px'
+    fontLine.value = String((0.133 * height.value).toFixed(2)) + 'px'
 })
 </script>
 <template>
@@ -36,7 +36,6 @@ watch(width, () => {
         <div class="text-center digitBlock__base">
             <AppIcon :icon="icon" class="digitBlock__icon" />
             <div class="digitBlock__digit">{{ digit }}</div>
-
             <div class="digitBlock__title">
                 <slot></slot>
             </div>
@@ -46,8 +45,7 @@ watch(width, () => {
 
 <style lang="scss" scoped>
 .digitBlock {
-    height: v-bind(baseWidth);
-    padding: 5%;
+    height: 100%;
 
     &__base {
         display: flex;

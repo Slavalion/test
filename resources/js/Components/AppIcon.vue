@@ -7,9 +7,21 @@ import IconAlertTriangle from '../Icons/AlertTriangle.vue'
 import IconArrowUp from '../Icons/ArrowUp.vue'
 import IconBluePurchase from '../Icons/BluePurchase.vue'
 import IconBlueLike from '../Icons/BlueLike.vue'
+import IconBlueBox from '../Icons/BlueBox.vue'
+import IconBlueQR from '../Icons/BlueQR.vue'
 import IconBlueReview from '../Icons/BlueReview.vue'
 import IconBlueQuestion from '../Icons/BlueQuestion.vue'
 import IconBlueStar from '../Icons/BlueStar.vue'
+import IconBlueUsers from '../Icons/BlueUsers.vue'
+import IconGreenUsers from '../Icons/GreenUsers.vue'
+import IconRedUsers from '../Icons/RedUsers.vue'
+import IconBlueBack from '../Icons/BlueBack.vue'
+import IconRedDeleted from '../Icons/RedDeleted.vue'
+import IconRedPurchase from '../Icons/RedPurchase.vue'
+import IconRedLike from '../Icons/RedLike.vue'
+import IconRedReview from '../Icons/RedReview.vue'
+import IconRedQuestion from '../Icons/RedQuestion.vue'
+import IconRedStar from '../Icons/RedStar.vue'
 import IconCalendar from '../Icons/Calendar.vue'
 import IconCard from '../Icons/Card.vue'
 import IconCheckCircle from '../Icons/CheckCircle.vue'
@@ -52,6 +64,7 @@ import IconTariffs from '../Icons/Tariffs.vue'
 import IconTransactions from '../Icons/Transactions.vue'
 import IconUser from '../Icons/User.vue'
 import IconUsers from '../Icons/Users.vue'
+import IconYellowEdit from '../Icons/YellowEdit.vue'
 import IconWallet from '../Icons/Wallet.vue'
 
 const icons = {
@@ -63,6 +76,18 @@ const icons = {
     'blue-review': IconBlueReview,
     'blue-question': IconBlueQuestion,
     'blue-star': IconBlueStar,
+    'blue-qr': IconBlueQR,
+    'blue-box': IconBlueBox,
+    'blue-users': IconBlueUsers,
+    'green-users': IconGreenUsers,
+    'red-users': IconRedUsers,
+    'blue-back': IconBlueBack,
+    'red-purchase': IconRedPurchase,
+    'red-like': IconRedLike,
+    'red-review': IconRedReview,
+    'red-question': IconRedQuestion,
+    'red-star': IconRedStar,
+    'red-deleted': IconRedDeleted,
     calendar: IconCalendar,
     card: IconCard,
     'check-circle': IconCheckCircle,
@@ -108,6 +133,7 @@ const icons = {
     transactions: IconTransactions,
     user: IconUser,
     users: IconUsers,
+    'yellow-edit': IconYellowEdit,
     wallet: IconWallet,
 }
 export default {}
