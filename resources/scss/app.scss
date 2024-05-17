@@ -447,12 +447,15 @@ body {
     justify-content: center;
     padding: 24px 19px;
     border-radius: 16px;
-
+    gap: 24px;
     background-color: $functionalBlue10;
     color: $neuralNeural10;
     transition: 0.3s;
     cursor: pointer;
-
+    width: 408px;
+    height: 80px;
+    display: flex;
+    align-items: center;
     @include paragraph(1);
 
     &:hover {
@@ -460,6 +463,9 @@ body {
     }
 }
 
+.passInput svg {
+    cursor: pointer;
+}
 .inline-link {
     color: $functionalBlue;
 }
@@ -1124,7 +1130,7 @@ body {
 
 .mobile-modal {
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     display: flex;
     align-items: flex-end;
     position: fixed;
@@ -1431,6 +1437,7 @@ body {
     }
 }
 
+.admin\/dashboard-mobile,
 .reviews-mobile,
 .deliveries-mobile,
 .pickups-mobile,
@@ -2165,6 +2172,10 @@ body {
             & .sidebar-collapse {
                 padding-top: 1.6667vw;
                 padding-bottom: 1.6667vw;
+
+                & .btn {
+                    padding: 11px 13px;
+                }
             }
 
             .menu__section:first-child {
@@ -2174,17 +2185,345 @@ body {
     }
 
     .topbar {
-        margin-left: 27.0833vw !important;
+        margin-left: 27.0833vw;
     }
     .wrapper {
-        padding-left: 27.0833vw !important;
+        padding-left: 27.0833vw;
     }
 
     .menu__link__alertTriangle,
     .menu__link__alertOctagon {
+        width: 2.0833vw !important;
+        height: 2.0833vw !important;
+
         & svg {
             width: 2.0833vw;
             height: 2.0833vw;
+        }
+    }
+
+    .menu__link-counter {
+        top: 1.0417vw;
+        right: 1.0417vw;
+        height: 2.0833vw;
+        min-width: 2.0833vw;
+        border-radius: 1.0417vw;
+        padding: 0 0.5208vw;
+        font-size: 1.3542vw;
+        line-height: 2.0833vw;
+        letter-spacing: 0.022vw;
+    }
+
+    .profile-card {
+        border-radius: 1.6667vw;
+        padding: 1.25vw;
+        margin-left: 0.2083vw;
+        margin-right: 0.2083vw;
+        & > div:first-child {
+            margin-bottom: 1.25vw;
+        }
+
+        &__email {
+            font-size: 1.5625vw;
+            line-height: 2.2917vw;
+            margin-bottom: 0;
+        }
+        &__settings a svg {
+            width: 2.0833vw;
+            height: 2.0833vw;
+        }
+        &__balance {
+            font-size: 1.5625vw;
+            line-height: 2.2917vw;
+            margin-bottom: 0.625vw;
+        }
+        &__fillup .btn {
+            border-radius: 1.0417vw;
+            padding: 1.0417vw 1.5625vw;
+            font-size: 1.5625vw;
+            line-height: 2.2917vw;
+            letter-spacing: 0.02vw;
+            gap: 0.625vw;
+        }
+    }
+
+    .sidebar_collapsed {
+        &.wrapper {
+            padding-left: 65px;
+        }
+        & .topbar {
+            margin-left: 65px;
+        }
+    }
+
+    .sidebar_collapsed {
+        & .sidebar {
+            & nav {
+                & .menu__link {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    & .menu__link__title {
+                        & svg {
+                            width: 20px;
+                            height: 20px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .main__headline {
+        padding: 2.5vw 0;
+        font-size: 2.8125vw;
+        line-height: 4.1667vw;
+        letter-spacing: -0.01vw;
+    }
+    .main {
+        padding-left: 2.5vw;
+        padding-right: 2.5vw;
+    }
+
+    .panel {
+        padding: 1.25vw;
+        border-radius: 1.6667vw;
+        box-shadow: 0px 0.3125vw 0.625vw 0px rgba(0, 0, 0, 0.03);
+    }
+    .mb-6 {
+        margin-bottom: 2.5vw;
+    }
+    .gap-1\.5 {
+        gap: 1.25vw;
+    }
+
+    .gap-4 {
+        gap: 1vw;
+    }
+
+    .pl-6 {
+        padding-left: 2.5vw;
+    }
+    .btn {
+        gap: 0.625vw;
+        border-radius: 0.8333vw;
+        padding: 0.7292vw 1.1458vw;
+        font-size: 1.3452vw;
+        line-height: 2.0833vw;
+        letter-spacing: 0.022vw;
+    }
+
+    .text-input {
+        padding: 0.7292vw 1.1458vw;
+        border-radius: 0.8333vw;
+        border: 1px solid #bbc1cd;
+        font-size: 1.3452vw;
+        line-height: 2.0833vw;
+        letter-spacing: 0px;
+    }
+
+    .tariffe-card {
+        min-height: 26.45vw;
+        padding: 2.5vw;
+        border-radius: 1.6667vw;
+
+        &__info {
+            & h1 {
+                font-size: 3.6458vw;
+                line-height: 5vw;
+                letter-spacing: 0px;
+            }
+            & h5 {
+                font-size: 1.5625vw;
+                line-height: 2.2917vw;
+                letter-spacing: 0px;
+            }
+        }
+    }
+
+    .profile-block {
+        gap: 1.25vw;
+        &__icon svg {
+            width: 2.9167vw;
+            height: 2.9167vw;
+        }
+        &__title {
+            margin-bottom: 0.3125vw;
+            font-size: 1.5625vw;
+            line-height: 2.2917vw;
+            letter-spacing: 0px;
+        }
+        &__desc {
+            max-width: 57.29vw;
+            font-size: 1.3452vw;
+            line-height: 2.0833vw;
+            letter-spacing: 0px;
+        }
+        &__action {
+            gap: 2vw;
+            font-size: 1.3452vw;
+            line-height: 2.0833vw;
+            letter-spacing: 0px;
+            & .btn {
+                border-radius: 1.0417vw;
+                padding: 1.0417vw 1.5625vw;
+                font-size: 1.5625vw;
+                line-height: 2.2917vw;
+                letter-spacing: 0.02vw;
+                gap: 0.625vw;
+
+                & svg {
+                    width: 1.5625vw;
+                    height: 1.5625vw;
+                }
+            }
+        }
+
+        & .tg-auth-widget {
+            width: 23vw;
+        }
+    }
+
+    #tg-auth-widget {
+        width: 23vw;
+        font-size: 1.3542vw;
+        line-height: 1.6667vw;
+    }
+
+    .products-header {
+        gap: 0.625vw;
+        padding-bottom: 1.25vw;
+        font-size: 1.3542vw;
+        line-height: 1.6667vw;
+    }
+
+    .purchase-group {
+        padding-bottom: 2.3vw;
+        & .transition-all {
+            & svg {
+                width: 2.5vw;
+                height: 2.5vw;
+            }
+        }
+        &__title {
+            font-size: 1.5625vw;
+            line-height: 2.2917vw;
+            letter-spacing: 0.02vw;
+        }
+        & .label {
+            gap: 0.625vw;
+            padding: 0.625vw;
+            border-radius: 0.625vw;
+            font-size: 1.3542vw;
+            line-height: 1.6667vw;
+        }
+        &__progress {
+            & p {
+                font-size: 1.1vw !important;
+                line-height: 2.0833vw !important;
+                letter-spacing: 0 !important;
+            }
+            & .progress {
+                min-width: 30px !important;
+            }
+        }
+    }
+    .product {
+        gap: 0.625vw;
+        padding: 1.25vw 0;
+
+        &__code,
+        &__quantity,
+        &__gender,
+        &__size,
+        &__keywords,
+        &__address {
+            font-size: 1.3vw !important;
+            line-height: 2.0833vw !important;
+            letter-spacing: 0 !important;
+        }
+
+        &__info {
+            padding-right: 1.875vw;
+            &-title,
+            &-price {
+                font-size: 1.3452vw;
+                line-height: 2.0833vw;
+                letter-spacing: 0;
+            }
+        }
+
+        &__image {
+            padding-right: 0.625vw;
+            width: 3.125vw;
+            height: 4.1667vw;
+            flex: 0 0 3.75vw;
+
+            & a img {
+                width: 3.125vw;
+                height: 4.1667vw;
+                border-radius: 0.4167vw;
+            }
+        }
+
+        &__actions {
+            & .label {
+                gap: 0.625vw;
+                padding: 0.625vw;
+                border-radius: 0.625vw;
+                font-size: 1.3542vw;
+                line-height: 1.6667vw;
+                & svg {
+                    width: 1.6667vw;
+                    height: 1.6667vw;
+                }
+            }
+            & .btn {
+                gap: 0.625vw;
+                border-radius: 0.8333vw;
+                padding: 0.7292vw 1.1458vw;
+                font-size: 1.3452vw;
+                line-height: 2.0833vw;
+                letter-spacing: 0.022vw;
+
+                & svg {
+                    width: 1.6667vw;
+                    height: 1.6667vw;
+                }
+            }
+        }
+    }
+
+    .main-table__th {
+        padding-bottom: 1.25vw;
+        font-size: 1.3452vw;
+        line-height: 1.6667vw;
+    }
+    .main-table__tr {
+        & td {
+            padding: 1.25vw;
+            font-size: 1.3452vw;
+            line-height: 2.0833vw;
+            letter-spacing: 0;
+        }
+    }
+
+    .telegram-auth {
+        width: 100%;
+        & .telegram-login {
+            padding: 2.5vw 1.98vw;
+            border-radius: 1.6667vw;
+            gap: 2.5vw;
+            width: 42.5vw;
+            height: 8.333vw;
+            font-size: 1.777vw;
+            line-height: 2.9167vw;
+            letter-spacing: 0px;
+
+            & svg {
+                width: 4.1667vw;
+                height: 3.333vw;
+            }
         }
     }
 }

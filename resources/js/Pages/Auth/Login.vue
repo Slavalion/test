@@ -6,7 +6,7 @@ import { useWindowSize } from '@vueuse/core'
 import { useTelegramAuth } from '@/Composables/telegramAuth'
 
 import GuestLayout from '@/Layouts/GuestLayout.vue'
-
+import AppIcon from '@/Components/AppIcon.vue'
 import AppButton from '@/Components/AppButton.vue'
 import CheckboxInput from '@/Components/Inputs/CheckboxInput.vue'
 import TextInput from '@/Components/Inputs/TextInput.vue'
@@ -33,6 +33,7 @@ if (refCode) {
 refCode = localStorage.getItem('refCode')
 
 const telegram = ref()
+const isPasswordHide = ref(true)
 
 useTelegramAuth(telegram, route('telegram.auth', { refCode: refCode ?? 0 }))
 
@@ -52,14 +53,11 @@ const regClick = () => {
     ym(96168318, 'reachGoal', 'registraciya')
 }
 
-// const widgetButtonClick = () => {
-//     window.Telegram.Login.auth(
-//         { bot_id: "5428078645", request_access: true },
-//         (data) => {
-//             console.log(data)
-//         }
-//     )
-// }
+const widgetButtonClick = () => {
+    window.Telegram.Login.auth({ bot_id: '5428078645', request_access: true }, (data) => {
+        console.log(data)
+    })
+}
 </script>
 
 <template>
@@ -98,11 +96,13 @@ const regClick = () => {
                     :has-error="form.errors.password != undefined"
                     :error-message="form.errors.password"
                     label="Пароль"
-                    icon="eye"
+                    :icon="isPasswordHide ? 'eye' : 'eyeoff'"
                     size="lg"
-                    type="password"
+                    :type="isPasswordHide ? 'password' : 'text'"
                     required
                     autocomplete="current-password"
+                    @clickIcon="isPasswordHide = !isPasswordHide"
+                    class="passInput"
                 />
 
                 <CheckboxInput name="remember" v-model:checked="form.remember">
@@ -140,10 +140,11 @@ const regClick = () => {
                 <AppButton @click="submit" size="lg" :disabled="form.processing"> Войти </AppButton>
             </div>
 
-            <div class="pt-9 flex justify-center">
-                <!-- <div class="telegram-login" @click="widgetButtonClick">
+            <div class="pt-9 flex justify-center telegram-auth">
+                <div class="telegram-login" @click="widgetButtonClick">
+                    <AppIcon icon="telegramm" />
                     <span>Войти с помощью Telegram</span>
-                </div> -->
+                </div>
                 <div ref="telegram" id="tg-auth-widget" style="display: none"></div>
             </div>
         </template>
