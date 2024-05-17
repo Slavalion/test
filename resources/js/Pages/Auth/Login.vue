@@ -140,7 +140,7 @@ const widgetButtonClick = () => {
                 <AppButton @click="submit" size="lg" :disabled="form.processing"> Войти </AppButton>
             </div>
 
-            <div class="pt-9 flex justify-center">
+            <div class="pt-9 flex justify-center telegram-auth">
                 <div class="telegram-login" @click="widgetButtonClick">
                     <AppIcon icon="telegramm" />
                     <span>Войти с помощью Telegram</span>

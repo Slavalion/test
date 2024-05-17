@@ -2507,6 +2507,25 @@ body {
             letter-spacing: 0;
         }
     }
+
+    .telegram-auth {
+        width: 100%;
+        & .telegram-login {
+            padding: 2.5vw 1.98vw;
+            border-radius: 1.6667vw;
+            gap: 2.5vw;
+            width: 42.5vw;
+            height: 8.333vw;
+            font-size: 1.777vw;
+            line-height: 2.9167vw;
+            letter-spacing: 0px;
+
+            & svg {
+                width: 4.1667vw;
+                height: 3.333vw;
+            }
+        }
+    }
 }
 
 @media (max-width: 390px) {
