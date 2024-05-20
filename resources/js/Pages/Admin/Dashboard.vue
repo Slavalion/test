@@ -7,6 +7,7 @@ import AppButton from '@/Components/AppButton.vue'
 import DigitBlock from '@/Components/Dashboard/DigitBlock.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import AppIcon from '@/Components/AppIcon.vue'
+import AccountsTable from '@/Components/AccountsTable.vue'
 import Modal from '@/Components/ModalMobileTariffs.vue'
 
 defineProps({
@@ -186,6 +187,8 @@ const nextSection = (section) => {
             <div v-if="currentSection === 'accounts'">
                 <img src="/images/graf4.png" alt="graf4" />
             </div>
+
+            <AccountsTable v-if="currentSection === 'accounts'" :accounts="accounts" />
 
             <div class="panel panel_p-lg" v-if="currentSection === 'stuck'">
                 <div class="mb-4">Пропущенные выкупы</div>
