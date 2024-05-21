@@ -20,7 +20,7 @@ const props = defineProps({
             )"
             :key="index"
         >
-            <div class="left-column">{{ name }}</div>
+            <div class="left-column">{{ $t(name + 'Accounts') }}</div>
             <div class="right-column">{{ value }}</div>
         </div>
     </div>
@@ -45,11 +45,13 @@ const props = defineProps({
     }
 
     & .left-column {
-        width: 35%;
+        width: 38%;
+        user-select: none;
     }
 
     & .rigth-column {
-        width: 65%;
+        width: 62%;
+        user-select: none;
     }
 }
 </style>

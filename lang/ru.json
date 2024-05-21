@@ -105,5 +105,15 @@
     "servicesTitle": "Услуги",
     "stuckTitle": "Зависло",
     "logisticTitle": "Логистика",
-    "accountsTitle": "Аккаунты"
+    "accountsTitle": "Аккаунты",
+    "freeAccounts": "Свободен",
+    "otlegAccounts": "В отлеге",
+    "bouthedAccounts": "Делал покупку",
+    "reviewedAccounts": "Писал отзыв",
+    "qrgiveAccounts": "Выдал товар QR-код для забора товара с WB",
+    "bannedAccounts": "100% забанен",
+    "thiefAccounts": "Угнал аккаунт",
+    "withoutcoocedAccounts": "Профиль с куками не существует",
+    "payedAccounts": "В процессе оплаты",
+    "stoledCardAccounts": "Угнал аккаунт с привязанной картой"
 }
