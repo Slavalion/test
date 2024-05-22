@@ -1,70 +1,45 @@
 <script setup>
 import { Head } from '@inertiajs/vue3'
 import { ref } from 'vue'
-import device from 'vue3-device-detector'
-import { useWindowSize } from '@vueuse/core'
+
+import { currencyFormater } from '@/Helpers/formater'
+
 import AppButton from '@/Components/AppButton.vue'
+import AppTable from '@/Components/AppTable.vue'
 import DigitBlock from '@/Components/Dashboard/DigitBlock.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import AppIcon from '@/Components/AppIcon.vue'
-import Modal from '@/Components/ModalMobileTariffs.vue'
 
 defineProps({
     totals: {
         type: Object,
         required: true,
     },
-    stuck: {
-        type: Object,
-        default: {
-            purchases: 12,
-            reviews: 4,
-            reviewReactions: 5,
-            reviewComplaints: 4,
-            cartActions: 0,
-        },
-    },
-    purchases: {
-        type: Object,
-        default: {
-            returned: 12,
-            edited: 34,
-            deleted: 50,
-        },
-    },
-    users: {
-        type: Object,
-        default: {
-            total: 45,
-            deleted: 5,
-        },
-    },
-    accounts: {
-        type: Object,
-        default: {
-            total: 50162,
-            free: 27465,
-            otleg: 10064,
-        },
-    },
     missedPurchases: {
         type: Array,
         required: true,
     },
+    missedReviews: {
+        type: Array,
+        required: true,
+    },
+    recentTopUps: {
+        type: Array,
+        required: true,
+    },
+    tinkoffTotal: {
+        type: Number,
+        required: true,
+    },
+    manualTotal: {
+        type: Number,
+        required: true,
+    },
 })
 
-const isModalShowed = ref(false)
-const sections = ['services', 'stuck', 'logistic', 'accounts']
-const currentSection = ref('stuck')
-const { width } = useWindowSize()
+const currentSection = ref('recentTopUpBalance')
 
 const setSection = (section) => {
     currentSection.value = section
-}
-
-const nextSection = (section) => {
-    setSection(section)
-    isModalShowed.value = false
 }
 </script>
 <template>
@@ -75,142 +50,91 @@ const nextSection = (section) => {
     <AuthenticatedLayout>
         <template #header>Статистика</template>
 
-        <div v-if="!(device().isDesktop && width > 390)" class="input-wrapper">
-            <div @click="isModalShowed = !isModalShowed" class="mobile-section-input">
-                <p>{{ $t(currentSection + 'Title') }}</p>
-                <AppIcon icon="chevron-down" />
-            </div>
-        </div>
-
-        <div class="panel mb-6" v-else>
-            <div class="flex gap-1.5">
-                <AppButton
-                    v-for="section in sections"
-                    theme="normal"
-                    :class="{ btn_selected: section == currentSection }"
-                    @click="setSection(section)"
-                >
-                    {{ $t(section + 'Title') }}
-                </AppButton>
-            </div>
-        </div>
-
         <div class="space-y-4">
-            <div
-                class="grid grid-cols-5 gap-4 digit-block-desk"
-                v-if="currentSection === 'services'"
-            >
-                <DigitBlock icon="blue-purchase" :digit="totals.purchases">выкупов</DigitBlock>
-                <DigitBlock icon="blue-review" :digit="totals.reviews">отзывов</DigitBlock>
-                <DigitBlock icon="blue-like" :digit="totals.reviewReactions">
+            <div class="grid grid-cols-5 gap-4">
+                <DigitBlock icon="setting" :digit="totals.purchases">выкупов</DigitBlock>
+                <DigitBlock icon="setting" :digit="totals.reviews">отзывов</DigitBlock>
+                <DigitBlock icon="setting" :digit="totals.reviewReactions">
                     реакций на отзывы
                 </DigitBlock>
-                <DigitBlock icon="blue-question" :digit="totals.reviewComplaints">
+                <DigitBlock icon="setting" :digit="totals.reviewComplaints">
                     жалоб на отзывы
                 </DigitBlock>
-                <DigitBlock icon="blue-star" :digit="totals.cartActions">
+                <DigitBlock icon="setting" :digit="totals.cartActions">
                     добавлений в корзину
                 </DigitBlock>
             </div>
 
-            <div v-if="currentSection === 'services'">
-                <img src="/images/graf1.png" alt="graf1" />
+            <div class="panel mb-6">
+                <div class="flex gap-1.5">
+                    <AppButton
+                        theme="normal"
+                        :class="{ btn_selected: 'recentTopUpBalance' == currentSection }"
+                        @click="setSection('recentTopUpBalance')"
+                    >
+                        Пополнения за 7 дней ({{ recentTopUps.length }})
+                    </AppButton>
+                    <AppButton
+                        theme="normal"
+                        :class="{ btn_selected: 'missedPurchases' == currentSection }"
+                        @click="setSection('missedPurchases')"
+                    >
+                        Пропущенные выкупы ({{ missedPurchases.length }})
+                    </AppButton>
+                    <AppButton
+                        theme="normal"
+                        :class="{ btn_selected: 'missedReviews' == currentSection }"
+                        @click="setSection('missedReviews')"
+                    >
+                        Пропущенные отзывы ({{ missedReviews.length }})
+                    </AppButton>
+                </div>
             </div>
 
-            <div
-                class="grid grid-cols-3 gap-4 digit-block-desk"
-                v-if="currentSection === 'services'"
-            >
-                <DigitBlock icon="blue-back" :digit="purchases.returned"
-                    >вернулось назад выкупов</DigitBlock
-                >
-                <DigitBlock icon="yellow-edit" :digit="purchases.edited"
-                    >отредактировано выкупов</DigitBlock
-                >
-                <DigitBlock icon="red-deleted" :digit="purchases.deleted">
-                    удалено выкупов
-                </DigitBlock>
+            <div v-show="currentSection == 'recentTopUpBalance'" class="panel panel_p-lg">
+                <template v-if="recentTopUps.length > 0">
+                    <AppTable>
+                        <tr
+                            v-for="transaction in recentTopUps"
+                            :key="transaction.id"
+                            class="border-y"
+                        >
+                            <td class="py-2">#{{ transaction.id }}</td>
+                            <td class="py-2">User ID {{ transaction.user_id }}</td>
+                            <td class="py-2">
+                                {{ currencyFormater.format(transaction.amount / 100) }}
+                            </td>
+                            <td class="py-2">
+                                <template v-if="transaction.target == 'balance_manually'">
+                                    Ручное пополнение
+                                </template>
+                                <template v-else-if="transaction.target == 'tinkoff'">
+                                    Tinkoff
+                                </template>
+                            </td>
+                            <td class="py-2">{{ transaction.created_ts }}</td>
+                        </tr>
+                    </AppTable>
+                    <div class="text-right mt-4">
+                        Всего через кассу: {{ currencyFormater.format(tinkoffTotal / 100) }}
+                    </div>
+                    <div class="text-right">
+                        Всего Ручных: {{ currencyFormater.format(manualTotal / 100) }}
+                    </div>
+                </template>
+                <div v-else class="text-center">За последние 7 дней нет пополнений</div>
             </div>
 
-            <div v-if="currentSection === 'services'">
-                <img src="/images/graf2.png" alt="graf2" />
-            </div>
-
-            <div
-                class="grid grid-cols-2 gap-4 digit-block-desk"
-                v-if="currentSection === 'logistic'"
-            >
-                <DigitBlock icon="blue-qr" :digit="users.total">выдано QR-кодов</DigitBlock>
-                <DigitBlock icon="blue-box" :digit="users.deleted">заборов из ПВЗ</DigitBlock>
-            </div>
-
-            <div v-if="currentSection === 'logistic'">
-                <img src="/images/graf3.png" alt="graf3" />
-            </div>
-
-            <div class="grid grid-cols-5 gap-4 digit-block-desk" v-if="currentSection === 'stuck'">
-                <DigitBlock icon="red-purchase" :digit="stuck.purchases">выкупов</DigitBlock>
-                <DigitBlock icon="red-review" :digit="stuck.reviews">отзывов</DigitBlock>
-                <DigitBlock icon="red-like" :digit="stuck.reviewReactions">
-                    реакций на отзывы
-                </DigitBlock>
-                <DigitBlock icon="red-question" :digit="stuck.reviewComplaints">
-                    жалоб на отзывы
-                </DigitBlock>
-                <DigitBlock icon="red-star" :digit="stuck.cartActions">
-                    добавлений в корзину
-                </DigitBlock>
-            </div>
-
-            <div
-                class="grid grid-cols-2 gap-4 digit-block-desk"
-                v-if="currentSection === 'services'"
-            >
-                <DigitBlock icon="blue-users" :digit="users.total"
-                    >зарегистрировалось пользователей</DigitBlock
-                >
-                <DigitBlock icon="red-deleted" :digit="users.deleted"
-                    >удалили свой аккаунт</DigitBlock
-                >
-            </div>
-
-            <div
-                class="grid grid-cols-3 gap-4 digit-block-desk"
-                v-if="currentSection === 'accounts'"
-            >
-                <DigitBlock icon="blue-users" :digit="accounts.total">всего</DigitBlock>
-                <DigitBlock icon="green-users" :digit="accounts.free">свободен</DigitBlock>
-                <DigitBlock icon="red-users" :digit="accounts.otleg"> в отлеге </DigitBlock>
-            </div>
-
-            <div v-if="currentSection === 'accounts'">
-                <img src="/images/graf4.png" alt="graf4" />
-            </div>
-
-            <div class="panel panel_p-lg" v-if="currentSection === 'stuck'">
-                <div class="mb-4">Пропущенные выкупы</div>
+            <div v-show="currentSection == 'missedPurchases'" class="panel panel_p-lg">
                 <div>
                     <pre v-for="purchase in missedPurchases" :key="purchase.id">{{ purchase }}</pre>
                 </div>
             </div>
+            <div v-show="currentSection == 'missedReviews'" class="panel panel_p-lg">
+                <div>
+                    <pre v-for="review in missedReviews" :key="review.id">{{ review }}</pre>
+                </div>
+            </div>
         </div>
-        <Modal
-            :show="isModalShowed"
-            :currentSection="currentSection"
-            :sections="sections"
-            @close="nextSection"
-            @open="disableInput = true"
-        />
     </AuthenticatedLayout>
 </template>
-
-<style lang="scss" scoped>
-.digit-block-desk {
-    height: 13.72vw;
-
-    & .digitBlock {
-        border-radius: 1.11vw;
-        padding: 0;
-    }
-}
-</style>

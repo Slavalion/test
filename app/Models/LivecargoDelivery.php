@@ -40,6 +40,7 @@ class LivecargoDelivery extends Model
      */
     protected $casts = [
         'picked_up_status' => LivecargoDeliveryPickedUpEnum::class,
+        'status_updated_at' => 'datetime',
     ];
 
     public function deliveryable(): MorphTo
@@ -60,5 +61,10 @@ class LivecargoDelivery extends Model
     public function livecargoOrder(): BelongsTo
     {
         return $this->belongsTo(LivecargoOrder::class);
+    }
+
+    public function pickpointAddress(): BelongsTo
+    {
+        return $this->belongsTo(PickpointAddress::class);
     }
 }

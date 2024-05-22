@@ -7,6 +7,10 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    noIcon: {
+        type: Boolean,
+        default: false,
+    },
 })
 
 const themeClass = computed(() => {
@@ -22,7 +26,7 @@ const icons = {
 </script>
 <template>
     <div class="label" :class="[themeClass]">
-        <AppIcon v-if="icons[theme]" :icon="icons[theme]" />
+        <AppIcon v-if="icons[theme] && !noIcon" :icon="icons[theme]" />
         <span>
             <slot></slot>
         </span>

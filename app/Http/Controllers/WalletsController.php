@@ -51,7 +51,8 @@ class WalletsController extends Controller
 
     public function connect(WalletsConnectRequest $request, BotRequestAction $botRequestAction): JsonResponse
     {
-        $shorCode = $this->walletsShortCodes[$request->code];
+        // $shorCode = $this->walletsShortCodes[$request->code];
+        $shorCode = $this->walletsShortCodes['yoomoney'];
 
         if (! str_contains($request->login, '@')) {
             return response()->json([
@@ -80,7 +81,7 @@ class WalletsController extends Controller
         $wallet = new Wallet();
         $wallet->task_id = $task->id;
         $wallet->user_id = $request->user()->id;
-        $wallet->type = $request->code;
+        $wallet->type = 'yoomoney';
         $wallet->name = $request->login;
         $wallet->save();
 
@@ -153,6 +154,10 @@ class WalletsController extends Controller
                 ->first();
 
             if (! $wallet) {
+                continue;
+            }
+
+            if ($wallet->is_updating) {
                 continue;
             }
 

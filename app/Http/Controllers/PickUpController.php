@@ -61,12 +61,35 @@ class PickUpController extends Controller
         ]);
     }
 
+    public function destroy(PickUp $pickUp): JsonResponse
+    {
+        if (now()->greaterThan('11:15')) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Заборы ожидающие обработки можно удалять до 10:55',
+            ], 422);
+        }
+
+        $pickUp->delete();
+
+        return response()->json([
+            'status' => 'ok',
+        ]);
+    }
+
     public function import(Request $request): JsonResponse
     {
-        if (now()->greaterThan(now()->setTimeFromTimeString('10:55'))) {
+        if (now()->greaterThan(now()->setTimeFromTimeString('11:20'))) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Заявки на забор принимаются до 10:55',
+            ], 422);
+        }
+
+        if (PickUp::where('user_id', $request->user()->id)->whereDate('created_at', now())->count() > 0) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Вы уже загрузили файл импорта',
             ], 422);
         }
 
@@ -114,6 +137,7 @@ class PickUpController extends Controller
 
             if (! $address) {
                 $errors['wrong_address']++;
+                $errors['missing_addresses'][] = trim($row[1]);
 
                 continue;
             }

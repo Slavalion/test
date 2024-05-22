@@ -10,6 +10,7 @@ import AppButton from '@/Components/AppButton.vue'
 import TextInput from '@/Components/Inputs/TextInput.vue'
 
 const api = useAxios()
+const { loading } = api
 
 const amounts = {
     '1 000 ₽': '1000',
@@ -69,7 +70,7 @@ const fillBalance = function () {
         </div>
 
         <template #actions>
-            <AppButton size="lg" @click="fillBalance">Пополнить</AppButton>
+            <AppButton size="lg" :disabled="loading" @click="fillBalance">Пополнить</AppButton>
         </template>
     </Modal>
 </template>

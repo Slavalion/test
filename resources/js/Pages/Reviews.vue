@@ -1,21 +1,18 @@
 <script setup>
 import { Head, router } from '@inertiajs/vue3'
-import { ref, watch, onMounted } from 'vue'
-import AppIcon from '@/Components/AppIcon.vue'
+import { ref } from 'vue'
+
 import { currencyFormater } from '@/Helpers/formater'
 import { addReview } from '@/modals'
 import { WbHelperImage } from '@/wbHelper'
-import Modal from '@/Components/ModalMobileReview.vue'
+
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import device from 'vue3-device-detector'
-import { useWindowSize } from '@vueuse/core'
+
 import AppButton from '@/Components/AppButton.vue'
 import AppPagination from '@/Components/AppPagination.vue'
 import EmptyState from '@/Components/EmptyState.vue'
 import LabelText from '@/Components/LabelText.vue'
 import AddReview from '@/Modals/AddReview.vue'
-import ReviewCard from '@/Components/Cards/ReviewCard.vue'
-import ReviewInProcessCard from '@/Components/Cards/ReviewInProcessCard.vue'
 
 const props = defineProps({
     section: {
@@ -37,13 +34,9 @@ const props = defineProps({
 })
 
 const stars = [1, 2, 3, 4, 5]
-const { width } = useWindowSize()
-const isSmallScreen = ref(false)
+
 const currentSection = ref(props.section)
 const selectedPurchase = ref(0)
-const isModalShowed = ref(false)
-const mobileCurrentSection = ref('Доступные')
-const actualSections = ['', 'processing', 'done']
 
 const openAddReview = (purchaseIndex) => {
     selectedPurchase.value = purchaseIndex
@@ -60,32 +53,6 @@ const setSection = (section) => {
         },
     })
 }
-
-const nextSection = (section) => {
-    setSection(section)
-    isModalShowed.value = false
-}
-
-watch(width, () => {
-    isSmallScreen.value = !(device().isDesktop && width.value > 390)
-})
-
-watch(
-    () => currentSection.value,
-    () => {
-        if (currentSection.value === 'processing') {
-            mobileCurrentSection.value = ' В работе'
-        } else if (currentSection.value === 'done') {
-            mobileCurrentSection.value = 'Опубликованные'
-        } else {
-            mobileCurrentSection.value = 'Доступные'
-        }
-    }
-)
-
-onMounted(() => {
-    isSmallScreen.value = !(device().isDesktop && width.value > 390)
-})
 </script>
 
 <template>
@@ -96,14 +63,7 @@ onMounted(() => {
     <AuthenticatedLayout>
         <template #header>Отзывы</template>
 
-        <div v-if="isSmallScreen" class="input-wrapper">
-            <div @click="isModalShowed = !isModalShowed" class="mobile-section-input">
-                <p>{{ mobileCurrentSection }}</p>
-                <AppIcon icon="chevron-down" />
-            </div>
-        </div>
-
-        <div class="panel mb-6" v-else>
+        <div class="panel mb-6">
             <div class="flex gap-1.5">
                 <AppButton
                     theme="normal"
@@ -126,22 +86,29 @@ onMounted(() => {
                 >
                     Опубликованные
                 </AppButton>
+
+                <div class="ml-auto">
+                    <a
+                        :href="'/reviews/download?section=' + currentSection"
+                        target="_blank"
+                        download
+                    >
+                        <AppButton icon="file-download">Скачать XLS</AppButton>
+                    </a>
+                </div>
             </div>
         </div>
 
         <template v-if="!currentSection">
-            <div
-                v-if="availablePurchases.length"
-                :class="isSmallScreen ? 'mobile-review' : 'panel panel_product'"
-            >
-                <div v-if="!isSmallScreen" class="products-header products-header_deliveries">
+            <div v-if="availablePurchases.length" class="panel panel_product">
+                <div class="products-header products-header_deliveries">
                     <div class="products-header__product" style="flex: 0 0 52.1946564885%">
                         Товар
                     </div>
                     <div class="products-header__code">Артикул</div>
                     <div class="products-header__address">Доступно отзывов</div>
                 </div>
-                <div v-if="!isSmallScreen" class="product-list product-list_deliveries">
+                <div class="product-list product-list_deliveries">
                     <div
                         v-for="(purchase, index) in availablePurchases"
                         :key="purchase.id"
@@ -199,31 +166,12 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-
-                <div v-else class="mobile-review__body">
-                    <ReviewCard
-                        v-for="(purchase, index) in availablePurchases"
-                        :key="purchase.id"
-                        class="mobile-review__item"
-                        :purchase="purchase"
-                        :index="index"
-                        @openAddReview="openAddReview"
-                    />
-                </div>
             </div>
 
             <div v-else class="panel flex flex-col grow">
                 <EmptyState class="grow">
-                    <div
-                        class="header-5 mb-1.5 text-center"
-                        :class="isSmallScreen ? 'mobile-review__empty-title' : ''"
-                    >
-                        Доступных отзывов пока нет
-                    </div>
-                    <div
-                        class="text-center paragraph-3"
-                        :class="isSmallScreen ? 'mobile-review__empty-paragraph' : ''"
-                    >
+                    <div class="header-5 mb-1.5 text-center">Доступных отзывов пока нет</div>
+                    <div class="text-center paragraph-3">
                         Чтобы добавить отзыв, <br />
                         заберите товар из ПВЗ
                     </div>
@@ -233,14 +181,14 @@ onMounted(() => {
 
         <template v-else>
             <template v-if="reviews.length">
-                <div :class="isSmallScreen ? 'mobile-review' : 'panel panel_product'">
-                    <div v-if="!isSmallScreen" class="products-header products-header_deliveries">
+                <div class="panel panel_product">
+                    <div class="products-header products-header_deliveries">
                         <div class="products-header__product">Товар</div>
                         <div class="products-header__code">Артикул</div>
                         <div class="products-header__review">Отзыв</div>
                         <div class="products-header__address">Дата публикации</div>
                     </div>
-                    <div v-if="!isSmallScreen" class="product-list product-list_deliveries">
+                    <div class="product-list product-list_deliveries">
                         <div
                             v-for="review in reviews"
                             :key="review.id"
@@ -353,26 +301,14 @@ onMounted(() => {
                             </div>
                         </div>
                     </div>
-                    <div v-else class="mobile-review__body">
-                        <ReviewInProcessCard
-                            v-for="review in reviews"
-                            :review="review"
-                            :key="review.id"
-                        />
-                    </div>
                 </div>
 
-                <AppPagination :links="reviewsPaginator" v-if="!isSmallScreen" />
+                <AppPagination :links="reviewsPaginator" />
             </template>
 
             <div v-else class="panel flex flex-col grow">
                 <EmptyState class="grow">
-                    <div
-                        class="header-5 mb-1.5"
-                        :class="isSmallScreen ? 'mobile-review__empty-title' : ''"
-                    >
-                        Отзывов пока нет
-                    </div>
+                    <div class="header-5 mb-1.5">Отзывов пока нет</div>
                 </EmptyState>
             </div>
         </template>
@@ -380,13 +316,6 @@ onMounted(() => {
         <AddReview
             v-if="availablePurchases.length"
             :model-value="availablePurchases[selectedPurchase]?.product_id"
-        />
-        <Modal
-            :show="isModalShowed"
-            currentSection="currentSection"
-            :sections="actualSections"
-            @close="nextSection"
-            @open="disableInput = true"
         />
     </AuthenticatedLayout>
 </template>

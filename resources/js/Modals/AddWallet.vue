@@ -143,7 +143,15 @@ const startListeningAfterSecondStep = () => {
                 addWallet.close()
 
                 router.reload()
-                toast.error('Не удалось привязать кошелек, попробуйте еще раз')
+                if (e.task_status == 'bad_pass') {
+                    toast.error('Не удалось привязать кошелек, неверный пароль')
+                } else if (e.task_status == 'bad_login') {
+                    toast.error('Не удалось привязать кошелек, неверный логин')
+                } else if (e.task_status == 'bad_code') {
+                    toast.error('Не удалось привязать кошелек, неверный код подтверждения')
+                } else {
+                    toast.error('Не удалось привязать кошелек')
+                }
             }
 
             window.Echo.private('user.' + user.id).stopListening('.wallet.connect')
@@ -160,7 +168,15 @@ const startListeningAfterThirdStep = () => {
             addWallet.close()
 
             if (badStatuses.includes(e.task_status)) {
-                toast.error('Не удалось привязать кошелек, попробуйте еще раз')
+                if (e.task_status == 'bad_pass') {
+                    toast.error('Не удалось привязать кошелек, неверный пароль')
+                } else if (e.task_status == 'bad_login') {
+                    toast.error('Не удалось привязать кошелек, неверный логин')
+                } else if (e.task_status == 'bad_code') {
+                    toast.error('Не удалось привязать кошелек, неверный код подтверждения')
+                } else {
+                    toast.error('Не удалось привязать кошелек')
+                }
             }
 
             nextTick(() => {

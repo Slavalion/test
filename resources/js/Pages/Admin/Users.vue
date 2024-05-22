@@ -9,6 +9,7 @@ import AppButton from '@/Components/AppButton.vue'
 import CheckboxInput from '@/Components/Inputs/CheckboxInput.vue'
 import TextInput from '@/Components/Inputs/TextInput.vue'
 import { useDebounce } from '@/Composables/debounce'
+import dayjs from 'dayjs'
 import { ref, watch } from 'vue'
 
 const props = defineProps({
@@ -87,6 +88,9 @@ watch(searchQuery, debauncedSearchUser)
                     <div>
                         <div class="leading-none pb-1">#{{ user.id }} {{ user.name }}</div>
                         <div class="text-xs leading-none">{{ user.email }}</div>
+                        <div class="text-xs leading-tight">
+                            Дата рег: {{ dayjs(user.created_at).format('YYYY/MM/DD') }}
+                        </div>
                     </div>
 
                     <div class="text-xs grid grid-cols-3 gap-1">

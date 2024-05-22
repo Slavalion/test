@@ -32,11 +32,11 @@ export default {
                     icon: 'message',
                     counter: ref(0),
                 },
-                questions: {
-                    title: 'Вопросы',
-                    route: 'question',
-                    icon: 'question',
-                },
+                // questions: {
+                //     title: 'Вопросы',
+                //     route: 'question',
+                //     icon: 'question',
+                // },
                 reviewReactions: {
                     title: 'Реакции на отзывы',
                     route: 'review-reactions',
@@ -66,6 +66,11 @@ export default {
                 dashboard: {
                     title: 'Dashboard',
                     route: 'admin.dashboard',
+                    icon: 'setting',
+                },
+                courierDashboard: {
+                    title: 'Dashboard (Courier)',
+                    route: 'admin.courier.dashboard',
                     icon: 'setting',
                 },
                 settings: {
@@ -106,7 +111,28 @@ export default {
             },
         },
         {
-            title: 'Финансы',
+            title: 'Менеджер',
+            role: 4,
+            items: {
+                // dashboard: {
+                //     title: 'Dashboard',
+                //     route: 'purchase.list',
+                //     icon: 'card',
+                // },
+                // courierDashboard: {
+                //     title: 'Dashboard (Courier)',
+                //     route: 'admin.courier.dashboard',
+                //     icon: 'card',
+                // },
+                users: {
+                    title: 'Пользователи',
+                    route: 'manager.users',
+                    icon: 'users',
+                },
+            },
+        },
+        {
+            title: 'Другое',
             items: [
                 {
                     title: 'Заборы',
@@ -118,11 +144,6 @@ export default {
                     title: 'Кошельки',
                     route: 'wallets',
                     icon: 'wallet',
-                },
-                {
-                    title: 'Тарифы',
-                    route: 'tariffs.index',
-                    icon: 'tariffs',
                 },
                 {
                     title: 'Транзакции',

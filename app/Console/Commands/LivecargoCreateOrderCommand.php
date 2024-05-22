@@ -8,6 +8,7 @@ use App\Enums\PickUpStatus;
 use App\Enums\TransactionTarget;
 use App\Enums\TransactionType;
 use App\Enums\UserPriceType;
+use App\Enums\UserRole;
 use App\Models\LivecargoDelivery;
 use App\Models\LivecargoOrder;
 use App\Models\PickpointAddress;
@@ -112,7 +113,7 @@ class LivecargoCreateOrderCommand extends Command
         $usersData = [];
 
         foreach ($pickUps as $pickUp) {
-            $pickpoints = WbPickpoints::where('address', preg_replace('/\s+/', ' ', trim($pickUp->address)))->get();
+            // $pickpoints = WbPickpoints::where('address', preg_replace('/\s+/', ' ', trim($pickUp->address)))->get();
 
             if (! isset($usersData[$pickUp->user->id])) {
                 $userService = new UserService($pickUp->user);
@@ -124,18 +125,18 @@ class LivecargoCreateOrderCommand extends Command
                 ];
             }
 
-            if ($pickpoints->count() > 1) {
-                info('Найдено больше одного адреса #'.$pickUp->id);
+            // if ($pickpoints->count() > 1) {
+            //     info('Найдено больше одного адреса #'.$pickUp->id);
 
-                continue;
-            } elseif ($pickpoints->count() == 0) {
-                info('Адрес не найден #'.$pickUp->id);
+            //     continue;
+            // } elseif ($pickpoints->count() == 0) {
+            //     info('Адрес не найден #'.$pickUp->id);
 
-                $pickUp->status = PickUpStatus::NOT_FOUND_ADDRESS;
-                $pickUp->save();
+            //     $pickUp->status = PickUpStatus::NOT_FOUND_ADDRESS;
+            //     $pickUp->save();
 
-                continue;
-            }
+            //     continue;
+            // }
 
             if ($usersData[$pickUp->user->id]['balance'] - $usersData[$pickUp->user->id]['to_pay'] - $usersData[$pickUp->user->id]['pick_up_price'] < 0) {
                 $pickUp->status = PickUpStatus::NOT_ENOUGH_BALANCE;
@@ -162,17 +163,17 @@ class LivecargoCreateOrderCommand extends Command
                 'deliveryable_type' => PickUp::class,
             ]);
 
-            $coords = explode(',', $pickpoints[0]->coordinates);
+            // $coords = explode(',', $pickpoints[0]->coordinates);
 
             $pickUp->status = PickUpStatus::PROCESS;
             $pickUp->save();
 
             $zones[$address->pickpoint_zone_id]['routes'][] = [
                 'address' => $pickUp->address,
-                'coords' => [
-                    (float) $coords[0],
-                    (float) $coords[1],
-                ],
+                // 'coords' => [
+                //     (float) $coords[0],
+                //     (float) $coords[1],
+                // ],
                 'addressatInfo' => [
                     'phone' => '79999999999',
                 ],
@@ -264,9 +265,9 @@ class LivecargoCreateOrderCommand extends Command
                     continue;
                 }
 
-                info('#'.$point->deliveryable->id.' Списываем если не админ');
+                // Списываем если не админ
 
-                if ($point->deliveryable->user->role != User::ROLE_ADMIN && ! $testMode) {
+                if ($point->deliveryable->user->role != UserRole::ADMIN && ! $testMode) {
                     $userService = new UserService($point->deliveryable->user);
                     $pickUpPrice = $userService->getPrice(UserPriceType::PICK_UP);
 

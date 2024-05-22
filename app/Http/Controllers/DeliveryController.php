@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\BotRequestAction;
+use App\Enums\BotRequestType;
 use App\Exports\DeliveriesExport;
 use App\Models\Purchase;
 use Illuminate\Http\JsonResponse;
@@ -68,9 +69,9 @@ class DeliveryController extends Controller
 
         // dd($purchase);
         $botRequestAction->execute([
+            'type' => BotRequestType::PURCHASE_RECHECK_COURIER_DELIVERY->value,
             'task_id' => $purchase->task_id,
-            'purchase_id' => $request->purchase_id,
-            'type' => 'wb-update-delivery-data',
+            // 'purchase_id' => $request->purchase_id,
         ]);
 
         return response()->json(['delivery' => $purchase], 200);

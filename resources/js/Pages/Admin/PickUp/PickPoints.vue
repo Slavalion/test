@@ -1,8 +1,8 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3'
+import { Head } from '@inertiajs/vue3'
 
+import LabelText from '@/Components/LabelText.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import AppButton from '@/Components/AppButton.vue'
 
 defineProps({
     zone: {
@@ -35,9 +35,15 @@ defineProps({
                         <div class="w-8">
                             {{ address.sort }}
                         </div>
-                        <div>
+                        <div class="">
                             {{ address.address }}
                         </div>
+                    </div>
+                    <div class="ml-auto">
+                        <LabelText v-if="address.wb_pickpoint_exist" theme="success">
+                            WB адрес найден
+                        </LabelText>
+                        <LabelText v-else theme="danger">WB адрес не найден</LabelText>
                     </div>
                 </div>
             </div>

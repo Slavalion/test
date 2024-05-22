@@ -1,9 +1,8 @@
 <script setup>
-import device from 'vue3-device-detector'
-import { useWindowSize } from '@vueuse/core'
-const { width } = useWindowSize()
 import { Head, Link, useForm } from '@inertiajs/vue3'
+
 import GuestLayout from '@/Layouts/GuestLayout.vue'
+
 import AppButton from '@/Components/AppButton.vue'
 import TextInput from '@/Components/Inputs/TextInput.vue'
 import { computed } from 'vue'
@@ -41,10 +40,7 @@ const isFormFill = computed(() => {
         </template>
 
         <template #default>
-            <form
-                @submit.prevent="submit"
-                :class="device().isDesktop && width > 390 ? 'space-y-6' : 'mobile-form'"
-            >
+            <form @submit.prevent="submit" class="space-y-6">
                 <TextInput
                     v-model="form.name"
                     :has-error="form.errors.name != undefined"
@@ -90,7 +86,7 @@ const isFormFill = computed(() => {
         </template>
 
         <template #footer>
-            <div class="flex justify-end gap-3" v-if="device().isDesktop && width > 390">
+            <div class="flex justify-end gap-3">
                 <Link :href="route('login')">
                     <AppButton size="lg" theme="normal"> Отмена </AppButton>
                 </Link>
@@ -99,53 +95,6 @@ const isFormFill = computed(() => {
                     Зарегистироваться
                 </AppButton>
             </div>
-            <div v-else class="auth-panel-mobile__footer-btns">
-                <Link :href="route('login')">
-                    <AppButton size="lg" theme="normal" class="mobileparagraph1">
-                        Отмена
-                    </AppButton>
-                </Link>
-
-                <AppButton
-                    @click="submit"
-                    size="lg"
-                    :disabled="form.processing || !isFormFill"
-                    class="mobileparagraph1"
-                >
-                    Зарегистироваться
-                </AppButton>
-            </div>
         </template>
     </GuestLayout>
 </template>
-
-<style lang="scss" scoped>
-.auth-panel-mobile__footer-btns {
-    width: 87vw;
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: space-between;
-    gap: 2.051vw;
-
-    & a button,
-    & button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 11.282vw;
-        border-radius: 2.564vw;
-    }
-
-    & a {
-        width: 100%;
-        margin: 0;
-    }
-}
-
-.mobile-form {
-    display: flex;
-    flex-direction: column;
-    gap: 5.128vw;
-}
-</style>

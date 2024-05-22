@@ -77,6 +77,7 @@ class SearchController extends Controller
             'size' => $productSize,
             'gender' => ['id' => 0, 'name' => 'Нет'],
             'purchase_at' => null,
+            'to_decline' => false,
             'sizes' => array_map(function ($element) {
                 return [
                     'id' => $element['optionId'],
@@ -162,6 +163,7 @@ class SearchController extends Controller
             'size' => $productSize,
             'gender' => ['id' => 0, 'name' => 'Нет'],
             'purchase_at' => null,
+            'to_decline' => false,
             'sizes' => array_map(function ($element) {
                 return [
                     'id' => $element['optionId'],

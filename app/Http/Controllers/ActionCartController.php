@@ -8,6 +8,7 @@ use App\Enums\ActionGroupStatus;
 use App\Enums\ActionItemStatus;
 use App\Enums\TransactionTarget;
 use App\Enums\TransactionType;
+use App\Enums\UserRole;
 use App\Models\ActionCart;
 use App\Models\ActionCartGroup;
 use App\Models\Task;
@@ -124,7 +125,7 @@ class ActionCartController extends Controller
             }
         }
 
-        if ($request->user()->role != User::ROLE_ADMIN) {
+        if ($request->user()->role != UserRole::ADMIN) {
             Transaction::create([
                 'user_id' => $request->user()->id,
                 'target_id' => $actionGroup->id,

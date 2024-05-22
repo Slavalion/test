@@ -206,7 +206,8 @@ watch(
                     <div class="profile-block__info">
                         <div class="profile-block__title">Реферральная программа</div>
                         <div class="profile-block__desc">
-                            Пригласи пользовтеля и получи 1000р, когда он пополнит баланс на 1000+
+                            Пригласи пользователя и получи 5% от всех его операций за следующие 3
+                            месяца
                         </div>
                     </div>
                     <div class="profile-block__action flex gap-4 items-center">

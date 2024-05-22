@@ -22,7 +22,7 @@ import TableTh from '@/Components/Table/TableTh.vue'
 
 const toast = useToast()
 const api = useAxios()
-
+const { loading } = api
 const actionPrice = 5
 
 const actions = reactive([])
@@ -207,7 +207,7 @@ const totalPrice = computed(() => {
         </AppTable>
 
         <template #actions>
-            <AppButton size="lg" @click="createAction">Отправить</AppButton>
+            <AppButton size="lg" :disable="loading" @click="createAction">Отправить</AppButton>
         </template>
     </ModalSlide>
 </template>

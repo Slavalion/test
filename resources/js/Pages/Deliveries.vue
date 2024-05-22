@@ -1,15 +1,14 @@
 <script setup>
 import { Head, router, usePage } from '@inertiajs/vue3'
-import { onMounted, onUnmounted, reactive, ref, watch, computed } from 'vue'
-import AppIcon from '@/Components/AppIcon.vue'
+import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+
 import { genders } from '@/Data/purchase'
 import { currencyFormater } from '@/Helpers/formater.js'
 import { updateDeliveryData } from '@/modals'
 import { WbHelperImage } from '@/wbHelper.js'
-import TextInput from '@/Components/Inputs/TextInput.vue'
+
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import device from 'vue3-device-detector'
-import { useWindowSize } from '@vueuse/core'
+
 import AppButton from '@/Components/AppButton.vue'
 import AppPagination from '@/Components/AppPagination.vue'
 import EmptyState from '@/Components/EmptyState.vue'
@@ -17,7 +16,6 @@ import LabelText from '@/Components/LabelText.vue'
 import { useAxios } from '@/Composables/useAxios'
 import UpdateDeliveryModal from '@/Modals/UpdateDeliveryModal.vue'
 import { useToast } from 'vue-toastification'
-import Modal from '@/Components/ModalMobileTariffs.vue'
 
 const props = defineProps({
     deliveries: {
@@ -34,11 +32,10 @@ const props = defineProps({
     },
 })
 
-const { width } = useWindowSize()
 const page = usePage()
-const searchPickUpPoint = ref('')
+
 const state = reactive({ deliveries: props.deliveries })
-const isSmallScreen = ref(false)
+
 watch(
     () => props.deliveries,
     (newVal) => {
@@ -55,16 +52,9 @@ const deliveryStatuses = {
     picked_up: 'Завершен',
     canceled: 'Отменен',
     // not_paid: 'Доставлен, но не оплачен',
-    all: 'Все',
 }
 
-watch(width, () => {
-    isSmallScreen.value = !(device().isDesktop && width.value > 390)
-})
-
 const currentStatus = ref(props.deliveryStatus)
-
-const isModalShowed = ref(false)
 
 const setStatus = (status) => {
     currentStatus.value = status
@@ -76,11 +66,6 @@ const setStatus = (status) => {
             page: 1,
         },
     })
-}
-
-const nextSection = (section) => {
-    setStatus(section)
-    isModalShowed.value = false
 }
 
 const selectedDelivery = ref(0)
@@ -101,8 +86,6 @@ const updateReceipt = (purchase) => {
 }
 
 onMounted(() => {
-    isSmallScreen.value = !(device().isDesktop && width.value > 390)
-
     window.Echo.private('user.' + page.props.auth.user.id).listen('.dilivery.update', (e) => {
         const delvrIndx = state.deliveries.findIndex((el) => {
             return el.id == e.id
@@ -137,14 +120,7 @@ onUnmounted(() => {
     <AuthenticatedLayout>
         <template #header>Доставки</template>
 
-        <div v-if="isSmallScreen" class="input-wrapper">
-            <div @click="isModalShowed = !isModalShowed" class="mobile-section-input">
-                <p>{{ deliveryStatuses[currentStatus] }}</p>
-                <AppIcon icon="chevron-down" />
-            </div>
-        </div>
-
-        <div class="panel mb-6" v-else>
+        <div class="panel mb-6">
             <div class="flex gap-1.5">
                 <AppButton
                     v-for="(name, statusCode) in deliveryStatuses"
@@ -156,23 +132,28 @@ onUnmounted(() => {
                     {{ name }}
                 </AppButton>
 
-                <!-- <AppButton
+                <AppButton
                     theme="normal"
                     @click="setStatus('all')"
                     :class="{ btn_selected: 'all' == currentStatus }"
                 >
                     Все
-                </AppButton> -->
+                </AppButton>
 
-                <div class="ml-auto flex gap-3">
-                    <TextInput v-model="searchPickUpPoint" size="md" placeholder="Адрес ПВЗ" />
-                </div>
+                <a
+                    class="ml-auto"
+                    :href="'/deliveries/download/xls?status=' + currentStatus"
+                    target="_blank"
+                    download
+                >
+                    <AppButton>Скачать XLS</AppButton>
+                </a>
             </div>
         </div>
 
         <template v-if="deliveries.length > 0">
-            <div :class="isSmallScreen ? 'mobile-deliveries__body' : 'panel panel_product'">
-                <div class="products-header products-header_deliveries" v-if="!isSmallScreen">
+            <div class="panel panel_product">
+                <div class="products-header products-header_deliveries">
                     <div class="products-header__product">Товар</div>
                     <div class="products-header__code">Артикул</div>
                     <div class="products-header__quantity">Кол-во</div>
@@ -183,59 +164,7 @@ onUnmounted(() => {
                         <span class="mr-1">Адрес</span>
                     </div>
                 </div>
-
-                <div
-                    v-if="isSmallScreen"
-                    v-for="(delivery, index) in state.deliveries"
-                    :key="'mobile' + index"
-                    class="mobile-product-card"
-                >
-                    <div class="mobile-product-card-top">
-                        <div class="mobile-product-card__image">
-                            <a
-                                :href="
-                                    'https://www.wildberries.ru/catalog/' +
-                                    delivery.product?.remote_id +
-                                    '/detail.aspx'
-                                "
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <img
-                                    :src="
-                                        WbHelperImage.constructHostV2(delivery.product?.remote_id) +
-                                        '/images/tm/1.webp'
-                                    "
-                                    alt=""
-                                    width="30"
-                                    height="40"
-                                />
-                            </a>
-                        </div>
-                        <div class="mobile-product-card__info">
-                            <div class="mobile-product-card__info__top">
-                                <div class="product__code">
-                                    <span class="product__code__text">Код:</span>
-                                    {{ delivery.product?.remote_id }}
-                                </div>
-                                <div class="product__quantity">Кол-во: {{ delivery.quantity }}</div>
-                            </div>
-                            <div class="mobile-product-card__info__bottom">
-                                {{ delivery.product.name }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mobile-product-card-bottom">
-                        <LabelText
-                            v-if="delivery.delivery_status != 'not_paid'"
-                            theme="info"
-                            class="whitespace-nowrap"
-                        >
-                            {{ deliveryStatuses[delivery.delivery_status] }}
-                        </LabelText>
-                    </div>
-                </div>
-                <div v-else class="product-list product-list_deliveries">
+                <div class="product-list product-list_deliveries">
                     <div
                         v-for="(delivery, index) in state.deliveries"
                         :key="delivery.id"
@@ -346,7 +275,7 @@ onUnmounted(() => {
                 </div>
             </div>
 
-            <AppPagination :links="paginator" v-if="!isSmallScreen" />
+            <AppPagination :links="paginator" />
         </template>
 
         <div v-else class="panel flex flex-col grow">
@@ -358,13 +287,6 @@ onUnmounted(() => {
         <UpdateDeliveryModal
             v-if="state.deliveries.length > 0 && currentStatus == 'available_for_pick_up'"
             v-model="state.deliveries[selectedDelivery]"
-        />
-        <Modal
-            :show="isModalShowed"
-            currentSection=" "
-            :sections="Object.keys(deliveryStatuses)"
-            @close="nextSection"
-            @open="disableInput = true"
         />
     </AuthenticatedLayout>
 </template>

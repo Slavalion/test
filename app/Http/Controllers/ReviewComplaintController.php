@@ -9,6 +9,7 @@ use App\Enums\ReviewComplaintType;
 use App\Enums\ReviewReactionPeriod;
 use App\Enums\TransactionTarget;
 use App\Enums\TransactionType;
+use App\Enums\UserRole;
 use App\Models\Product;
 use App\Models\ReviewComplaint;
 use App\Models\ReviewComplaintGroup;
@@ -136,7 +137,7 @@ class ReviewComplaintController extends Controller
                 ];
             }
 
-            if ($request->user()->role != User::ROLE_ADMIN) {
+            if ($request->user()->role != UserRole::ADMIN) {
                 $complaintPrice = $reviewComplaintGroup->total * 30 * 100;
 
                 Transaction::create([

@@ -1,6 +1,6 @@
 <script setup>
 import { router, usePage } from '@inertiajs/vue3'
-import { computed, nextTick, ref, onMounted } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 
 import { useAxios } from '@/Composables/useAxios'
 
@@ -40,6 +40,8 @@ const paymentType = ref({
 const open = () => {
     nextTick(() => searchInput.value.focus())
 }
+
+const useLivecargo = ref(page.props.auth.user.preferences.use_livecargo)
 
 const userHasTgPayment = computed(
     () => usePage().props.auth.user.preferences?.paymentChatId != null
@@ -186,19 +188,11 @@ const onAdressSelected = (pickpoint) => {
         selectedProduct.value = null
     }
 }
-
-onMounted(() => {
-    if (document.getElementById('purchaseSladeInput')) {
-        document.getElementById('purchaseSladeInput').type = 'number'
-        document.getElementById('purchaseSladeInput').pattern = '\\d*'
-        document.getElementById('purchaseSladeInput').inputmode = 'decimal'
-    }
-})
 </script>
 <template>
     <ModalSlide
         header-class="modal__header_noborder"
-        body-class="modal__body_nopadding-top addPurchase"
+        body-class="modal__body_nopadding-top"
         :show="purchaseSlide.show"
         @close="purchaseSlide.close()"
         @open="open"
@@ -238,7 +232,6 @@ onMounted(() => {
         <template #search>
             <TextInput
                 v-model="productCode"
-                id="purchaseSladeInput"
                 placeholder="Введите артикул"
                 wrapper-class="grow"
                 size="lg"
@@ -293,6 +286,7 @@ onMounted(() => {
                 <div v-if="productsHasSizes" class="products-header__size">Размер</div>
                 <div class="products-header__keywords">Поисковой запрос</div>
                 <div class="products-header__purchase-at">Дата выкупа</div>
+                <div v-if="useLivecargo" class="products-header__gender">Отказаться</div>
                 <div class="products-header__address">
                     <span class="mr-1">Адрес</span>
                     <AppButton
@@ -364,6 +358,13 @@ onMounted(() => {
                             v-model="product.purchase_at"
                             :has-error="product.errors.purchase_at != null"
                             :error-message="product.errors?.purchase_at"
+                        />
+                    </div>
+
+                    <div v-if="useLivecargo" class="product__gender flex justify-center">
+                        <CheckboxInput
+                            v-model:checked="product.to_decline"
+                            :value="product.to_decline"
                         />
                     </div>
 

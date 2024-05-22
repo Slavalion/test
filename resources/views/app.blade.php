@@ -61,10 +61,11 @@
     <!-- /Yandex.Metrika counter -->
 
     @inertia
-    @if (Auth::user()?->role != 1 && Auth::user()?->role != 2)
+    @if (Auth::user()?->role != App\Enums\UserRole::ADMIN &&
+            Auth::user()?->role != App\Enums\UserRole::COURIER &&
+            Auth::user()?->role != App\Enums\UserRole::MANAGER)
         <script src="//code.jivo.ru/widget/5WzJHpQ729" async></script>
     @endif
-
     @if (config('mpbtop.demo_mode'))
     @endif
 </body>

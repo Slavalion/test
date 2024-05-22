@@ -30,7 +30,9 @@ export const WbHelperImage = {
                                       ? '//basket-14.wbbasket.ru/'
                                       : e >= 2091 && e <= 2405
                                         ? '//basket-15.wbbasket.ru/'
-                                        : '//basket-16.wbbasket.ru/'
+                                        : e >= 2406 && e <= 2621
+                                          ? '//basket-16.wbbasket.ru/'
+                                          : '//basket-17.wbbasket.ru/'
     },
     constructHostV2(vendorCode) {
         const n = parseInt(vendorCode, 10),

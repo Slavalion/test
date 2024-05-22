@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Enums\ReviewComplaintStatus;
+use App\Enums\UserRole;
 use App\Models\ReviewComplaintGroup;
 use App\Models\Transaction;
 use App\Models\User;
@@ -16,7 +17,7 @@ class ReviewComplaintGroupRemoveAction
     {
         $reviewComplaintGroup = ReviewComplaintGroup::findOrFail($reviewComplaintGroupID);
 
-        if ($reviewComplaintGroup->user->role != User::ROLE_ADMIN) {
+        if ($reviewComplaintGroup->user->role != UserRole::ADMIN) {
             $complaintPrice = $reviewComplaintGroup->transaction->amount;
             $reviewComplaintGroup->transaction->delete();
 

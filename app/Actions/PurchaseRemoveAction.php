@@ -5,9 +5,9 @@ namespace App\Actions;
 use App\Enums\TransactionTarget;
 use App\Enums\TransactionType;
 use App\Enums\UserPriceType;
+use App\Enums\UserRole;
 use App\Models\Purchase;
 use App\Models\Transaction;
-use App\Models\User;
 use App\Services\UserService;
 
 class PurchaseRemoveAction
@@ -22,7 +22,7 @@ class PurchaseRemoveAction
         $userService = new UserService($purchase->user);
         $purchasePrice = $userService->getPrice(UserPriceType::PURCHASE);
 
-        if ($purchase->user->role != User::ROLE_ADMIN) {
+        if ($purchase->user->role != UserRole::ADMIN) {
             Transaction::create([
                 'user_id' => $purchase->user->id,
                 'target_id' => $purchase->id,

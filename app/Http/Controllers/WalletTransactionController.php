@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TelegramTransactionsExport;
+use App\Exports\TransactionsExport;
 use App\Exports\WalletTransactionsExport;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -19,17 +21,9 @@ class WalletTransactionController extends Controller
         } elseif ($request->section == 'telegram') {
             $activeSection = 'telegram';
             $transactionsQuery = $request->user()->tgTransactions()->with(['purchase', 'purchase.product']);
-        } elseif ($request->section == 'refill') {
-            $activeSection = 'refill';
-            $transactionsQuery = $request->user()->transactions()->whereIn('type', [1]);
-        }elseif ($request->section == 'debit') {
-            $activeSection = 'debit';
-            $transactionsQuery = $request->user()->transactions()->whereIn('type', [-1]);
         } else {
-             $activeSection = 'balance';
-            $transactionsQuery = $request->user()->transactions();
-            // $activeSection = 'wallets';
-            // $transactionsQuery = $request->user()->walletTransactions()->with(['purchase', 'purchase.product']);
+            $activeSection = 'wallets';
+            $transactionsQuery = $request->user()->walletTransactions()->with(['purchase', 'purchase.product']);
         }
 
         $transactionsPaginator = $transactionsQuery->orderByDesc('created_at')->paginate(10)->withQueryString();
@@ -43,6 +37,18 @@ class WalletTransactionController extends Controller
 
     public function download(Request $request): BinaryFileResponse
     {
-        return (new WalletTransactionsExport($request->user()->id))->download('wallet-transactions.xlsx');
+        $excelExporter = match ($request->section) {
+            'balance' => TransactionsExport::class,
+            'telegram' => TelegramTransactionsExport::class,
+            default => WalletTransactionsExport::class,
+        };
+
+        $fileName = match ($request->section) {
+            'balance' => 'balance-transactions.xlsx',
+            'telegram' => 'telegram-transactions.xlsx',
+            default => 'wallet-transactions.xlsx',
+        };
+
+        return (new $excelExporter($request->user()->id))->download($fileName);
     }
 }

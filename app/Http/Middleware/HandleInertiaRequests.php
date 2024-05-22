@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\UserRole;
 use App\Models\Purchase;
 use App\Models\Setting;
-use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -43,7 +43,7 @@ class HandleInertiaRequests extends Middleware
                         return [];
                     }
 
-                    if ($request->user()?->role !== User::ROLE_ADMIN) {
+                    if ($request->user()?->role === UserRole::CLIENT) {
                         return $request->user()->makeHidden('role');
                     }
 
@@ -65,11 +65,6 @@ class HandleInertiaRequests extends Middleware
                 'availableReviews' => Purchase::availableReviews()
                     ->where('user_id', $request->user()?->id)
                     ->count(),
-                'allDeliveres' =>  Purchase::where('user_id', $request->user()?->id)
-                    ->count(),
-                'finishedDeliveres' =>  Purchase::where('user_id', $request->user()?->id)
-                    ->where('status', 'done')    
-                    ->count(),     
 
             ],
             'settings' => [

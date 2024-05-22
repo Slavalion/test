@@ -27,6 +27,8 @@ class TelegramController extends Controller
                 if (config('mpbtop.demo_mode')) {
                     $user->balance = 3300000;
                     $user->save();
+                } else {
+                    $user->balance = 1000 * 100;
                 }
 
                 if ($request->refCode) {

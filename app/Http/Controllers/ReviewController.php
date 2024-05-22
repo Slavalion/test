@@ -7,10 +7,11 @@ use App\Actions\UserWriteOffBalance;
 use App\Enums\TransactionTarget;
 use App\Enums\TransactionType;
 use App\Enums\UserPriceType;
+use App\Enums\UserRole;
+use App\Exports\ReviewsExport;
 use App\Models\Purchase;
 use App\Models\Review;
 use App\Models\Transaction;
-use App\Models\User;
 use App\Services\UserService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -18,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ReviewController extends Controller
 {
@@ -123,7 +125,7 @@ class ReviewController extends Controller
             'files' => $files,
         ];
 
-        if ($request->user()->role != User::ROLE_ADMIN) {
+        if ($request->user()->role != UserRole::ADMIN) {
             Transaction::create([
                 'user_id' => $request->user()->id,
                 'target_id' => $review->id,
@@ -140,5 +142,16 @@ class ReviewController extends Controller
         return response()->json([
             'status' => 'ok',
         ], 200);
+    }
+
+    public function download(Request $request): BinaryFileResponse
+    {
+        // $request->validate([
+        //     'status' => Rule::in([...self::deliveryStatuses, 'all']),
+        // ]);
+
+        $status = $request->status ?: 'all';
+
+        return (new ReviewsExport($request->user()->id, $status))->download('reviews.xlsx');
     }
 }

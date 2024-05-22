@@ -9,6 +9,7 @@ use App\Enums\PurchaseTypesEnum;
 use App\Enums\TransactionTarget;
 use App\Enums\TransactionType;
 use App\Enums\UserPriceType;
+use App\Events\Courier\DeliveryUpdateEvent;
 use App\Events\DeliveryUpdateDataEvent;
 use App\Events\DeliveryUpdateTotalEvent;
 use App\Http\Controllers\Controller;
@@ -118,6 +119,28 @@ class PurchaseController extends Controller
 
                 $userTopUpBalance->handle($user, $totalServicePrice);
             }
+
+            if (
+                $purchase->status == Purchase::STATUS_UNAVAILABLE
+                && $prevStatus != Purchase::STATUS_UNAVAILABLE
+            ) {
+                $user = $purchase->user;
+
+                $userService = new UserService($user);
+                $purchasePrice = $userService->getPrice(UserPriceType::PURCHASE);
+
+                $totalServicePrice = $purchasePrice;
+
+                Transaction::create([
+                    'user_id' => $user?->id,
+                    'target_id' => $purchase->id,
+                    'amount' => $totalServicePrice,
+                    'type' => TransactionType::TOP_UP,
+                    'target' => TransactionTarget::RETURN_PURCHASE,
+                ]);
+
+                $userTopUpBalance->handle($user, $totalServicePrice);
+            }
         }
 
         if ($request->has('search_position')) {
@@ -187,6 +210,10 @@ class PurchaseController extends Controller
             $purchase->delivery_phone = $request->delivery_phone;
         }
 
+        if ($request->delivery_name) {
+            $purchase->delivery_name = $request->delivery_name;
+        }
+
         if ($request->address && trim($request->address) != '') {
             if ($purchase->original_address == '') {
                 $purchase->original_address = $purchase->address;
@@ -214,21 +241,33 @@ class PurchaseController extends Controller
             // }
         }
 
-        if ($request->updated) {
-            $purchase->is_updating_delivery = false;
-            DeliveryUpdateDataEvent::dispatch($purchase->user, $purchase);
-        }
-
         $purchase->save();
 
-        if (
-            $request->delivery_status == Purchase::DELIVERY_STATUS_AVAILABLE_FOR_PICK_UP
-            || $request->delivery_status == Purchase::DELIVERY_STATUS_PICKED_UP
-        ) {
-            $purchase->delivery_status_updated_at = now();
+        try {
+            if ($request->updated) {
+                $purchase->is_updating_delivery = false;
+                DeliveryUpdateDataEvent::dispatch($purchase->user, $purchase);
+
+                $lcDelivery = $purchase->livecargoDelivery()->whereDate('created_at', now())->first();
+
+                if ($lcDelivery) {
+                    DeliveryUpdateEvent::dispatch($purchase->user, $lcDelivery);
+                }
+            }
+
             $purchase->save();
-            DeliveryUpdateDataEvent::dispatch($purchase->user, $purchase);
-            DeliveryUpdateTotalEvent::dispatch($purchase->user);
+
+            if (
+                $request->delivery_status == Purchase::DELIVERY_STATUS_AVAILABLE_FOR_PICK_UP
+                || $request->delivery_status == Purchase::DELIVERY_STATUS_PICKED_UP
+            ) {
+                $purchase->delivery_status_updated_at = now();
+                $purchase->save();
+                DeliveryUpdateDataEvent::dispatch($purchase->user, $purchase);
+                DeliveryUpdateTotalEvent::dispatch($purchase->user);
+            }
+        } catch (\Throwable $th) {
+            info($th);
         }
 
         return response()->json(['ok']);

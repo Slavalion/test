@@ -13,10 +13,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('devtest')->everyMinute();
-        $schedule->command('livecargo:create-order')->dailyAt('11:00');
+        $schedule->command('livecargo:create-order')->dailyAt('11:20');
         $schedule->command('pick-up:return')->dailyAt('1:00');
         $schedule->command('wb:update-pickpoints')->dailyAt('5:00');
         $schedule->command('mpb:recheck-statuses')->everyTwoHours();
+
+        $schedule->command('mpb:reset-courier')->dailyAt('00:00');
 
         // Only for demo
         if (config('mpbtop.demo_mode')) {

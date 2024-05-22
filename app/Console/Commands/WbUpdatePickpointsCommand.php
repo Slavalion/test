@@ -28,7 +28,7 @@ class WbUpdatePickpointsCommand extends Command
      */
     public function handle()
     {
-        $response = Http::get('https://static-basket-01.wb.ru/vol0/data/all-poo-fr-v7.json');
+        $response = Http::get('https://static-basket-01.wbbasket.ru/vol0/data/all-poo-fr-v9.json');
         $respJson = $response->json();
 
         WbPickpoints::query()->truncate();
@@ -36,6 +36,16 @@ class WbUpdatePickpointsCommand extends Command
         foreach ($respJson[0]['items'] as $pickpoint) {
             if (isset($pickpoint['isExternalPostamat'])) {
                 // Постаматы пропускаем
+                continue;
+            }
+
+            if (isset($pickpoint['dtype']) && $pickpoint['dtype'] == 63) {
+                // Склады пропускаем
+                continue;
+            }
+
+            if (! isset($pickpoint['isWb']) || ! $pickpoint['isWb']) {
+                // Оставляем только точки WB
                 continue;
             }
 

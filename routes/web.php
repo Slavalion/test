@@ -23,7 +23,6 @@ use App\Http\Controllers\ReviewReactionController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\WalletsController;
 use App\Http\Controllers\WalletTransactionController;
-use App\Http\Controllers\TariffController;
 use App\Http\Middleware\MaintenanceModeMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -81,8 +80,11 @@ Route::middleware('auth')->group(function () {
     Route::get('question', [QuestionController::class, 'list'])->name('question');
     Route::post('question', [QuestionController::class, 'add'])->middleware(MaintenanceModeMiddleware::class)->name('question.add');
 
-    Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');
-    Route::post('/reviews', [ReviewController::class, 'create'])->middleware(MaintenanceModeMiddleware::class)->name('reviews.create');
+    Route::prefix('reviews')->group(function () {
+        Route::get('/', [ReviewController::class, 'index'])->name('reviews');
+        Route::post('/', [ReviewController::class, 'create'])->middleware(MaintenanceModeMiddleware::class)->name('reviews.create');
+        Route::get('download', [ReviewController::class, 'download'])->name('reviews.download');
+    });
 
     Route::prefix('review-complaints')->group(function () {
         Route::get('/', [ReviewComplaintController::class, 'index'])->name('review-complaints');
@@ -122,8 +124,11 @@ Route::middleware('auth')->group(function () {
     Route::get('deliveries/download/xls', [DeliveryController::class, 'download'])->name('delivery.download');
     Route::post('deliveries/update-data', [DeliveryController::class, 'updateData'])->middleware(MaintenanceModeMiddleware::class)->name('deliveries.update-data');
 
-    Route::get('pick-ups', [PickUpController::class, 'index'])->name('pick-ups.index');
-    Route::post('pick-ups/download/xls', [PickUpController::class, 'import'])->name('pick-ups.import');
+    Route::prefix('pick-ups')->group(function () {
+        Route::get('', [PickUpController::class, 'index'])->name('pick-ups.index');
+        Route::post('download/xls', [PickUpController::class, 'import'])->name('pick-ups.import');
+        Route::post('{pickUp}', [PickUpController::class, 'destroy'])->name('pick-ups.destroy');
+    });
 
     Route::get('faq', [App\Http\Controllers\FaqController::class, 'index'])->name('faq.index');
 
@@ -165,6 +170,24 @@ Route::middleware('auth')->group(function () {
 
         Route::get('dev', [App\Http\Controllers\Admin\DevController::class, 'index'])->name('admin.dev');
         Route::get('dev/get-by-task-id', [App\Http\Controllers\Admin\DevController::class, 'getByTaskID']);
+
+        Route::prefix('courier')->group(function () {
+            Route::get('dashboard', [App\Http\Controllers\Admin\Courier\DashboardController::class, 'index'])->name('admin.courier.dashboard');
+
+            Route::get('{courier}/download-stat', [App\Http\Controllers\Admin\Courier\DashboardController::class, 'downloadStat'])->name('admin.courier.download-stat');
+            Route::post('{courier}/set-preference', [App\Http\Controllers\Admin\Courier\DashboardController::class, 'setPreference'])->name('admin.courier.set-preference');
+
+        });
+
+    });
+
+    Route::prefix('manager')->middleware('can:manager-access')->group(function () {
+        Route::prefix('users')->group(function () {
+            Route::get('', [App\Http\Controllers\Manager\UserController::class, 'index'])->name('manager.users');
+            Route::get('{user}', [App\Http\Controllers\Manager\UserController::class, 'show'])->name('manager.users.show');
+            Route::post('{user}/set-preferences', [App\Http\Controllers\Manager\UserController::class, 'setPreferences'])->name('manager.users.set-preferences');
+            Route::post('users/login-as/{user}', [App\Http\Controllers\Manager\UserController::class, 'loginAs'])->name('manager.users.login-as');
+        });
     });
 
     Route::middleware('can:courier-access')->group(function () {
@@ -177,8 +200,5 @@ Route::middleware('auth')->group(function () {
 
 // Demo section
 Route::get('demo-auth', [DemoController::class, 'auth']);
-
-// tariff section
-Route::get('tariffs', [TariffController::class, 'index'])->name('tariffs.index');
 
 require __DIR__.'/auth.php';

@@ -25,7 +25,7 @@ class WalletsConnectRequest extends FormRequest
         return [
             'login' => ['required'],
             'password' => ['required'],
-            'code' => ['required', Rule::in(['qiwi', 'yoomoney'])],
+            // 'code' => ['required', Rule::in(['qiwi', 'yoomoney'])],
         ];
     }
 }

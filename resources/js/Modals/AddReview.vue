@@ -6,7 +6,7 @@ import { useToast } from 'vue-toastification'
 import { useAxios } from '@/Composables/useAxios'
 
 import { addReview } from '@/modals.js'
-import ImagesInput from '@/Components/Inputs/ImagesInput.vue'
+
 import AppButton from '@/Components/AppButton.vue'
 import DatePicker from '@/Components/Inputs/DatePicker.vue'
 import RadioGroupInput from '@/Components/Inputs/RadioGroupInput.vue'
@@ -20,8 +20,6 @@ const props = defineProps({
         default: '',
     },
 })
-
-const files2 = ref([])
 
 const toast = useToast()
 const api = useAxios()
@@ -121,14 +119,9 @@ const createReview = function () {
         })
         .catch((error) => alert(JSON.stringify(error.response.data.errors)))
 }
-
-const closeAddRewiewModal = () => {
-    files.value = []
-    addReview.close()
-}
 </script>
 <template>
-    <Modal :show="addReview.show" @close="closeAddRewiewModal" @open="open">
+    <Modal :show="addReview.show" @close="addReview.close()" @open="open">
         <template #header> Оставить отзыв </template>
 
         <div class="space-y-6">
@@ -163,7 +156,7 @@ const closeAddRewiewModal = () => {
                 :error-message="review.errors?.rating"
             />
 
-            <!-- <label class="text-input__label">Фото для отзыва</label>
+            <label class="text-input__label">Фото для отзыва</label>
             <div class="input-wrapper">
                 <input
                     type="file"
@@ -182,15 +175,14 @@ const closeAddRewiewModal = () => {
                         alt=""
                         class="w-16 h-16 rounded-md object-cover"
                     />
-                    <span
+                    <!-- <span
                             class="block cursor-pointer -right-1 -top-1 absolute bg-white rounded-full"
                             @click="removeFile(idx)"
                         >
                             <AppIcon icon="delete" />
-                        </span>
+                        </span> -->
                 </div>
-            </div>--->
-            <ImagesInput label="Фото для отзыва" v-model="files" />
+            </div>
         </div>
 
         <template #actions>

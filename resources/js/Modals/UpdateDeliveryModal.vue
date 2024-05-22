@@ -83,6 +83,7 @@ const updateData = function () {
                     </a>
                 </div>
                 <div>{{ modelValue.address }}</div>
+                <div v-if="modelValue.delivery_name">Имя: {{ modelValue.delivery_name }}</div>
                 <div v-if="modelValue.delivery_phone">Телефон: {{ modelValue.delivery_phone }}</div>
             </div>
             <div class="flex">

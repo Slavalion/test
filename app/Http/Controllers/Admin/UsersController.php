@@ -91,6 +91,12 @@ class UsersController extends Controller
 
     public function topUpBalance(Request $request, User $user, UserTopUpBalance $userTopUpBalance): JsonResponse
     {
+        if ($request->user()->id == 15) {
+            return response()->json([
+                'message' => 'Недостаточно прав для операции',
+            ], 422);
+        }
+
         $request->validate([
             'amount' => ['required', 'numeric'],
         ]);
@@ -125,6 +131,12 @@ class UsersController extends Controller
 
     public function setPreferences(Request $request): JsonResponse
     {
+        if ($request->user()->id == 15) {
+            return response()->json([
+                'message' => 'Недостаточно прав для операции',
+            ], 422);
+        }
+
         $user = User::findOrFail($request->user_id);
 
         $userPreferences = $user->preferences;

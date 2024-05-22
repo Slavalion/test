@@ -5,9 +5,9 @@ namespace App\Actions;
 use App\Enums\ReviewReactionStatus;
 use App\Enums\TransactionTarget;
 use App\Enums\TransactionType;
+use App\Enums\UserRole;
 use App\Models\ReviewReactionGroup;
 use App\Models\Transaction;
-use App\Models\User;
 
 class ReviewReactionGroupRemoveAction
 {
@@ -18,7 +18,7 @@ class ReviewReactionGroupRemoveAction
     {
         $reviewReactionGroup = ReviewReactionGroup::findOrFail($reviewReactionGroupID);
 
-        if ($reviewReactionGroup->user->role != User::ROLE_ADMIN) {
+        if ($reviewReactionGroup->user->role != UserRole::ADMIN) {
             $reviewReactionGroup->transaction->delete();
         }
 
@@ -32,7 +32,7 @@ class ReviewReactionGroupRemoveAction
             } else {
                 $userTopUpBalanceAction = new UserTopUpBalance();
 
-                if ($reviewReactionGroup->user->role != User::ROLE_ADMIN) {
+                if ($reviewReactionGroup->user->role != UserRole::ADMIN) {
                     Transaction::create([
                         'user_id' => $reviewReactionGroup->user->id,
                         'target_id' => $reviewReaction->id,

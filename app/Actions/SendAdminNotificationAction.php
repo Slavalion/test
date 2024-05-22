@@ -13,7 +13,7 @@ class SendAdminNotificationAction
      */
     public function handle(string $message)
     {
-        $users = User::select('id', 'telegram_id')->whereIn('role', UserRole::ADMIN->value)->where('telegram_id', '<>', 0)->get();
+        $users = User::select('id', 'telegram_id')->where('role', UserRole::ADMIN)->where('telegram_id', '<>', 0)->get();
 
         $message = str_replace(
             ['_'],

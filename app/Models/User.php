@@ -4,8 +4,10 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Casts\UserPreferencesCast;
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,23 +18,20 @@ use Laravel\Sanctum\HasApiTokens;
  * @mixin \Illuminate\Database\Eloquent\Builder
  *
  * @property int                                      $id
- * @property int                                      $role
+ * @property UserRole                                 $role
  * @property string                                   $name
  * @property string                                   $email
  * @property int                                      $telegram_id
  * @property string                                   $ref_code
  * @property int                                      $inviter_id
  * @property \Illuminate\Database\Eloquent\Collection $prices
+ * @property array                                    $preferences
  * @property \Carbon\Carbon                           $created_at
  * @property \Carbon\Carbon                           $updated_at
  */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
-    const ROLE_ADMIN = 1;
-
-    const ROLE_COURIER = 2;
 
     /**
      * The attributes that are mass assignable.
@@ -77,6 +76,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'is_admin' => 'boolean',
         'preferences' => UserPreferencesCast::class,
+        'role' => UserRole::class,
     ];
 
     public function wallets()
@@ -107,5 +107,20 @@ class User extends Authenticatable
     public function inviter(): BelongsTo
     {
         return $this->belongsTo(User::class, 'inviter_id');
+    }
+
+    public function livecargoDeliveries(): HasMany
+    {
+        return $this->hasMany(LivecargoDelivery::class, 'courier_id');
+    }
+
+    public function managerUsers(): BelongsToMany
+    {
+        return $this->BelongsToMany(User::class, 'manager_user', 'manager_id');
+    }
+
+    public function managers(): BelongsToMany
+    {
+        return $this->BelongsToMany(User::class, 'manager_user', 'user_id', 'manager_id');
     }
 }

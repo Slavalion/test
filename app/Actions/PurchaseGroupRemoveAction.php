@@ -5,10 +5,10 @@ namespace App\Actions;
 use App\Enums\TransactionTarget;
 use App\Enums\TransactionType;
 use App\Enums\UserPriceType;
+use App\Enums\UserRole;
 use App\Models\Purchase;
 use App\Models\PurchaseGroup;
 use App\Models\Transaction;
-use App\Models\User;
 use App\Services\UserService;
 
 class PurchaseGroupRemoveAction
@@ -20,7 +20,7 @@ class PurchaseGroupRemoveAction
     {
         $purchaseGroup = PurchaseGroup::findOrFail($purchaseGroupID);
 
-        if ($purchaseGroup->user->role != User::ROLE_ADMIN) {
+        if ($purchaseGroup->user->role != UserRole::ADMIN) {
             $purchaseGroup->transaction->delete();
         }
 
@@ -37,7 +37,7 @@ class PurchaseGroupRemoveAction
             } else {
                 $userTopUpBalanceAction = new UserTopUpBalance();
 
-                if ($purchaseGroup->user->role != User::ROLE_ADMIN) {
+                if ($purchaseGroup->user->role != UserRole::ADMIN) {
                     Transaction::create([
                         'user_id' => $purchaseGroup->user->id,
                         'target_id' => $purchase->id,

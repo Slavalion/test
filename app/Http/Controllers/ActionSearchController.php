@@ -8,11 +8,11 @@ use App\Enums\ActionGroupStatus;
 use App\Enums\ActionItemStatus;
 use App\Enums\TransactionTarget;
 use App\Enums\TransactionType;
+use App\Enums\UserRole;
 use App\Models\ActionSearch;
 use App\Models\ActionSearchGroup;
 use App\Models\Task;
 use App\Models\Transaction;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -116,7 +116,7 @@ class ActionSearchController extends Controller
             }
         }
 
-        if ($request->user()->role != User::ROLE_ADMIN) {
+        if ($request->user()->role != UserRole::ADMIN) {
             Transaction::create([
                 'user_id' => $request->user()->id,
                 'target_id' => $actionGroup->id,

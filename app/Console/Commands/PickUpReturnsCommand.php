@@ -34,7 +34,7 @@ class PickUpReturnsCommand extends Command
     public function handle()
     {
         $userTopUpBalance = new UserTopUpBalance();
-        $failurePickUps = PickUp::where('status', PickUpStatus::PROCESS)
+        $failurePickUps = PickUp::whereIn('status', [PickUpStatus::PROCESS, PickUpStatus::FAIL_PICKUP])
             ->with('user')
             ->get();
 

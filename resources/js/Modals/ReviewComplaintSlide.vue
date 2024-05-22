@@ -1,26 +1,27 @@
 <script setup>
-import { computed, ref } from 'vue'
 import { router } from '@inertiajs/vue3'
-import { useToast } from 'vue-toastification'
 import dayjs from 'dayjs'
+import { computed, ref } from 'vue'
+import { useToast } from 'vue-toastification'
 
 import { useAxios } from '@/Composables/useAxios'
 
-import { reviewComplaintSlide } from '@/modals.js'
-import { wbProduct, wbFeedbacks } from '@/Store/wbReviews'
-import { feedbackPeriods, complaintTypes } from '@/Data/purchase'
+import { complaintTypes, feedbackPeriods } from '@/Data/purchase'
 import { currencyFormater } from '@/Helpers/formater'
+import { wbFeedbacks, wbProduct } from '@/Store/wbReviews'
+import { reviewComplaintSlide } from '@/modals.js'
 
-import ModalSlide from '@/Components/ModalSlide.vue'
-import LabelText from '@/Components/LabelText.vue'
-import AppTable from '@/Components/AppTable.vue'
-import TableTh from '@/Components/Table/TableTh.vue'
-import SelectInput from '@/Components/Inputs/SelectInput.vue'
 import AppButton from '@/Components/AppButton.vue'
+import AppTable from '@/Components/AppTable.vue'
 import QuantityInput from '@/Components/Inputs/QuantityInput.vue'
+import SelectInput from '@/Components/Inputs/SelectInput.vue'
 import TextInput from '@/Components/Inputs/TextInput.vue'
+import LabelText from '@/Components/LabelText.vue'
+import ModalSlide from '@/Components/ModalSlide.vue'
+import TableTh from '@/Components/Table/TableTh.vue'
 
 const api = useAxios()
+const { loading } = api
 
 const complaintPrice = 30
 const ratingStars = [1, 2, 3, 4, 5]
@@ -286,7 +287,11 @@ const setOrder = (orderVal) => {
         </div>
 
         <template #actions>
-            <AppButton size="lg" :disabled="complaints.length == 0" @click="createReviewComplaints">
+            <AppButton
+                size="lg"
+                :disabled="complaints.length == 0 || loading"
+                @click="createReviewComplaints"
+            >
                 Добавить
             </AppButton>
         </template>

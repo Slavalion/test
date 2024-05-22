@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\UserRole;
 use App\Models\Setting;
-use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +13,7 @@ class MaintenanceModeMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -26,7 +26,7 @@ class MaintenanceModeMiddleware
             return [$item['key'] => $itemValue];
         });
 
-        if ($settings['maintenance_mode'] && $request->user()->role != User::ROLE_ADMIN) {
+        if ($settings['maintenance_mode'] && $request->user()->role != UserRole::ADMIN) {
             abort(442, 'Включен режим обслуживания, попробуйте позже!');
         }
 

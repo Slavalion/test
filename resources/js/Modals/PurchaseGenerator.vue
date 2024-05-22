@@ -1,5 +1,5 @@
 <script setup>
-import { nextTick, ref, reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { useToast } from 'vue-toastification'
 
 import { useAxios } from '@/Composables/useAxios'
@@ -8,14 +8,15 @@ import { locationSelector, purchaseGenerator, purchaseSlide } from '@/modals.js'
 import { products } from '@/Store/purchases'
 
 import AppButton from '@/Components/AppButton.vue'
-import Modal from '@/Components/Modal.vue'
-import TextInput from '@/Components/Inputs/TextInput.vue'
-import QuantityInput from '@/Components/Inputs/QuantityInput.vue'
-import LocationSelectorModal from '@/Modals/LocationSelector.vue'
 import DatePicker from '@/Components/Inputs/DatePicker.vue'
+import QuantityInput from '@/Components/Inputs/QuantityInput.vue'
+import TextInput from '@/Components/Inputs/TextInput.vue'
+import Modal from '@/Components/Modal.vue'
+import LocationSelectorModal from '@/Modals/LocationSelector.vue'
 
 const toast = useToast()
 const api = useAxios()
+const { loading } = api
 
 const productInput = ref(null)
 
@@ -250,7 +251,9 @@ const removeRange = (index) => {
         </div>
 
         <template #actions>
-            <AppButton size="lg" @click="generatePurchases">Отправить</AppButton>
+            <AppButton size="lg" :disabled="loading" @click="generatePurchases">
+                Отправить
+            </AppButton>
         </template>
     </Modal>
 

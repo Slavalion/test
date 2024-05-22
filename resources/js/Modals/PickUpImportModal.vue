@@ -1,4 +1,5 @@
 <script setup>
+import { router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import { useToast } from 'vue-toastification'
 
@@ -6,9 +7,8 @@ import { useAxios } from '@/Composables/useAxios'
 
 import { pickUpImport } from '@/modals.js'
 
-import Modal from '@/Components/Modal.vue'
 import AppButton from '@/Components/AppButton.vue'
-import { router } from '@inertiajs/vue3'
+import Modal from '@/Components/Modal.vue'
 
 const toast = useToast()
 const api = useAxios()
@@ -47,13 +47,19 @@ const importPickUps = () => {
                 toast.warning('Пропущено строк (отсутсвует qr код) ' + errors.empty_qr_code)
             }
 
+            if (errors.missing_addresses) {
+                let message = ''
+                errors.missing_addresses.forEach((el) => {
+                    message = `${el}; ${message}`
+                })
+                toast.warning(message)
+            }
+
             router.reload()
         })
         .catch((error) => {
             if (error.response.data.error) {
                 toast.error(error.response.data.error)
-            } else {
-                alert('Что-то пошло не так')
             }
         })
 }

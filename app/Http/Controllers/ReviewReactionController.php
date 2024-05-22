@@ -9,6 +9,7 @@ use App\Enums\ReviewReactionStatus;
 use App\Enums\ReviewReactionType;
 use App\Enums\TransactionTarget;
 use App\Enums\TransactionType;
+use App\Enums\UserRole;
 use App\Models\ReviewReaction;
 use App\Models\ReviewReactionGroup;
 use App\Models\Task;
@@ -133,7 +134,7 @@ class ReviewReactionController extends Controller
                 ];
             }
 
-            if ($request->user()->role != User::ROLE_ADMIN) {
+            if ($request->user()->role != UserRole::ADMIN) {
                 $reactionPrice = $reviewReactionGroup->total * 8 * 100;
 
                 Transaction::create([

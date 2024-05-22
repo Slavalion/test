@@ -9,6 +9,7 @@ use App\Enums\PurchaseTypesEnum;
 use App\Enums\TransactionTarget;
 use App\Enums\TransactionType;
 use App\Enums\UserPriceType;
+use App\Enums\UserRole;
 use App\Exports\PurchasesExport;
 use App\Http\Requests\PurchaseStoreRequest;
 use App\Models\Purchase;
@@ -141,15 +142,16 @@ class PurchaseController extends Controller
             $purchase->size = $product['size'];
             $purchase->keywords = $product['keywords'];
             $purchase->address = $product['address'];
+            $purchase->to_decline = $product['to_decline'];
             $purchase->purchase_at = (new Carbon($product['purchase_at']))->timezone('Europe/Moscow');
 
-            if ($request->type == 'pro' && $request->user()->role == User::ROLE_ADMIN) {
+            if ($request->type == 'pro' && $request->user()->role == UserRole::ADMIN) {
                 $purchase->type = PurchaseTypesEnum::PRO;
             } else {
                 $purchase->type = PurchaseTypesEnum::DEFAULT;
             }
 
-            if ($request->test_mode && $request->user()->role == User::ROLE_ADMIN) {
+            if ($request->test_mode && $request->user()->role == UserRole::ADMIN) {
                 $purchase->test_mode = $request->test_mode;
             }
 
@@ -206,7 +208,7 @@ class PurchaseController extends Controller
         $purchaseGroup->total_sum = $groupSum / 100;
         $purchaseGroup->save();
 
-        if ($request->user()->role != User::ROLE_ADMIN) {
+        if ($request->user()->role != UserRole::ADMIN) {
             Transaction::create([
                 'user_id' => $request->user()->id,
                 'target_id' => $purchaseGroup->id,
