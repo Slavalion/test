@@ -192,10 +192,6 @@ const nextSection = (section) => {
                 <DigitBlock icon="red-users" :digit="accounts.otleg"> в отлеге </DigitBlock>
             </div>
 
-            <div v-if="currentSection === 'accounts'">
-                <img src="/images/graf4.png" alt="graf4" />
-            </div>
-
             <AccountsTable v-if="currentSection === 'accounts'" :accounts="accounts" />
 
             <div class="panel panel_p-lg" v-if="currentSection === 'stuck'">

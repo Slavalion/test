@@ -21,7 +21,7 @@ const headerLine = ref('56px')
 const svgWidth = ref('10px')
 const fontSize = ref('17px')
 const fontLine = ref('28px')
-const { width, height } = useElementSize(el)
+const { height } = useElementSize(el)
 
 watch(height, () => {
     baseWidth.value = String(height.value.toFixed(2)) + 'px'
@@ -73,6 +73,13 @@ watch(height, () => {
         line-height: v-bind(fontLine);
         font-weight: 400;
         letter-spacing: 0.18px;
+    }
+}
+
+@media (min-width: 1441px) {
+    .digitBlock__digit {
+        font-size: 48px;
+        line-height: 56px;
     }
 }
 </style>

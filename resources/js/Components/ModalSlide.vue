@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted, watch } from 'vue'
 import AppButton from './AppButton.vue'
-import { ref } from 'vue'
 
 import device from 'vue3-device-detector'
 import { useWindowSize } from '@vueuse/core'
