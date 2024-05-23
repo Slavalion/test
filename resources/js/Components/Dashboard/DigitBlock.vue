@@ -1,5 +1,8 @@
 <script setup>
+import { ref, watch } from 'vue'
 import AppPanel from '../AppPanel.vue'
+import { useElementSize } from '@vueuse/core'
+import AppIcon from '@/Components/AppIcon.vue'
 
 defineProps({
     digit: {
@@ -18,7 +21,7 @@ const headerLine = ref('56px')
 const svgWidth = ref('10px')
 const fontSize = ref('17px')
 const fontLine = ref('28px')
-const { height } = useElementSize(el)
+const { width, height } = useElementSize(el)
 
 watch(height, () => {
     baseWidth.value = String(height.value.toFixed(2)) + 'px'
@@ -29,11 +32,11 @@ watch(height, () => {
 })
 </script>
 <template>
-    <AppPanel>
-        <div class="text-center">
-            <div>Icon</div>
-            <div>{{ digit }}</div>
-            <div>
+    <AppPanel class="digitBlock" ref="el">
+        <div class="text-center digitBlock__base">
+            <AppIcon :icon="icon" class="digitBlock__icon" />
+            <div class="digitBlock__digit">{{ digit }}</div>
+            <div class="digitBlock__title">
                 <slot></slot>
             </div>
         </div>
@@ -70,13 +73,6 @@ watch(height, () => {
         line-height: v-bind(fontLine);
         font-weight: 400;
         letter-spacing: 0.18px;
-    }
-}
-
-@media (min-width: 1441px) {
-    .digitBlock__digit {
-        font-size: 48px;
-        line-height: 56px;
     }
 }
 </style>
