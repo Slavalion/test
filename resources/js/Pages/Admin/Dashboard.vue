@@ -8,11 +8,55 @@ import AppButton from '@/Components/AppButton.vue'
 import AppTable from '@/Components/AppTable.vue'
 import DigitBlock from '@/Components/Dashboard/DigitBlock.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import AppIcon from '@/Components/AppIcon.vue'
+import AccountsTable from '@/Components/AccountsTable.vue'
+import Modal from '@/Components/ModalMobileTariffs.vue'
 
 defineProps({
     totals: {
         type: Object,
         required: true,
+    },
+    stuck: {
+        type: Object,
+        default: {
+            purchases: 12,
+            reviews: 4,
+            reviewReactions: 5,
+            reviewComplaints: 4,
+            cartActions: 0,
+        },
+    },
+    purchases: {
+        type: Object,
+        default: {
+            returned: 12,
+            edited: 34,
+            deleted: 50,
+        },
+    },
+    users: {
+        type: Object,
+        default: {
+            total: 45,
+            deleted: 5,
+        },
+    },
+    accounts: {
+        type: Object,
+        default: {
+            total: 50162,
+            free: 27465,
+            otleg: 10064,
+            bouthed: 560,
+            reviewed: 1590,
+            qrgive: 7590,
+            banned: 232,
+            thief: 198,
+            withoutcooced: 2,
+            payed: 500,
+            stoledCard: 463,
+        },
     },
     missedPurchases: {
         type: Array,
@@ -125,7 +169,31 @@ const setSection = (section) => {
                 <div v-else class="text-center">За последние 7 дней нет пополнений</div>
             </div>
 
-            <div v-show="currentSection == 'missedPurchases'" class="panel panel_p-lg">
+            <div
+                class="grid grid-cols-2 gap-4 digit-block-desk"
+                v-if="currentSection === 'services'"
+            >
+                <DigitBlock icon="blue-users" :digit="users.total"
+                    >зарегистрировалось пользователей</DigitBlock
+                >
+                <DigitBlock icon="red-deleted" :digit="users.deleted"
+                    >удалили свой аккаунт</DigitBlock
+                >
+            </div>
+
+            <div
+                class="grid grid-cols-3 gap-4 digit-block-desk"
+                v-if="currentSection === 'accounts'"
+            >
+                <DigitBlock icon="blue-users" :digit="accounts.total">всего</DigitBlock>
+                <DigitBlock icon="green-users" :digit="accounts.free">свободен</DigitBlock>
+                <DigitBlock icon="red-users" :digit="accounts.otleg"> в отлеге </DigitBlock>
+            </div>
+
+            <AccountsTable v-if="currentSection === 'accounts'" :accounts="accounts" />
+
+            <div class="panel panel_p-lg" v-if="currentSection === 'stuck'">
+                <div class="mb-4">Пропущенные выкупы</div>
                 <div>
                     <pre v-for="purchase in missedPurchases" :key="purchase.id">{{ purchase }}</pre>
                 </div>
