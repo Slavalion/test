@@ -7,6 +7,7 @@ import AppButton from '@/Components/AppButton.vue'
 import DigitBlock from '@/Components/Dashboard/DigitBlock.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import AppIcon from '@/Components/AppIcon.vue'
+import AccountsTable from '@/Components/AccountsTable.vue'
 import Modal from '@/Components/ModalMobileTariffs.vue'
 
 defineProps({
@@ -45,6 +46,14 @@ defineProps({
             total: 50162,
             free: 27465,
             otleg: 10064,
+            bouthed: 560,
+            reviewed: 1590,
+            qrgive: 7590,
+            banned: 232,
+            thief: 198,
+            withoutcooced: 2,
+            payed: 500,
+            stoledCard: 463,
         },
     },
     missedPurchases: {
@@ -183,9 +192,7 @@ const nextSection = (section) => {
                 <DigitBlock icon="red-users" :digit="accounts.otleg"> в отлеге </DigitBlock>
             </div>
 
-            <div v-if="currentSection === 'accounts'">
-                <img src="/images/graf4.png" alt="graf4" />
-            </div>
+            <AccountsTable v-if="currentSection === 'accounts'" :accounts="accounts" />
 
             <div class="panel panel_p-lg" v-if="currentSection === 'stuck'">
                 <div class="mb-4">Пропущенные выкупы</div>
