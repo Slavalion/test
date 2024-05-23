@@ -1,7 +1,8 @@
 <script setup>
 import { Link, usePage } from '@inertiajs/vue3'
-import { computed, ref } from 'vue'
-
+import { computed, ref, watch, onMounted } from 'vue'
+import device from 'vue3-device-detector'
+import { useWindowSize } from '@vueuse/core'
 import { purchaseGenerator, purchaseImport, purchaseSlide } from '@/modals'
 
 import ApplicationLogo from '@/Components/ApplicationLogo.vue'
@@ -14,12 +15,18 @@ import FillUpBalanceModal from '@/Modals/FillUpBalance.vue'
 import PurchaseGenerator from '@/Modals/PurchaseGenerator.vue'
 import PurchaseImport from '@/Modals/PurchaseImport.vue'
 import PurchaseSlide from '@/Modals/PurchaseSlide.vue'
-
+import ProgressBar from '@/Components/PurchaseProgressBar.vue'
 import AppDropdown from '@/Components/AppDropdown.vue'
 import AppIcon from '@/Components/AppIcon.vue'
 import { globalSettings } from '@/Store/globalSettings'
 
 const sidebarCollapsed = ref(localStorage.getItem('sidebar-collapsed') == 'true')
+const sidebarCollapsedMobile = ref(localStorage.getItem('sidebar-collapsed-mobile') == 'true')
+const isSmallScreen = ref(false)
+const { width } = useWindowSize()
+const page = usePage()
+const totalDeliveres = page.props.data.allDeliveres
+const finishedDeliveres = page.props.data.finishedDeliveres
 
 const collapseIcon = computed(() => {
     return sidebarCollapsed.value ? 'chevrons-right' : 'chevrons-left'
@@ -34,14 +41,95 @@ const toggleSidebar = () => {
     localStorage.setItem('sidebar-collapsed', sidebarCollapsed.value)
 }
 
+const toggleSidebarMobile = () => {
+    sidebarCollapsedMobile.value = !sidebarCollapsedMobile.value
+    localStorage.setItem('sidebar-collapsed-mobile', sidebarCollapsed.value)
+}
+
 globalSettings.value = {
     ...globalSettings.value,
     ...usePage().props.settings,
 }
+
+window.Echo.channel('tasks').listen('TaskProgressUpdate', (e) => {
+    // const task = e.task
+    // let localTask = state.tasks.find((el) => {
+    //     return el.id == task.id
+    // })
+    console.log(e.task)
+    // localTask.progress = task.progress
+})
+
+watch(width, () => {
+    isSmallScreen.value = !(device().isDesktop && width.value > 390)
+    if (width.value < 390 && document.getElementsByTagName('jdiv').length > 0) {
+        document.getElementsByTagName('jdiv')[0].style.display = 'none'
+    }
+})
+
+onMounted(() => {
+    isSmallScreen.value = !(device().isDesktop && width.value > 390)
+    if (!(device().isDesktop && width > 390)) {
+        sidebarCollapsedMobile.value = true
+        localStorage.setItem('sidebar-collapsed-mobile', true)
+    }
+})
 </script>
 
 <template>
     <div
+        v-if="isSmallScreen"
+        :class="'wrapper-mobile ' + usePage().component.toLowerCase() + '-mobile'"
+    >
+        <div class="wrapper-mobile__desk">
+            <div class="wrapper-mobile__desk-topmenu">
+                <AppButton icon="menu" theme="outline" @click="toggleSidebarMobile"></AppButton>
+                <div class="wrapper-mobile__logo">
+                    <img src="/images/LogoColor.svg" alt="MPB.top" height="44" />
+                </div>
+                <AppButton
+                    v-if="purchaseSlide.show"
+                    icon="close"
+                    @click="purchaseSlide.close()"
+                ></AppButton>
+                <AppButton v-else icon="plus-circle" @click="purchaseSlide.open()"></AppButton>
+            </div>
+            <!-- Page Content -->
+            <main class="wrapper-mobile__desk-body" v-if="!sidebarCollapsedMobile">
+                <div class="wrapper-mobile__sidebar">
+                    <ProfileCard />
+
+                    <SidebarNav />
+                </div>
+            </main>
+
+            <main class="wrapper-mobile__desk-body" v-else>
+                <!-- Page Heading -->
+                <div v-if="globalSettings.maintenance_mode" class="mobile-maintenance-mode">
+                    <div class="flex items-center gap-6">
+                        <AppIcon icon="alert-triangle" width="30" height="30" />
+                        <div class="mobile-maintenance-mode__infotext">
+                            <h6>Режим обслуживания</h6>
+                            <p>На данный момент можно только пополнить кошелек</p>
+                        </div>
+                    </div>
+                </div>
+
+                <header v-if="$slots.header">
+                    <h1 class="main__headline flex items-center wrapper-mobile__header">
+                        <slot name="header" />
+                    </h1>
+                </header>
+
+                <slot></slot>
+            </main>
+        </div>
+        <PurchaseSlide />
+        <FillUpBalanceModal />
+    </div>
+
+    <div
+        v-else
         class="wrapper min-h-screen z-50"
         :class="{
             sidebar_collapsed: sidebarCollapsed,
@@ -82,6 +170,11 @@ globalSettings.value = {
         </div>
 
         <div class="topbar fixed inset-x-0">
+            <div class="purchase-group__progress">
+                <p>Завершено выкупов: {{ finishedDeliveres }} из {{ totalDeliveres }}</p>
+                <ProgressBar :progress="Math.round((finishedDeliveres * 100) / totalDeliveres)" />
+            </div>
+
             <AppButton class="ml-auto" icon="plus-circle" @click="purchaseSlide.open()">
                 Создать выкуп
             </AppButton>
@@ -114,7 +207,7 @@ globalSettings.value = {
                 </h1>
             </header>
 
-            <slot></slot>
+            <slot :isSmallScreen="isSmallScreen"></slot>
         </main>
 
         <!-- Modals -->

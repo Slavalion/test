@@ -146,6 +146,11 @@ export default {
                     icon: 'wallet',
                 },
                 {
+                    title: 'Тарифы',
+                    route: 'tariffs.index',
+                    icon: 'tariffs',
+                },
+                {
                     title: 'Транзакции',
                     route: 'transactions',
                     icon: 'transactions',
