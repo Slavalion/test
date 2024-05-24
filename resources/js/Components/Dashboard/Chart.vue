@@ -29,7 +29,10 @@ const green = 'green'
 
 const el = ref(null)
 const { width } = useElementSize(el)
-const baseHeight = ref('540px')
+const previousWidth = ref(1132)
+const widthCart = ref(1000)
+const heightCart = ref(300)
+const baseHeight = ref('500px')
 const dim44 = ref('44px')
 const dim40 = ref('40px')
 const dim36 = ref('36px')
@@ -43,24 +46,33 @@ const dim6 = ref('6px')
 const dim2 = ref('2px')
 
 watch(width, () => {
-    baseHeight.value = String((0.483 * width.value).toFixed(2)) + 'px' //524px
-    dim44.value = String((0.0388 * width.value).toFixed(2)) + 'px' //44px
-    dim40.value = String((0.0353 * width.value).toFixed(2)) + 'px' //40px
-    dim36.value = String((0.0318 * width.value).toFixed(2)) + 'px' //36px
-    dim30.value = String((0.0265 * width.value).toFixed(2)) + 'px' //30px
-    dim24.value = String((0.0212 * width.value).toFixed(2)) + 'px' //24px
-    dim23.value = String((0.0203 * width.value).toFixed(2)) + 'px' //23px
-    dim20.value = String((0.0177 * width.value).toFixed(2)) + 'px' //20px
-    dim16.value = String((0.0141 * width.value).toFixed(2)) + 'px' //16px
-    dim14.value = String((0.0124 * width.value).toFixed(2)) + 'px' //14px
-    dim6.value = String((0.0053 * width.value).toFixed(2)) + 'px' //6px
-    dim2.value = String((0.002 * width.value).toFixed(2)) + 'px' //2.32px
+    if (
+        Math.abs(Math.round(width.value) - previousWidth.value) >
+        Math.round(previousWidth.value / 100)
+    ) {
+        previousWidth.value = Math.round(width.value)
+
+        baseHeight.value = String((0.442 * width.value).toFixed(2)) + 'px' //504px
+        dim44.value = String((0.0388 * width.value).toFixed(2)) + 'px' //44px
+        dim40.value = String((0.0353 * width.value).toFixed(2)) + 'px' //40px
+        dim36.value = String((0.0318 * width.value).toFixed(2)) + 'px' //36px
+        dim30.value = String((0.0265 * width.value).toFixed(2)) + 'px' //30px
+        dim24.value = String((0.0212 * width.value).toFixed(2)) + 'px' //24px
+        dim23.value = String((0.0203 * width.value).toFixed(2)) + 'px' //23px
+        dim20.value = String((0.0177 * width.value).toFixed(2)) + 'px' //20px
+        dim16.value = String((0.0141 * width.value).toFixed(2)) + 'px' //16px
+        dim14.value = String((0.0124 * width.value).toFixed(2)) + 'px' //14px
+        dim6.value = String((0.0053 * width.value).toFixed(2)) + 'px' //6px
+        dim2.value = String((0.002 * width.value).toFixed(2)) + 'px' //2.32px
+        dim2.value = String((0.002 * width.value).toFixed(2)) + 'px' //2.32px
+    }
 })
 
 const canvasElement = ref(undefined)
 const context = ref(undefined)
 
 onMounted(() => {
+    previousWidth.value = Math.round(width.value)
     context.value = canvasElement.value?.getContext('2d') || undefined
 
     render()
@@ -71,7 +83,7 @@ function render() {
         return
     }
 
-    context.value.fillText('CHAT', 50, 50)
+    context.value.fillText('CHAT', widthCart.value, heightCart.value)
 }
 </script>
 
@@ -89,7 +101,7 @@ function render() {
                 </div>
             </div>
         </div>
-        <canvas ref="canvasElement" width="200" height="200" />
+        <canvas ref="canvasElement" :width="widthCart" :height="heightCart" />
     </div>
 </template>
 
