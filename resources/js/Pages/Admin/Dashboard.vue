@@ -7,7 +7,8 @@ import AppButton from '@/Components/AppButton.vue'
 import DigitBlock from '@/Components/Dashboard/DigitBlock.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import AppIcon from '@/Components/AppIcon.vue'
-import AccountsTable from '@/Components/AccountsTable.vue'
+import AccountsTable from '@/Components/Dashboard/AccountsTable.vue'
+import Chart from '@/Components/Dashboard/Chart.vue'
 import Modal from '@/Components/ModalMobileTariffs.vue'
 
 defineProps({
@@ -155,6 +156,10 @@ const nextSection = (section) => {
 
             <div v-if="currentSection === 'logistic'">
                 <img src="/images/graf3.png" alt="graf3" />
+            </div>
+
+            <div v-if="currentSection === 'logistic'">
+                <Chart title="Логистика" />
             </div>
 
             <div class="grid grid-cols-5 gap-4 digit-block-desk" v-if="currentSection === 'stuck'">
