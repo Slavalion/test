@@ -10,6 +10,13 @@ import AppIcon from '@/Components/AppIcon.vue'
 import AccountsTable from '@/Components/Dashboard/AccountsTable.vue'
 import Chart from '@/Components/Dashboard/Chart.vue'
 import Modal from '@/Components/ModalMobileTariffs.vue'
+import {
+    logisticSourceData,
+    logisticSourceLegend,
+    balanseSourceLegend,
+    incomeSourceLegend,
+    incomeSourceData,
+} from '@/Data/chart'
 
 defineProps({
     totals: {
@@ -127,6 +134,15 @@ const nextSection = (section) => {
                 <img src="/images/graf1.png" alt="graf1" />
             </div>
 
+            <div v-if="currentSection === 'services'">
+                <Chart
+                    title="Вы заработали"
+                    :dataSource="incomeSourceData"
+                    variant="income"
+                    :legend="incomeSourceLegend"
+                />
+            </div>
+
             <div
                 class="grid grid-cols-3 gap-4 digit-block-desk"
                 v-if="currentSection === 'services'"
@@ -142,8 +158,17 @@ const nextSection = (section) => {
                 </DigitBlock>
             </div>
 
-            <div v-if="currentSection === 'services'">
+            <!-- <div v-if="currentSection === 'services'">
                 <img src="/images/graf2.png" alt="graf2" />
+            </div> -->
+
+            <div v-if="currentSection === 'services'">
+                <Chart
+                    title="Пополнений баланса"
+                    :dataSource="logisticSourceData"
+                    variant="balanse"
+                    :legend="balanseSourceLegend"
+                />
             </div>
 
             <div
@@ -154,12 +179,17 @@ const nextSection = (section) => {
                 <DigitBlock icon="blue-box" :digit="users.deleted">заборов из ПВЗ</DigitBlock>
             </div>
 
-            <div v-if="currentSection === 'logistic'">
+            <!-- <div v-if="currentSection === 'logistic'">
                 <img src="/images/graf3.png" alt="graf3" />
-            </div>
+            </div> -->
 
             <div v-if="currentSection === 'logistic'">
-                <Chart title="Логистика" />
+                <Chart
+                    title="Логистика"
+                    :dataSource="logisticSourceData"
+                    variant="logistic"
+                    :legend="logisticSourceLegend"
+                />
             </div>
 
             <div class="grid grid-cols-5 gap-4 digit-block-desk" v-if="currentSection === 'stuck'">
