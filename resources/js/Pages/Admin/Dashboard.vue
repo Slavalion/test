@@ -8,6 +8,7 @@ import DigitBlock from '@/Components/Dashboard/DigitBlock.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import AppIcon from '@/Components/AppIcon.vue'
 import AccountsTable from '@/Components/Dashboard/AccountsTable.vue'
+import StuckTable from '@/Components/Dashboard/StuckTable.vue'
 import Chart from '@/Components/Dashboard/Chart.vue'
 import Modal from '@/Components/ModalMobileTariffs.vue'
 import {
@@ -130,9 +131,9 @@ const nextSection = (section) => {
                 </DigitBlock>
             </div>
 
-            <div v-if="currentSection === 'services'">
+            <!-- <div v-if="currentSection === 'services'">
                 <img src="/images/graf1.png" alt="graf1" />
-            </div>
+            </div> -->
 
             <div v-if="currentSection === 'services'">
                 <Chart
@@ -229,12 +230,14 @@ const nextSection = (section) => {
 
             <AccountsTable v-if="currentSection === 'accounts'" :accounts="accounts" />
 
-            <div class="panel panel_p-lg" v-if="currentSection === 'stuck'">
+            <!-- <div class="panel panel_p-lg" v-if="currentSection === 'stuck'">
                 <div class="mb-4">Пропущенные выкупы</div>
                 <div>
                     <pre v-for="purchase in missedPurchases" :key="purchase.id">{{ purchase }}</pre>
                 </div>
-            </div>
+            </div> -->
+
+            <StuckTable v-if="currentSection === 'stuck'" />
         </div>
         <Modal
             :show="isModalShowed"

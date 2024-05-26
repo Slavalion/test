@@ -11,20 +11,16 @@ const props = defineProps({
     title: {
         type: String,
         required: true,
+        default: 'Название графика',
     },
     legend: {
         type: Object,
         default: {
-            // 1: {
-            //     id: 1,
-            //     name: 'выдано QR',
-            //     color: '#1665FF',
-            // },
-            // 2: {
-            //     id: 2,
-            //     name: 'заборов из ПВЗ',
-            //     color: '#16C050',
-            // },
+            1: {
+                id: 1,
+                name: 'легенда графика',
+                color: '#1665FF',
+            },
         },
     },
     dataSource: {
@@ -266,6 +262,97 @@ function render() {
         context.value.lineWidth = 2
         context.value.strokeStyle = props.legend[1].color //'#1665FF'
         context.value.stroke()
+    } else if (props.variant === 'income') {
+        for (let i = 0; i < 25; i++) {
+            context.value.beginPath()
+            context.value.rect(
+                58 + 38 * i,
+                290 - Math.round(props.dataSource[i].likeOnReview / 35.7143),
+                16,
+                Math.round(props.dataSource[i].likeOnReview / 35.7143)
+            )
+            context.value.closePath()
+            context.value.strokeStyle = props.legend[5].color
+            context.value.fillStyle = props.legend[5].color
+            context.value.fill()
+            context.value.stroke()
+
+            context.value.beginPath()
+            context.value.rect(
+                58 + 38 * i,
+                290 -
+                    Math.round(
+                        (props.dataSource[i].likeOnReview + props.dataSource[i].questions) / 35.7143
+                    ),
+                16,
+                Math.round(props.dataSource[i].questions / 35.7143)
+            )
+            context.value.closePath()
+            context.value.strokeStyle = props.legend[4].color
+            context.value.fillStyle = props.legend[4].color
+            context.value.fill()
+            context.value.stroke()
+
+            context.value.beginPath()
+            context.value.rect(
+                58 + 38 * i,
+                290 -
+                    Math.round(
+                        (props.dataSource[i].likeOnReview +
+                            props.dataSource[i].questions +
+                            props.dataSource[i].likes) /
+                            35.7143
+                    ),
+                16,
+                Math.round(props.dataSource[i].likes / 35.7143)
+            )
+            context.value.closePath()
+            context.value.strokeStyle = props.legend[3].color
+            context.value.fillStyle = props.legend[3].color
+            context.value.fill()
+            context.value.stroke()
+
+            context.value.beginPath()
+            context.value.rect(
+                58 + 38 * i,
+                290 -
+                    Math.round(
+                        (props.dataSource[i].likeOnReview +
+                            props.dataSource[i].questions +
+                            props.dataSource[i].likes +
+                            props.dataSource[i].review) /
+                            35.7143
+                    ),
+                16,
+                Math.round(props.dataSource[i].review / 35.7143)
+            )
+            context.value.closePath()
+            context.value.strokeStyle = props.legend[2].color
+            context.value.fillStyle = props.legend[2].color
+            context.value.fill()
+            context.value.stroke()
+
+            context.value.beginPath()
+            context.value.rect(
+                58 + 38 * i,
+                290 -
+                    Math.round(
+                        (props.dataSource[i].likeOnReview +
+                            props.dataSource[i].questions +
+                            props.dataSource[i].likes +
+                            props.dataSource[i].review +
+                            props.dataSource[i].purchase) /
+                            35.7143
+                    ),
+                16,
+                Math.round(props.dataSource[i].purchase / 35.7143)
+            )
+            context.value.closePath()
+            context.value.strokeStyle = props.legend[1].color
+            context.value.fillStyle = props.legend[1].color
+            context.value.fill()
+            context.value.stroke()
+        }
     }
 }
 </script>
