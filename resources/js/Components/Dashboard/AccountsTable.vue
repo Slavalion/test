@@ -21,10 +21,6 @@ const dim13 = ref('13px')
 const dim12 = ref('12px')
 const dim6 = ref('6px')
 
-const page = reactive({
-    title: '56px',
-})
-
 watch(width, () => {
     dim24.value = String((0.0212 * width.value).toFixed(2)) + 'px' //24px
     baseHeight.value = String((0.483 * width.value).toFixed(2)) + 'px' //524px
@@ -35,8 +31,6 @@ watch(width, () => {
     dim12.value = String((0.0106 * width.value).toFixed(2)) + 'px' //12px
     dim6.value = String((0.0053 * width.value).toFixed(2)) + 'px' //12px
     levelLine.value = String((0.61 * width.value).toFixed(2)) + 'px'
-    // fontSize.value = String((0.081 * height.value).toFixed(2)) + 'px'
-    // fontLine.value = String((0.133 * height.value).toFixed(2)) + 'px'
 })
 </script>
 
