@@ -2,7 +2,6 @@
 import { Head, router, usePage } from '@inertiajs/vue3'
 import dayjs from 'dayjs'
 import { computed, ref, reactive, watch } from 'vue'
-import moment from 'moment'
 import { currencyFormater } from '@/Helpers/formater'
 import AppIcon from '@/Components/AppIcon.vue'
 import AppButton from '@/Components/AppButton.vue'
@@ -287,8 +286,8 @@ watch(
                         <span v-else>Пополнение</span>
                     </td>
                     <td class="text-left">
-                        {{ moment(transaction.created_ts).format('DD.MM.YYYY') }} в
-                        {{ moment(transaction.created_ts).format('hh:mm') }}
+                        {{ dayjs(transaction.created_ts).format('DD.MM.YYYY') }} в
+                        {{ dayjs(transaction.created_ts).format('hh:mm') }}
                     </td>
                     <td class="text-left p-6">
                         <div v-if="transaction.status == 1" class="accentGreen flex badge">
@@ -350,7 +349,7 @@ watch(
                     <div class="mobile-product-card__info">
                         <div class="mobile-product-card__info__top">
                             <div class="product__code product__code__text">
-                                {{ moment(transaction.created_ts).format('DD.MM.YYYY') }}
+                                {{ dayjs(transaction.created_ts).format('DD.MM.YYYY') }}
                             </div>
                             <div class="product__quantity">
                                 {{ targetOnlyText(transaction.target) }}

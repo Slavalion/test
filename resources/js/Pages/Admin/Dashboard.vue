@@ -131,10 +131,6 @@ const nextSection = (section) => {
                 </DigitBlock>
             </div>
 
-            <!-- <div v-if="currentSection === 'services'">
-                <img src="/images/graf1.png" alt="graf1" />
-            </div> -->
-
             <div v-if="currentSection === 'services'">
                 <Chart
                     title="Вы заработали"
@@ -159,10 +155,6 @@ const nextSection = (section) => {
                 </DigitBlock>
             </div>
 
-            <!-- <div v-if="currentSection === 'services'">
-                <img src="/images/graf2.png" alt="graf2" />
-            </div> -->
-
             <div v-if="currentSection === 'services'">
                 <Chart
                     title="Пополнений баланса"
@@ -179,10 +171,6 @@ const nextSection = (section) => {
                 <DigitBlock icon="blue-qr" :digit="users.total">выдано QR-кодов</DigitBlock>
                 <DigitBlock icon="blue-box" :digit="users.deleted">заборов из ПВЗ</DigitBlock>
             </div>
-
-            <!-- <div v-if="currentSection === 'logistic'">
-                <img src="/images/graf3.png" alt="graf3" />
-            </div> -->
 
             <div v-if="currentSection === 'logistic'">
                 <Chart
@@ -229,13 +217,6 @@ const nextSection = (section) => {
             </div>
 
             <AccountsTable v-if="currentSection === 'accounts'" :accounts="accounts" />
-
-            <!-- <div class="panel panel_p-lg" v-if="currentSection === 'stuck'">
-                <div class="mb-4">Пропущенные выкупы</div>
-                <div>
-                    <pre v-for="purchase in missedPurchases" :key="purchase.id">{{ purchase }}</pre>
-                </div>
-            </div> -->
 
             <StuckTable v-if="currentSection === 'stuck'" />
         </div>
