@@ -1,42 +1,23 @@
 <script setup>
-import device from 'vue3-device-detector'
+import { computed } from 'vue'
 import { useWindowSize } from '@vueuse/core'
+
 const { width } = useWindowSize()
+const mobileMode = computed(() => {
+    return width.value <= 390
+})
 </script>
 
 <template>
-    <div class="min-h-screen auth-layout" v-if="device().isDesktop && width > 390">
-        <div class="auth-layout__bg"></div>
+    <div :class="mobileMode ? 'min-h-screen auth-layout-mobile' : 'min-h-screen auth-layout'">
+        <div :class="mobileMode ? 'auth-layout-mobile__bg' : 'auth-layout__bg'"></div>
 
-        <div class="auth-layout__logo">
+        <div :class="mobileMode ? 'auth-layout-mobile__logo' : 'auth-layout__logo'">
             <img src="/images/LogoWhite.svg" alt="MPB.top" height="36" />
         </div>
 
-        <div class="auth-panel">
-            <div class="auth-panel__head">
-                <div class="auth-panel__head-title">
-                    <slot name="title"></slot>
-                </div>
-                <div class="auth-panel__head-caption">
-                    <slot name="caption"></slot>
-                </div>
-            </div>
-            <div class="auth-panel__body">
-                <slot></slot>
-            </div>
-            <div class="auth-panel__footer">
-                <slot name="footer"></slot>
-            </div>
-        </div>
-    </div>
-    <div v-else class="min-h-screen auth-layout-mobile">
-        <div class="auth-layout-mobile__bg"></div>
-        <div class="auth-layout-mobile__logo">
-            <img src="/images/LogoWhite.svg" alt="MPB.top" height="36" />
-        </div>
-
-        <div class="auth-panel-mobile">
-            <div class="auth-panel-mobile__head">
+        <div ref="elg" :class="mobileMode ? 'auth-panel-mobile' : 'auth-panel'">
+            <div class="auth-panel-mobile__head" v-if="mobileMode">
                 <div class="auth-panel-mobile__head-title">
                     <slot name="title"></slot>
                 </div>
@@ -44,12 +25,67 @@ const { width } = useWindowSize()
                     <slot name="caption"></slot>
                 </div>
             </div>
-            <div class="auth-panel-mobile__body">
+
+            <div class="auth-panel__head" v-else>
+                <div class="auth-panel__head-title">
+                    <slot name="title"></slot>
+                </div>
+                <div class="auth-panel__head-caption">
+                    <slot name="caption"></slot>
+                </div>
+            </div>
+
+            <div :class="mobileMode ? 'auth-panel-mobile__body' : 'auth-panel__body'">
                 <slot></slot>
             </div>
-            <div class="auth-panel-mobile__footer">
+            <div :class="mobileMode ? 'auth-panel-mobile__footer' : 'auth-panel__footer'">
                 <slot name="footer"></slot>
             </div>
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+@import './../../scss/vars';
+
+.auth-panel {
+    width: 480px;
+    border-radius: 25px;
+    box-shadow: -1px 3px 8px 0px rgba(89, 128, 206, 0.05);
+    background-color: $functionalWhite;
+}
+
+// .auth-panel {
+//     width: 480px;
+//     border-radius: 25px;
+//     box-shadow: -1px 3px 8px 0px rgba(89, 128, 206, 0.05);
+//     background-color: $functionalWhite;
+
+//     &__head {
+//         padding: 36px;
+//         border-bottom: 1px solid $neuralNeural4;
+
+//         &-title {
+//             margin-bottom: 12px;
+//             color: $neuralNeural10;
+
+//             @include header(2);
+//         }
+
+//         &-caption {
+//             color: $neuralNeural8;
+
+//             @include paragraph(2);
+//         }
+//     }
+
+//     &__body {
+//         padding: 36px;
+//     }
+
+//     &__footer {
+//         padding: 36px;
+//         border-top: 1px solid $neuralNeural4;
+//     }
+// }
+</style>

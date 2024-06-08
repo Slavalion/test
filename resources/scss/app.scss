@@ -147,39 +147,39 @@ body {
     }
 }
 
-.auth-panel {
-    width: 480px;
-    border-radius: 25px;
-    box-shadow: -1px 3px 8px 0px rgba(89, 128, 206, 0.05);
-    background-color: $functionalWhite;
+// .auth-panel {
+//     width: 480px;
+//     border-radius: 25px;
+//     box-shadow: -1px 3px 8px 0px rgba(89, 128, 206, 0.05);
+//     background-color: $functionalWhite;
 
-    &__head {
-        padding: 36px;
-        border-bottom: 1px solid $neuralNeural4;
+//     &__head {
+//         padding: 36px;
+//         border-bottom: 1px solid $neuralNeural4;
 
-        &-title {
-            margin-bottom: 12px;
-            color: $neuralNeural10;
+//         &-title {
+//             margin-bottom: 12px;
+//             color: $neuralNeural10;
 
-            @include header(2);
-        }
+//             @include header(2);
+//         }
 
-        &-caption {
-            color: $neuralNeural8;
+//         &-caption {
+//             color: $neuralNeural8;
 
-            @include paragraph(2);
-        }
-    }
+//             @include paragraph(2);
+//         }
+//     }
 
-    &__body {
-        padding: 36px;
-    }
+//     &__body {
+//         padding: 36px;
+//     }
 
-    &__footer {
-        padding: 36px;
-        border-top: 1px solid $neuralNeural4;
-    }
-}
+//     &__footer {
+//         padding: 36px;
+//         border-top: 1px solid $neuralNeural4;
+//     }
+// }
 
 .empty-state {
     height: 100%;
@@ -456,7 +456,7 @@ body {
     height: 80px;
     display: flex;
     align-items: center;
-    @include paragraph(1);
+    // @include paragraph(1);
 
     &:hover {
         background-color: $functionalBlue20;
@@ -2509,21 +2509,21 @@ body {
     }
 
     .telegram-auth {
-        width: 100%;
+        //width: 100%;
         & .telegram-login {
-            padding: 2.5vw 1.98vw;
-            border-radius: 1.6667vw;
-            gap: 2.5vw;
-            width: 42.5vw;
-            height: 8.333vw;
-            font-size: 1.777vw;
-            line-height: 2.9167vw;
+            // padding: 2.5vw 1.98vw;
+            // border-radius: 1.6667vw;
+            // gap: 2.5vw;
+            // width: 42.5vw;
+            // height: 8.333vw;
+            // font-size: 1.777vw;
+            // line-height: 2.9167vw;
             letter-spacing: 0px;
 
-            & svg {
-                width: 4.1667vw;
-                height: 3.333vw;
-            }
+            // & svg {
+            //     width: 4.1667vw;
+            //     height: 3.333vw;
+            // }
         }
     }
 }

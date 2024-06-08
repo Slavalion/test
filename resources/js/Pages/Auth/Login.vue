@@ -1,13 +1,12 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import { ref } from 'vue'
-import device from 'vue3-device-detector'
 import { useWindowSize } from '@vueuse/core'
 import { useTelegramAuth } from '@/Composables/telegramAuth'
 
 import GuestLayout from '@/Layouts/GuestLayout.vue'
-import AppIcon from '@/Components/AppIcon.vue'
 import AppButton from '@/Components/AppButton.vue'
+import TelegramButton from '@/Components/TelegramButton.vue'
 import CheckboxInput from '@/Components/Inputs/CheckboxInput.vue'
 import TextInput from '@/Components/Inputs/TextInput.vue'
 
@@ -75,10 +74,7 @@ const widgetButtonClick = () => {
                 {{ status }}
             </div>
 
-            <form
-                @submit.prevent="submit"
-                :class="device().isDesktop && width > 390 ? 'space-y-6' : 'mobile-form'"
-            >
+            <form @submit.prevent="submit" :class="width > 390 ? 'space-y-6' : 'mobile-form'">
                 <TextInput
                     v-model="form.email"
                     :has-error="form.errors.email != undefined"
@@ -112,27 +108,23 @@ const widgetButtonClick = () => {
         </template>
 
         <template #footer>
-            <div class="flex gap-3" v-if="device().isDesktop && width > 390">
+            <div :class="width > 390 ? 'flex gap-3' : 'auth-panel-mobile__footer-btns'">
                 <Link :href="route('register')" @click="regClick">
-                    <AppButton size="lg" theme="outline"> Регистрация </AppButton>
-                </Link>
-
-                <Link v-if="canResetPassword" :href="route('password.request')" class="ml-auto">
-                    <AppButton size="lg" theme="normal"> Забыли пароль </AppButton>
-                </Link>
-
-                <AppButton @click="submit" size="lg" :disabled="form.processing"> Войти </AppButton>
-            </div>
-
-            <div v-else class="auth-panel-mobile__footer-btns">
-                <Link :href="route('register')" @click="regClick">
-                    <AppButton size="lg" theme="outline" class="mobileparagraph1">
+                    <AppButton
+                        size="lg"
+                        theme="outline"
+                        :class="width > 390 ? '' : 'mobileparagraph1'"
+                    >
                         Регистрация
                     </AppButton>
                 </Link>
 
-                <Link v-if="canResetPassword" :href="route('password.request')">
-                    <AppButton size="lg" theme="normal" class="mobileparagraph1">
+                <Link v-if="canResetPassword" :href="route('password.request')" class="ml-auto">
+                    <AppButton
+                        size="lg"
+                        theme="normal"
+                        :class="width > 390 ? '' : 'mobileparagraph1'"
+                    >
                         Забыли пароль
                     </AppButton>
                 </Link>
@@ -140,13 +132,7 @@ const widgetButtonClick = () => {
                 <AppButton @click="submit" size="lg" :disabled="form.processing"> Войти </AppButton>
             </div>
 
-            <div class="pt-9 flex justify-center telegram-auth">
-                <div class="telegram-login" @click="widgetButtonClick">
-                    <AppIcon icon="telegramm" />
-                    <span>Войти с помощью Telegram</span>
-                </div>
-                <div ref="telegram" id="tg-auth-widget" style="display: none"></div>
-            </div>
+            <TelegramButton @clickBtn="widgetButtonClick" />
         </template>
     </GuestLayout>
 </template>
