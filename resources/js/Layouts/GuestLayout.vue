@@ -47,45 +47,106 @@ const mobileMode = computed(() => {
 
 <style lang="scss" scoped>
 @import './../../scss/vars';
+@import './../../scss/mixins';
 
 .auth-panel {
     width: 480px;
     border-radius: 25px;
     box-shadow: -1px 3px 8px 0px rgba(89, 128, 206, 0.05);
     background-color: $functionalWhite;
+
+    &__head {
+        padding: 36px;
+        border-bottom: 1px solid $neuralNeural4;
+
+        &-title {
+            margin-bottom: 12px;
+            color: $neuralNeural10;
+            user-select: none;
+            @include header(2);
+        }
+
+        &-caption {
+            color: $neuralNeural8;
+            user-select: none;
+            @include paragraph(2);
+        }
+    }
+
+    &__body {
+        padding: 36px;
+    }
+
+    &__footer {
+        padding: 36px;
+        border-top: 1px solid $neuralNeural4;
+    }
 }
 
-// .auth-panel {
-//     width: 480px;
-//     border-radius: 25px;
-//     box-shadow: -1px 3px 8px 0px rgba(89, 128, 206, 0.05);
-//     background-color: $functionalWhite;
+@media (min-width: 390px) and (max-width: 500px) {
+    .auth-panel {
+        width: calc(100vw - 20px);
 
-//     &__head {
-//         padding: 36px;
-//         border-bottom: 1px solid $neuralNeural4;
+        &__head {
+            padding: 7.2vw;
 
-//         &-title {
-//             margin-bottom: 12px;
-//             color: $neuralNeural10;
+            &-title {
+                margin-bottom: 2.4vw;
+            }
+        }
 
-//             @include header(2);
-//         }
+        &__body {
+            padding: 7.2vw;
+        }
 
-//         &-caption {
-//             color: $neuralNeural8;
+        &__footer {
+            padding: 7.2vw;
+        }
+    }
+}
 
-//             @include paragraph(2);
-//         }
-//     }
+.auth-panel-mobile {
+    width: 100%;
+    border-radius: 6.15vw 6.15vw 0 0;
+    background-color: $functionalWhite;
+    overflow-y: auto;
 
-//     &__body {
-//         padding: 36px;
-//     }
+    flex-grow: 1;
 
-//     &__footer {
-//         padding: 36px;
-//         border-top: 1px solid $neuralNeural4;
-//     }
-// }
+    &__head {
+        min-height: 28.2vw;
+        padding: 5.128vw;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 3.07vw;
+        border-bottom: 1px solid $neuralNeural4;
+
+        &-title {
+            width: 87vw;
+            height: 10.2564vw;
+            color: $neuralNeural10;
+            user-select: none;
+            @include mobileheader2;
+        }
+
+        &-caption {
+            width: 87vw;
+            color: $neuralNeural8;
+            user-select: none;
+            @include mobileparagraph1;
+        }
+    }
+
+    &__body {
+        padding: 5.128vw;
+        gap: 5.128vw;
+    }
+
+    &__footer {
+        padding: 5.128vw;
+        border-top: 1px solid $neuralNeural4;
+    }
+}
 </style>
