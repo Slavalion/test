@@ -240,3 +240,21 @@ export const profileDelete = reactive({
         this.show = true
     },
 })
+
+export const addQuestion = reactive({
+    show: false,
+    // walletCode: localStorage.getItem('addWallet_walletCode'),
+    close() {
+        this.show = false
+        // this.storeValue()
+    },
+    open(id) {
+        // this.walletCode = walletCode
+        this.show = true
+        // this.storeValue()
+    },
+    storeValue() {
+        localStorage.setItem('addQuestion', this.show)
+        // localStorage.setItem('addWallet_walletCode', this.walletCode)
+    },
+})
