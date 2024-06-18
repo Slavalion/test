@@ -1,0 +1,1 @@
+import{f as a,o as t,c as o,h as l,p as c,n}from"./app-632bf8b8.js";const m={__name:"ProgressBar",props:{size:{type:String,default:""},progress:{type:Number,default:0}},setup(s){const e=s,r=a(()=>"progress_size-"+e.size);return(p,i)=>(t(),o("div",{class:n(["progress",r.value])},[l("div",{class:"progress__fill",style:c({width:s.progress+"%"})},null,4)],2))}};export{m as _};

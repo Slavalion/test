@@ -1,0 +1,1 @@
+import{d as c,e as p}from"./app-632bf8b8.js";function l(){const n=c(),a=p(!1),o=(e,s)=>(a.value=!0,new Promise((r,u)=>{axios(e,s).then(t=>{a.value=!1,r(t)}).catch(t=>{a.value=!1,t.response.status==422&&n.error(t.response.data.message),u(t)})}));return{loading:a,get:(e,s)=>o(e,{method:"get",params:s}),post:(e,s)=>o(e,{method:"post",data:s})}}export{l as u};
