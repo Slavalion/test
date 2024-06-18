@@ -25,6 +25,7 @@ use App\Http\Controllers\WalletsController;
 use App\Http\Controllers\WalletTransactionController;
 use App\Http\Middleware\MaintenanceModeMiddleware;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\TariffController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -200,5 +201,9 @@ Route::middleware('auth')->group(function () {
 
 // Demo section
 Route::get('demo-auth', [DemoController::class, 'auth']);
+
+// tariff section
+Route::get('tariffs', [TariffController::class, 'index'])->name('tariffs.index');
+
 
 require __DIR__.'/auth.php';

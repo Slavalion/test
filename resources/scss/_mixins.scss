@@ -1,10 +1,5 @@
 @mixin header($size) {
-
-    @each $index,
-    $fontSize,
-    $fontWeight,
-    $liheHeight,
-    $letterSpacing in $headers {
+    @each $index, $fontSize, $fontWeight, $liheHeight, $letterSpacing in $headers {
         @if $size ==$index {
             font-family: $headlineFont;
             font-size: $fontSize;
@@ -16,11 +11,7 @@
 }
 
 @mixin paragraph($size) {
-
-    @each $index,
-    $fontSize,
-    $liheHeight,
-    $letterSpacing in $paragraphs {
+    @each $index, $fontSize, $liheHeight, $letterSpacing in $paragraphs {
         @if $size ==$index {
             font-size: $fontSize;
             line-height: $liheHeight;
@@ -34,4 +25,52 @@
     font-weight: 400;
     line-height: 18px;
     letter-spacing: 0.24px;
+
+    @media (min-width: 1441px) {
+        font-size: 0.8333vw;
+        line-height: 1.25vw;
+        letter-spacing: 0.24px;
+    }
+}
+
+@mixin mobileheader2 {
+    font-size: 6.923vw;
+    line-height: 10.2564vw;
+    font-weight: 600;
+    letter-spacing: -0.01px;
+}
+
+@mixin mobileheader4 {
+    font-size: 4.359vw;
+    line-height: 7.1794vw;
+    font-weight: 500;
+    letter-spacing: 0.18px;
+}
+
+@mixin mobileparagraph1 {
+    font-size: 3.8461vw;
+    line-height: 5.641vw;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+}
+
+@mixin mobileparagraph0 {
+    font-size: 3.333vw;
+    line-height: 5.128vw;
+    font-weight: 400;
+    letter-spacing: 0.1px;
+}
+
+@mixin largeheader2 {
+    font-size: 1.875vw;
+    line-height: 2.7777vw;
+    font-weight: 600;
+    letter-spacing: -0.01px;
+}
+
+@mixin largeparagraph1 {
+    font-size: 1.0416vw;
+    line-height: 1.5278vw;
+    font-weight: 400;
+    letter-spacing: 0.2px;
 }
